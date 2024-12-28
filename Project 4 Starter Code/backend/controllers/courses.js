@@ -50,7 +50,27 @@ err:err.message
   })
 };
 
+const deleteCourseById =(req,res)=>{
+  const id =req.params.id
+  courseModel
+  .deleteOne({_id:id})
+  .then((result)=>{
+    res.status(200).json({
+      success: true,
+      message: "Course deleted "
+    })
+  })
+  .catch((err)=>{
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+      err:err.message
+
+
+    })
+  })
+}
 module.exports={
     createNewCourse,
-    getAllCourse
+    getAllCourse,deleteCourseById
 }
