@@ -27,6 +27,30 @@ newCourse.save()
   });
 };
 
+const getAllCourse=(req,res)=>{
+  courseModel
+  .find({})
+  .then((result)=>{
+    console.log("rererere:",result);
+    
+    res.status(200).json({
+      success: true,
+      message:" All the course",
+      articles: result,
+
+    })
+  }).catch((err)=>{
+  res.status(500).json({
+    success: false,
+
+message: "Server Error",
+
+err:err.message
+  })
+  })
+};
+
 module.exports={
-    createNewCourse
+    createNewCourse,
+    getAllCourse
 }
