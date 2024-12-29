@@ -17,7 +17,7 @@ teacherId
     res.status(201).json({
       success: true,
       message: `lessone created`,
-      article: lessone,
+      lessone: lessone,
     });
   })
   .catch((err) => {
@@ -28,4 +28,25 @@ teacherId
     });
   });
 };
-module.exports={createNewLesson }
+const getAllLessons=(req,res)=>{
+  lessonsModel.find()
+  .then((result)=>{
+    
+    res.status(200).json({
+      success: true,
+      message:" All the lessons",
+      lessone: result,
+
+    })
+  }).catch((err)=>{
+  res.status(500).json({
+    success: false,
+
+message: "Server Error",
+
+err:err.message
+  })
+  })
+
+}
+module.exports={createNewLesson ,getAllLessons }
