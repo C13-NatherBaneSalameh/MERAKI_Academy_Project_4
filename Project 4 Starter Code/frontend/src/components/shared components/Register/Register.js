@@ -6,6 +6,7 @@ const Register = () => {
   const [userInfo, setUserInfo] = useState("");
   const [isRegister, setIsRegister] = useState(false);
   const [response, setResponse] = useState("");
+  const [error, setError] = useState(false)
 
   const createRegister = () => {
     axios
@@ -20,6 +21,7 @@ const Register = () => {
         setResponse(err);
         setIsRegister(false);
         console.log( "err",response);
+        setError(true)
         
       });
   };
@@ -50,7 +52,8 @@ const Register = () => {
       />
       <button onClick={createRegister}>Register</button>
       
-      {isRegister?<p>{response.data.message}</p>:<p>{response.response.data.message}</p>}
+      {isRegister&&<p>{response.data.message}</p>}
+      {error&&<p>{response.response.data.message}</p>}
       
     </div>
   );
