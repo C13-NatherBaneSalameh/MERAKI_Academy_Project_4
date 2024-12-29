@@ -13,10 +13,12 @@ const usersRouter=require("./routes/user")
 const rolesRouter=require("./routes/roles")
 const coursesRouter=require("./routes/courses")
 const lessoneRouter =require("./routes/lessons")
+const commentsRouter=require("./routes/comments")
 app.use("/users",usersRouter)
 app.use("/roles",rolesRouter)
 app .use("/course",coursesRouter)
 app.use("/lessons",lessoneRouter)
+app.use("/comments",commentsRouter)
 
 
 

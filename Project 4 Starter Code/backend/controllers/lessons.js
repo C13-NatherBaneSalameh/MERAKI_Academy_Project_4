@@ -31,6 +31,7 @@ const createNewLesson = (req, res) => {
 const getAllLessons = (req, res) => {
   lessonsModel
     .find()
+    .populate("comments","-_id -__v")
     .then((result) => {
       if (result.length === 0) {
         res.status(400).json("No lessons yet ");
@@ -90,4 +91,4 @@ const updateLessonById = (req, res) => {
     err: err.message
   })
   })};
-module.exports = { createNewLesson, getAllLessons, deleteLessonsById ,updateLessonById};
+module.exports = { createNewLesson,getAllLessons,deleteLessonsById ,updateLessonById};
