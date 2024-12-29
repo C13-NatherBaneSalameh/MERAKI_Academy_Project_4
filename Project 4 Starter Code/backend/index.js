@@ -12,9 +12,11 @@ const PORT = process.env.PORT || 5000;
 const usersRouter=require("./routes/user")
 const rolesRouter=require("./routes/roles")
 const coursesRouter=require("./routes/courses")
+const lessoneRouter =require("./routes/lessons")
 app.use("/users",usersRouter)
 app.use("/roles",rolesRouter)
 app .use("/course",coursesRouter)
+app.use("/lessons",lessoneRouter)
 
 
 
