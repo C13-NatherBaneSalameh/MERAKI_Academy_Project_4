@@ -2,8 +2,10 @@ import React from "react";
 import axios from "axios";
 import { useState,useContext } from "react";
 import { UserContext } from "../../../App";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = () => { 
+    const navigate =useNavigate()
     const {token,setToken}=useContext(UserContext)
     const [loginInfo, setLoginInfo] = useState("")
     const [response, setResponse] = useState("")
@@ -42,7 +44,7 @@ const Login = () => {
 
         }}/>
         <button onClick={login}>Login </button>
-        {isLoged&&<p>{response.data.message}</p>}
+        {isLoged&&<p>{navigate("/dashboard")}</p>}
         {isError&&<p>{error.response.data.message}</p>}
 
     </div>
