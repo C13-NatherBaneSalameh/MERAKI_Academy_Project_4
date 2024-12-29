@@ -17,9 +17,15 @@ const Navbar = () => {
     const forword=()=>{
         navigate(1)
     }
+    const logout=()=>{
+        navigate("/logout")
+    }
+
   const { token } = useContext(UserContext);
   return <div>{token ?
-     <></>
+     <div>
+        <button onClick={logout}>logout</button>
+     </div>
       : 
       
       <div>
