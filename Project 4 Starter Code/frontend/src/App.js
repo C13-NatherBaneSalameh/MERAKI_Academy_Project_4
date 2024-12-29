@@ -1,9 +1,10 @@
 import React from 'react'
 import "./App.css";
+import Register from "./components/shared components/Register/Register"
 const App = () => {
   return (
    <div className="App">
-      <h1>Hello World!</h1>
+    <Register />
     </div>
   )
 }
