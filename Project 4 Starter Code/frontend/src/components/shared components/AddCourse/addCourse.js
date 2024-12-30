@@ -18,10 +18,11 @@ const AddCourse = () => {
       .then((res) => {
         setResponse(res);
         setIsAdd(true);
+        setisError(false);
       })
       .catch((err) => {
         console.log(err);
-
+        setIsAdd(false);
         setError(err);
         setisError(true);
       });

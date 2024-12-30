@@ -5,7 +5,7 @@ import { useState,createContext } from 'react';
 import { Route,Routes } from 'react-router-dom';
 import Login from './components/shared components/Login/Login';
 import Navbar from './components/shared components/Navbar';
-import Dashboard from './components/shared components/Dashboard/dahboard';
+import Dashboard from './components/shared components/Dashboard/Dashboard';
 import Logout from './components/Logout/logout';
 import AddCourse from './components/shared components/AddCourse/addCourse';
 export const UserContext=createContext()

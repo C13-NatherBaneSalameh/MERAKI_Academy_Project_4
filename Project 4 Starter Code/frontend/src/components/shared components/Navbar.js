@@ -23,12 +23,16 @@ const Navbar = () => {
     const addCourse=()=>{
         navigate("/addNewCourse")
     }
+    const dahboardCoutse=()=>{
+        navigate("/dashboard")
+    }
 
   const { token } = useContext(UserContext);
   return <div>{token ?
      <div>
         <button onClick={logout}>logout</button>
         <button onClick={addCourse}> AddCourse</button>
+        <button onClick={dahboardCoutse}> Dahboard Course</button>
      </div>
       : 
       

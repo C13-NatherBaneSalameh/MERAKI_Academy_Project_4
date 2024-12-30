@@ -28,6 +28,7 @@ newCourse.save()
 };
 
 const getAllCourse=(req,res)=>{
+  const teacherId=req.token.userId
   courseModel
   .find({})
   .then((result)=>{
@@ -36,7 +37,8 @@ const getAllCourse=(req,res)=>{
     res.status(200).json({
       success: true,
       message:" All the course",
-      articles: result,
+      courses: result,
+      teacherId:teacherId,
 
     })
   }).catch((err)=>{
