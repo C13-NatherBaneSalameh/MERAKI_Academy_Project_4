@@ -20,11 +20,15 @@ const Navbar = () => {
     const logout=()=>{
         navigate("/logout")
     }
+    const addCourse=()=>{
+        navigate("/addNewCourse")
+    }
 
   const { token } = useContext(UserContext);
   return <div>{token ?
      <div>
         <button onClick={logout}>logout</button>
+        <button onClick={addCourse}> AddCourse</button>
      </div>
       : 
       
