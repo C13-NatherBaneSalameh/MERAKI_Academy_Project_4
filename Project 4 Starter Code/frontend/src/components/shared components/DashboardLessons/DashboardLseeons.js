@@ -66,6 +66,21 @@ const DashboardLseeons = () => {
     })
   
   };
+  const deleteLesson=(id)=>{
+    axios
+    .delete(`http://localhost:5000/lessons/${id}` , { headers })
+    .then((res)=>{
+     const lessonAfterDelete= lesson.filter((ele)=>ele._id!==id)
+     setLesson(lessonAfterDelete)
+
+
+    })
+    .catch((err)=>{
+      console.log(err);
+      
+    })
+
+  }
 
   return (
     <div>
@@ -96,6 +111,7 @@ const DashboardLseeons = () => {
               >
                 comment
               </button>
+              <button id={ele._id} onClick={(e)=>{deleteLesson(e.target.id)}}>X</button>
 
               {isClickedToUpdate ? (
                 <div>

@@ -7,25 +7,33 @@ const Addlesson = () => {
     const {token}=useContext(UserContext)
     const headers = { Authorization: `Bearer ${token}` };
 
-    const [lessonInfo, setLessonInfo] = useState({})
+    // const [lessonInfo, setLessonInfo] = useState({})
     const [error, setError] = useState("")
     const [response, setResponse] = useState("")
     const [isAdded, setIsAdded] = useState(false)
-    const [isError, setIsError] = useState(false)
+    const [isError, setIsError] = useState(false) 
+    const [title, setTitle] = useState()
+    const [description, setDescription] = useState()
+    const [video, setVideo] = useState()
+
     const {id}=useParams()
     console.log(id);
 
     const addNewLesson=()=>{
-        setLessonInfo({...lessonInfo,courseId:id})
+        // setLessonInfo({...lessonInfo,courseId:id})
+
 
 
 
             console.log(id);
+            // console.log( "info",lessonInfo);
+
+            
 
             
 
         axios
-        .post("http://localhost:5000/lessons" , lessonInfo, { headers })
+        .post("http://localhost:5000/lessons" , {title:title,courseId:id,description:description,video:video}, { headers })
         .then((res)=>{
             console.log("res lesson",res);
             
@@ -47,15 +55,12 @@ const Addlesson = () => {
   return (
     <div>
         <input type='text' placeholder='title' onChange={(e)=>{
-            setLessonInfo({...lessonInfo,title:e.target.value })
-        }}/>
+setTitle(e.target.value)        }}/>
         
         <textarea type ='text' placeholder='Description' onChange={(e)=>{
-            setLessonInfo({...lessonInfo,description:e.target.value })
-        }} ></textarea>
+setDescription(e.target.value)        }} ></textarea>
         <input placeholder='Video' onChange={(e)=>{
-            setLessonInfo({...lessonInfo,video:e.target.value })
-        }}/>
+setVideo(e.target.value)        }}/>
         <button onClick={addNewLesson} > AddLesson</button>
         {isError&&<p>{error.response.data.message}</p>}
         {isAdded&&<p>{response.data.message}</p>}
