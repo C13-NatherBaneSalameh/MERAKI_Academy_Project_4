@@ -13,8 +13,16 @@ const Addlesson = () => {
     const [isAdded, setIsAdded] = useState(false)
     const [isError, setIsError] = useState(false)
     const {id}=useParams()
+    console.log(id);
+
     const addNewLesson=()=>{
-            setLessonInfo({...lessonInfo,courseId:id})
+        setLessonInfo({...lessonInfo,courseId:id})
+
+
+
+            console.log(id);
+
+            
 
         axios
         .post("http://localhost:5000/lessons" , lessonInfo, { headers })
@@ -22,6 +30,8 @@ const Addlesson = () => {
             console.log("res lesson",res);
             
             setResponse(res)
+            console.log(response);
+            
             setIsAdded(true)
             setIsError(false)
 
@@ -39,6 +49,7 @@ const Addlesson = () => {
         <input type='text' placeholder='title' onChange={(e)=>{
             setLessonInfo({...lessonInfo,title:e.target.value })
         }}/>
+        
         <textarea type ='text' placeholder='Description' onChange={(e)=>{
             setLessonInfo({...lessonInfo,description:e.target.value })
         }} ></textarea>

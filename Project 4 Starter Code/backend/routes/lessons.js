@@ -7,5 +7,5 @@ const lessoneRouter =express.Router()
 lessoneRouter.post("/",authentication ,authorization("CREATE_LESSON"),createNewLesson)
 lessoneRouter.get("/:id",getAllLessonsByID)
 lessoneRouter.delete("/:id",authentication,deleteLessonsById)
-lessoneRouter.put("/:id",updateLessonById)
+lessoneRouter.put("/:id", authentication,updateLessonById)
 module.exports=lessoneRouter

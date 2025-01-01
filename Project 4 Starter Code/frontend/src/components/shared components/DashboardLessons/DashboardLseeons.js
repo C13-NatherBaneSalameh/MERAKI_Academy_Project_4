@@ -5,12 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { UserContext } from "../../../App";
 const DashboardLseeons = () => {
+  const [isClickedToUpdate, setIsClickedToUpdate] = useState(false)
+  const [newInfoLessons, setNewInfoLessons] = useState({})
   const { token, lesson, setLesson } = useContext(UserContext);
+
   const headers = {
     Authorization: `Bearer ${token}`,
   };
   const navigate = useNavigate();
-  const { id } = useParams();
+  const {id} = useParams();
   console.log(id);
   const addLessons = () => {
     navigate(`/addLesson/${id}`);
@@ -32,6 +35,29 @@ console.log(err);
     
     
   }, [])
+  const updatedLesson=(id)=>{
+    axios
+    .put(`http://localhost:5000/lessons/${id}`, newInfoLessons, { headers })
+    .then((res)=>{
+      const lessoneAfterUpdate=lesson.map((ele,ind)=>{
+        if(ele._id===res.data.lesson._id){
+          ele.title=res.data.lesson.title
+          ele.description=res.data.lesson.description
+          ele.video=res.data.lesson.video
+        }
+        return ele;
+      })
+      setLesson(lessoneAfterUpdate)
+      setIsClickedToUpdate(false)
+
+    })
+    .catch((err)=>{
+      console.log(err);
+
+    })
+
+  }
+
   
 
   return (
@@ -45,6 +71,39 @@ console.log(err);
                 <iframe src={ele.video} type="video/mp4"/>
                 <p>{ele.title}</p>
                 <p>{ele.description}</p>
+                
+                {isClickedToUpdate?
+                <div>
+                  <input type="text" placeholder="title" onChange={(e) => {
+                  setNewInfoLessons({
+                    ...newInfoLessons,
+                    title: e.target.value,
+                  });
+                }}/>
+                  <textarea typeof="text" placeholder="description" onChange={(e) => {
+                  setNewInfoLessons({
+                    ...newInfoLessons,
+                    description: e.target.value,
+                  });
+                }}></textarea>
+                  <input placeholder="video" onChange={(e) => {
+                  setNewInfoLessons({
+                    ...newInfoLessons,
+                    video: e.target.value
+                  });
+                }} />
+                  <button id={ele._id} onClick={(e)=>{
+                    updatedLesson(e.target.id)
+                  }}> Update</button>
+                  
+                  
+                  
+                  
+                  
+                  
+                  </div> :<button onClick={()=>{
+                  setIsClickedToUpdate(true)
+                }} > update </button>}
             </div>
         })}
 
