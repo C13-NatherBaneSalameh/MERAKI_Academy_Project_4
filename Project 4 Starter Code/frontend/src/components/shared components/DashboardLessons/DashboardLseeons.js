@@ -8,7 +8,8 @@ const DashboardLseeons = () => {
   const [isClickedToUpdate, setIsClickedToUpdate] = useState(false);
   const [newInfoLessons, setNewInfoLessons] = useState({});
   const [comments, setComments] = useState({});
-  const { token, lesson, setLesson } = useContext(UserContext);
+  const [lessons0, setLessons0] = useState([]);
+  const { token, lesson, setLesson, role } = useContext(UserContext);
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -25,14 +26,13 @@ const DashboardLseeons = () => {
       .then((res) => {
         setLesson(res.data.lessone);
         console.log(res.data.lessone);
+        setLessons0(res.data.lessone);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  useEffect(() => {
-    getLessonsById();
-  }, []);
+
   const updatedLesson = (id) => {
     axios
       .put(`http://localhost:5000/lessons/${id}`, newInfoLessons, { headers })
@@ -54,38 +54,45 @@ const DashboardLseeons = () => {
   };
   const addComment = (id) => {
     axios
-    .post(`http://localhost:5000/comments/${id}`, comments, { headers })
-    .then((res)=>{
-      getLessonsById()
-
-    })
-    .catch((err)=>{
-      console.log(err);
-      
-
-    })
-  
+      .post(`http://localhost:5000/comments/${id}`, comments, { headers })
+      .then((res) => {
+        getLessonsById();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-  const deleteLesson=(id)=>{
+  const deleteLesson = (id) => {
     axios
-    .delete(`http://localhost:5000/lessons/${id}` , { headers })
-    .then((res)=>{
-     const lessonAfterDelete= lesson.filter((ele)=>ele._id!==id)
-     setLesson(lessonAfterDelete)
-
-
-    })
-    .catch((err)=>{
-      console.log(err);
-      
-    })
-
-  }
+      .delete(`http://localhost:5000/lessons/${id}`, { headers })
+      .then((res) => {
+        const lessonAfterDelete = lesson.filter((ele) => ele._id !== id);
+        setLesson(lessonAfterDelete);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getLessonsById();
+  }, []);
+  // if (!lessons0.length) {
+  //   return (
+  //     <div>
+  //       <div>
+  //         <button onClick={addLessons}>addLesson</button>
+  //       </div>
+  //       <p>no lesson yet</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
+      
       <div>
-        <button onClick={addLessons}>addLesson</button>
+        {role==="teacher"&&<button onClick={addLessons}>addLesson</button>}
+        
       </div>
       <div>
         {lesson?.map((ele, ind) => {
@@ -94,8 +101,9 @@ const DashboardLseeons = () => {
               <iframe src={ele.video} type="video/mp4" />
               <p>{ele.title}</p>
               <p>{ele.description}</p>
-              {ele.comments.map(o=><p>comment : {o.comment}</p>)}
-
+              {ele.comments.map((o) => (
+                <p>comment : {o.comment}</p>
+              ))}
 
               <textarea
                 placeholder="Comment"
@@ -111,7 +119,16 @@ const DashboardLseeons = () => {
               >
                 comment
               </button>
-              <button id={ele._id} onClick={(e)=>{deleteLesson(e.target.id)}}>X</button>
+              {role === "teacher" && (
+                <button
+                  id={ele._id}
+                  onClick={(e) => {
+                    deleteLesson(e.target.id);
+                  }}
+                >
+                  X
+                </button>
+              )}
 
               {isClickedToUpdate ? (
                 <div>
@@ -154,16 +171,18 @@ const DashboardLseeons = () => {
                     Update
                   </button>
                 </div>
-              ) : (
-                <button
-                  onClick={() => {
-                    setIsClickedToUpdate(true);
-                  }}
-                >
-                  {" "}
-                  update{" "}
-                </button>
-              )}
+              ) :<> {role==="teacher"&&<button
+                onClick={() => {
+                  setIsClickedToUpdate(true);
+                }}
+              >
+                
+                update
+              </button>}
+                
+                </>
+              }
+              
             </div>
           );
         })}

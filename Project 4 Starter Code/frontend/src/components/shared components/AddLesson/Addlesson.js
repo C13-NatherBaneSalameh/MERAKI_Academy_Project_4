@@ -61,6 +61,7 @@ setTitle(e.target.value)        }}/>
 setDescription(e.target.value)        }} ></textarea>
         <input placeholder='Video' onChange={(e)=>{
 setVideo(e.target.value)        }}/>
+
         <button onClick={addNewLesson} > AddLesson</button>
         {isError&&<p>{error.response.data.message}</p>}
         {isAdded&&<p>{response.data.message}</p>}

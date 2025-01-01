@@ -5,7 +5,7 @@ const authorization = require("../middleware/authorization")
 
 const lessoneRouter =express.Router()
 lessoneRouter.post("/",authentication ,authorization("CREATE_LESSON"),createNewLesson)
-lessoneRouter.get("/:id",getAllLessonsByID)
-lessoneRouter.delete("/:id",authentication,deleteLessonsById)
-lessoneRouter.put("/:id", authentication,updateLessonById)
+lessoneRouter.get("/:id",authentication,authorization("GET_ALL_LESSON"), getAllLessonsByID)
+lessoneRouter.delete("/:id",authentication, authorization("DELETE_LESSON"),deleteLessonsById)
+lessoneRouter.put("/:id", authentication,authorization("UPDETE_LESSONE") ,updateLessonById)
 module.exports=lessoneRouter

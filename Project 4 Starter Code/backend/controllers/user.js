@@ -70,6 +70,7 @@ const login =(req,res)=>{
           message: `Valid login credentials`,
           token: token,
           userId: result._id,
+          role:result.role.role
 
         });
       } catch (error) {

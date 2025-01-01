@@ -13,12 +13,24 @@ import Addlesson from "./components/shared components/AddLesson/Addlesson";
 export const UserContext = createContext();
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [role, setRole] = useState(localStorage.getItem("role")||null);
   const [courseId, setCourseId] = useState("");
   const [course, setCourse] = useState();
-  const [lesson, setLesson] = useState()
+  const [lesson, setLesson] = useState([]);
   return (
     <UserContext.Provider
-      value={{ token, course, setCourse, setToken, courseId, setCourseId,lesson,setLesson}}
+      value={{
+        token,
+        course,
+        setCourse,
+        setToken,
+        courseId,
+        setCourseId,
+        lesson,
+        setLesson,
+        role,
+        setRole,
+      }}
     >
       <div className="App">
         <Navbar />

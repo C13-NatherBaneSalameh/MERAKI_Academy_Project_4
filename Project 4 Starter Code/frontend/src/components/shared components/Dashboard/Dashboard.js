@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { token, setCourse, course } = useContext(UserContext);
+  const { token, setCourse, course ,role} = useContext(UserContext);
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -73,14 +73,15 @@ const Dashboard = () => {
             />
             <p>{ele.title}</p>
             <p>{ele.description}</p>
-            <button
+            {role==="teacher"&& <button
               id={ele._id}
               onClick={(e) => {
                 deleteCourseById(e.target.id);
               }}
             >
               X
-            </button>
+            </button>}
+           
           </div>
         );
       })}

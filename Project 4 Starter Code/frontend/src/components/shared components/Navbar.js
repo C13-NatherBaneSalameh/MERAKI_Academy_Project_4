@@ -27,12 +27,13 @@ const Navbar = () => {
         navigate("/dashboard")
     }
 
-  const { token } = useContext(UserContext);
+  const { token,role } = useContext(UserContext);
   return <div>{token ?
      <div>
         <button onClick={logout}>logout</button>
-        <button onClick={addCourse}> AddCourse</button>
-        <button onClick={dahboardCoutse}> Dahboard Course</button>
+        {role ==="teacher"&& <button onClick={addCourse}> AddCourse</button>
+    }
+        <button onClick={dahboardCoutse}>Home</button>
         <button onClick={back} > Back</button>
         <button onClick={forword}>Forword</button>
      </div>
