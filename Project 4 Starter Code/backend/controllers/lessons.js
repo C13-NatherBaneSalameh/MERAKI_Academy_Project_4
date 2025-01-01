@@ -28,9 +28,11 @@ const createNewLesson = (req, res) => {
       });
     });
 };
-const getAllLessons = (req, res) => {
+const getAllLessonsByID = (req, res) => {
+  const id = req.params.id;
+
   lessonsModel
-    .find()
+    .find({courseId:id})
     .populate("comments","-_id -__v")
     .then((result) => {
       if (result.length === 0) {
@@ -91,4 +93,4 @@ const updateLessonById = (req, res) => {
     err: err.message
   })
   })};
-module.exports = { createNewLesson,getAllLessons,deleteLessonsById ,updateLessonById};
+module.exports = { createNewLesson,getAllLessonsByID,deleteLessonsById ,updateLessonById};

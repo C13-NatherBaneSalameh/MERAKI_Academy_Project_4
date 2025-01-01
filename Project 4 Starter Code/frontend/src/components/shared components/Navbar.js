@@ -33,14 +33,15 @@ const Navbar = () => {
         <button onClick={logout}>logout</button>
         <button onClick={addCourse}> AddCourse</button>
         <button onClick={dahboardCoutse}> Dahboard Course</button>
+        <button onClick={back} > Back</button>
+        <button onClick={forword}>Forword</button>
      </div>
       : 
       
       <div>
         <button on onClick={login}>Login</button>
         <button onClick={register}>Register</button>
-        <button onClick={back} > Back</button>
-        <button onClick={forword}>Forword</button>
+        
         </div>}
       
       </div>;
