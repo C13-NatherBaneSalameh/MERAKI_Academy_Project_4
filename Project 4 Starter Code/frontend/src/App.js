@@ -35,8 +35,8 @@ const App = () => {
       }}
     >
       <div className="App">
-        <Navbar />
-        {/* <Test/> */}
+        {/* <Navbar /> */}
+        <Test/>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

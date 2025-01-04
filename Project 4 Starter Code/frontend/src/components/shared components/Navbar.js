@@ -34,8 +34,8 @@ const Navbar = () => {
         {role ==="teacher"&& <button onClick={addCourse}> AddCourse</button>
     }
         <button onClick={dahboardCoutse}>Home</button>
-        <button onClick={back} > Back</button>
-        <button onClick={forword}>Forword</button>
+        {/* <button onClick={back} > Back</button>
+        <button onClick={forword}>Forword</button> */}
      </div>
       : 
       
