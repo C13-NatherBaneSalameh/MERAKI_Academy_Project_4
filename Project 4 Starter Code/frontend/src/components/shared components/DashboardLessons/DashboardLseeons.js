@@ -90,12 +90,19 @@ const DashboardLseeons = () => {
   return (
     <div>
       
+      
       <div>
-        {role==="teacher"&&<button onClick={addLessons}>addLesson</button>}
-        
-      </div>
-      <div>
-        {lesson?.map((ele, ind) => {
+        {!lessons0.length? <div>
+         <div>
+         {role==="teacher"&&<button onClick={addLessons}>addLesson</button>}
+         </div>
+        <p>no lesson yet</p>
+      </div>:<>
+      
+      {role==="teacher"&&<button onClick={addLessons}>addLesson</button>}
+
+      
+      {lesson?.map((ele, ind) => {
           return (
             <div>
               <iframe src={ele.video} type="video/mp4" />
@@ -185,7 +192,8 @@ const DashboardLseeons = () => {
               
             </div>
           );
-        })}
+        })} </>}
+        
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import Logout from "./components/Logout/logout";
 import AddCourse from "./components/shared components/AddCourse/addCourse";
 import DashboardLseeons from "./components/shared components/DashboardLessons/DashboardLseeons";
 import Addlesson from "./components/shared components/AddLesson/Addlesson";
+import NotFoundPage from "./components/shared components/NotFoundPage";
 export const UserContext = createContext();
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/addNewCourse" element={<AddCourse />} />
           <Route path="/dashboard/:id" element={<DashboardLseeons />} />
           <Route path="/addLesson/:id" element={<Addlesson />} />
+          <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
       </div>
     </UserContext.Provider>
