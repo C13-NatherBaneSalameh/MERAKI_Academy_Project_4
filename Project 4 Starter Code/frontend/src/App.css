@@ -55,7 +55,14 @@ body {
 .login{
   margin-bottom: 15px;
 }
-
+.card{
+  height: 420px;
+}
+.card1{
+  height: 470px;
+}
+.mb-4 {  margin-bottom: 10px;
+}
 
 
 

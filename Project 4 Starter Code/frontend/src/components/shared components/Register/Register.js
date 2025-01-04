@@ -83,13 +83,13 @@ const Register = () => {
             className="position-absolute shadow-5-strong"
           ></div>
 
-          <MDBCard className="my-5 bg-glass">
+          <MDBCard className="my-5 bg-glass card1">
             <MDBCardBody className="p-5">
               <h3>Register as </h3>
               <div className="RegisterBtns">
                 
                 <MDBBtn
-                  className="w-100 mb-4"
+                  className="w-100 mb-4 "
                   size="md"
                   onClick={(e) => {
                     setRoleId("67758bfa06d797ae116babc6");
@@ -103,7 +103,7 @@ const Register = () => {
                   Teacher
                 </MDBBtn>
                 <MDBBtn
-                  className="w-100 mb-4"
+                  className="w-100 mb-4 "
                   size="md"
                   onClick={(e) => {
                     setRoleId("6775877359d1e574b0f67dfd");
