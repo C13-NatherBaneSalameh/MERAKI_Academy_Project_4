@@ -89,111 +89,116 @@ const DashboardLseeons = () => {
 
   return (
     <div>
-      
-      
       <div>
-        {!lessons0.length? <div>
-         <div>
-         {role==="teacher"&&<button onClick={addLessons}>addLesson</button>}
-         </div>
-        <p>no lesson yet</p>
-      </div>:<>
-      
-      {role==="teacher"&&<button onClick={addLessons}>addLesson</button>}
-
-      
-      {lesson?.map((ele, ind) => {
-          return (
+        {!lessons0.length ? (
+          <div>
             <div>
-              <iframe src={ele.video} type="video/mp4" />
-              <p>{ele.title}</p>
-              <p>{ele.description}</p>
-              {ele.comments.map((o) => (
-                <p>comment : {o.comment}</p>
-              ))}
-
-              <textarea
-                placeholder="Comment"
-                onChange={(e) => {
-                  setComments({ ...comments, comment: e.target.value });
-                }}
-              ></textarea>
-              <button
-                id={ele._id}
-                onClick={(e) => {
-                  addComment(e.target.id);
-                }}
-              >
-                comment
-              </button>
               {role === "teacher" && (
-                <button
-                  id={ele._id}
-                  onClick={(e) => {
-                    deleteLesson(e.target.id);
-                  }}
-                >
-                  X
-                </button>
+                <button onClick={addLessons}>addLesson</button>
               )}
-
-              {isClickedToUpdate ? (
+            </div>
+            <p>no lesson yet</p>
+          </div>
+        ) : (
+          <>
+            {role === "teacher" && (
+              <button onClick={addLessons}>addLesson</button>
+            )}
+            {lesson?.map((ele, ind) => {
+              return (
                 <div>
-                  <input
-                    type="text"
-                    placeholder="title"
-                    onChange={(e) => {
-                      setNewInfoLessons({
-                        ...newInfoLessons,
-                        title: e.target.value,
-                      });
-                    }}
-                  />
+                  <iframe src={ele.video} type="video/mp4" />
+                  <p>{ele.title}</p>
+                  <p>{ele.description}</p>
+                  {ele.comments.map((o) => (
+                    <p>comment : {o.comment}</p>
+                  ))}
+
                   <textarea
-                    typeof="text"
-                    placeholder="description"
+                    placeholder="Comment"
                     onChange={(e) => {
-                      setNewInfoLessons({
-                        ...newInfoLessons,
-                        description: e.target.value,
-                      });
+                      setComments({ ...comments, comment: e.target.value });
                     }}
                   ></textarea>
-                  <input
-                    placeholder="video"
-                    onChange={(e) => {
-                      setNewInfoLessons({
-                        ...newInfoLessons,
-                        video: e.target.value,
-                      });
-                    }}
-                  />
                   <button
                     id={ele._id}
                     onClick={(e) => {
-                      updatedLesson(e.target.id);
+                      addComment(e.target.id);
                     }}
                   >
-                    {" "}
-                    Update
+                    comment
                   </button>
+                  {role === "teacher" && (
+                    <button
+                      id={ele._id}
+                      onClick={(e) => {
+                        deleteLesson(e.target.id);
+                      }}
+                    >
+                      X
+                    </button>
+                  )}
+
+                  {isClickedToUpdate ? (
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="title"
+                        onChange={(e) => {
+                          setNewInfoLessons({
+                            ...newInfoLessons,
+                            title: e.target.value,
+                          });
+                        }}
+                      />
+                      <textarea
+                        typeof="text"
+                        placeholder="description"
+                        onChange={(e) => {
+                          setNewInfoLessons({
+                            ...newInfoLessons,
+                            description: e.target.value,
+                          });
+                        }}
+                      ></textarea>
+                      <input
+                        placeholder="video"
+                        onChange={(e) => {
+                          setNewInfoLessons({
+                            ...newInfoLessons,
+                            video: e.target.value,
+                          });
+                        }}
+                      />
+                      <button
+                        id={ele._id}
+                        onClick={(e) => {
+                          updatedLesson(e.target.id);
+                        }}
+                      >
+                        {" "}
+                        Update
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      {" "}
+                      {role === "teacher" && (
+                        <button
+                          onClick={() => {
+                            setIsClickedToUpdate(true);
+                          }}
+                        >
+                          update
+                        </button>
+                      )}
+                    </>
+                  )}
                 </div>
-              ) :<> {role==="teacher"&&<button
-                onClick={() => {
-                  setIsClickedToUpdate(true);
-                }}
-              >
-                
-                update
-              </button>}
-                
-                </>
-              }
-              
-            </div>
-          );
-        })} </>}
-        
+              );
+            })}
+          </>
+        )}
       </div>
     </div>
   );
