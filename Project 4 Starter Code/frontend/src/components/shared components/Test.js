@@ -11,41 +11,42 @@ import {
   MDBIcon,
 } from "mdb-react-ui-kit";
 import axios from "axios";
-import "./style.css";
-import { useState } from "react";
-const Register = () => {
-  // const [userInfo, setUserInfo] = useState("");
-  const [isRegister, setIsRegister] = useState(false);
-  const [response, setResponse] = useState("");
-  const [error, setError] = useState(false)
-  const [registerAs, setRegisterAs] = useState(false)
-  const [roleId, setRoleId] = useState("")
-  const [userName, setUserName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+import { useState, useContext } from "react";
+import { UserContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
-  const createRegister = () => {
+function App() {
+  const navigate = useNavigate();
+  const { token, setToken, role, setRole } = useContext(UserContext);
+  const [loginInfo, setLoginInfo] = useState("");
+  const [response, setResponse] = useState("");
+  const [isLoged, setIsLoged] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState("");
+  const login = () => {
     axios
-      .post(`http://localhost:5000/users/register`, {userName:userName,
-        email:email,
-        password:password,
-        role:roleId})
+      .post(`http://localhost:5000/users/login`, loginInfo)
       .then((res) => {
         setResponse(res);
-        setIsRegister(true);
-        console.log( "pass",response);
-
+        console.log(res);
+        setRole(res.data.role);
+        localStorage.setItem("role", res.data.role);
+        console.log("res =>", response);
+        setToken(res.data.token);
+        localStorage.setItem("token", res.data.token);
+        setIsLoged(true);
+        setIsError(false);
       })
       .catch((err) => {
-        setResponse(err);
-        setIsRegister(false);
-        console.log( "err",response);
-        setError(true)
-        
+        // setResponse(err)
+        setError(err);
+        console.log("err =>", error);
+        setIsError(true);
+        setIsLoged(false);
       });
   };
 
-  return(
+  return (
     <MDBContainer
       fluid
       className="p-4 background-radial-gradient overflow-hidden"
@@ -85,51 +86,7 @@ const Register = () => {
 
           <MDBCard className="my-5 bg-glass">
             <MDBCardBody className="p-5">
-              <h3>Register as </h3>
-              <div className="RegisterBtns">
-                
-                <MDBBtn
-                  className="w-100 mb-4"
-                  size="md"
-                  onClick={(e) => {
-                    setRoleId("67758bfa06d797ae116babc6");
-                    console.log(roleId);
-                    e.target.style.backgroundColor="green"
-
-
-                    setRegisterAs(true);
-                  }}
-                >
-                  Teacher
-                </MDBBtn>
-                <MDBBtn
-                  className="w-100 mb-4"
-                  size="md"
-                  onClick={(e) => {
-                    setRoleId("6775877359d1e574b0f67dfd");
-                    setRegisterAs(true);
-                    console.log(roleId);
-                    e.target.style.backgroundColor="green"
-                  }}
-                >
-                  Student
-                </MDBBtn>
-              </div>
-
-              <MDBRow>
-                <MDBCol col="6">
-                  <MDBInput
-                    wrapperClass="mb-4"
-                    label="User Name"
-                    id="form1"
-                    type="text"
-                    onChange={(e) => {
-                      // setUserInfo({ ...userInfo, userName: e.target.value });
-                      setUserName(e.target.value);
-                    }}
-                  />
-                </MDBCol>
-              </MDBRow>
+              <h2 className="login">Login</h2>
 
               <MDBInput
                 wrapperClass="mb-4"
@@ -137,8 +94,7 @@ const Register = () => {
                 id="form3"
                 type="email"
                 onChange={(e) => {
-                  // setUserInfo({ ...userInfo, email: e.target.value });
-                  setEmail(e.target.value);
+                  setLoginInfo({ ...loginInfo, email: e.target.value });
                 }}
               />
               <MDBInput
@@ -147,16 +103,15 @@ const Register = () => {
                 id="form4"
                 type="password"
                 onChange={(e) => {
-                  // setUserInfo({ ...userInfo, password: e.target.value });
-                  setPassword(e.target.value);
+                  setLoginInfo({ ...loginInfo, password: e.target.value });
                 }}
               />
 
-              <MDBBtn className="w-100 mb-4" size="md" onClick={createRegister}>
-                sign up
+              <MDBBtn className="w-100 mb-4" size="md" onClick={login}>
+                sign in
               </MDBBtn>
-              {isRegister&&<p>{response.data.message}</p>}
-              {error&&<p>{response.response.data.message}</p>}
+              {isLoged && <p>{navigate("/dashboard")}</p>}
+              {isError && <p>{error.response.data.message}</p>}
 
               <div className="text-center">
                 <p>or sign up with:</p>
@@ -203,5 +158,6 @@ const Register = () => {
       </MDBRow>
     </MDBContainer>
   );
-};
-export default Register 
+}
+
+export default App;

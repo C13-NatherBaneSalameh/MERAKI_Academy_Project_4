@@ -11,6 +11,7 @@ import AddCourse from "./components/shared components/AddCourse/addCourse";
 import DashboardLseeons from "./components/shared components/DashboardLessons/DashboardLseeons";
 import Addlesson from "./components/shared components/AddLesson/Addlesson";
 import NotFoundPage from "./components/shared components/NotFoundPage";
+import Test from "./components/shared components/Test"
 export const UserContext = createContext();
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -34,7 +35,8 @@ const App = () => {
       }}
     >
       <div className="App">
-        <Navbar />
+        {/* <Navbar /> */}
+        <Test/>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
