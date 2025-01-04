@@ -1,7 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../../App";
 // import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+    MDBContainer,
+    MDBNavbar,
+    MDBNavbarBrand,
+    MDBNavbarToggler,
+    MDBNavbarNav,
+    MDBNavbarItem,
+    MDBNavbarLink,
+    MDBCollapse,
+    MDBIcon,
+    
+  } from "mdb-react-ui-kit";
 
 const Navbar = () => {
     const navigate=useNavigate()
@@ -28,24 +40,51 @@ const Navbar = () => {
     }
 
   const { token,role } = useContext(UserContext);
-  return <div>{token ?
-     <div>
-        <button onClick={logout}>logout</button>
-        {role ==="teacher"&& <button onClick={addCourse}> AddCourse</button>
-    }
-        <button onClick={dahboardCoutse}>Home</button>
-        {/* <button onClick={back} > Back</button>
-        <button onClick={forword}>Forword</button> */}
-     </div>
-      : 
-      
-      <div>
-        <button on onClick={login}>Login</button>
-        <button onClick={register}>Register</button>
-        
-        </div>}
-      
-      </div>;
+  const [openNav, setOpenNav] = useState(false);
+
+  return (
+    <MDBNavbar expand="lg" className="navber">
+      <MDBContainer fluid>
+        <MDBNavbarBrand href="#" >Navbar</MDBNavbarBrand>
+        <MDBCollapse navbar open={openNav}  className="ooooo">
+          <MDBNavbarNav >
+            {token ? (
+              < >
+                <MDBNavbarItem>
+                  <MDBNavbarLink active aria-current="page" href="/dashboard" style={{fontSize:"x-large"}}>
+                    Home
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
+                <MDBNavbarItem>
+                  {role === "teacher" && (
+                    <MDBNavbarLink href="/addNewCourse" active aria-current="page" style={{fontSize:"x-large"}}>AddCorse</MDBNavbarLink>
+                  )}
+                </MDBNavbarItem>
+                <MDBNavbarItem>
+                  <MDBNavbarLink href="/logout" style={{fontSize:"x-large"}}>Logout</MDBNavbarLink>
+                </MDBNavbarItem>
+              </>
+            ) : (
+              <>
+                <MDBNavbarItem>
+                <MDBNavbarLink href="/login" style={{fontSize:"x-large"}}>Login</MDBNavbarLink>
+
+                {/* <button on onClick={login} className="b">
+                  Login
+                </button> */}
+                </MDBNavbarItem>
+                <MDBNavbarItem>
+                <MDBNavbarLink href="/register"  style={{fontSize:"x-large"}}> Register</MDBNavbarLink>
+
+                  
+                </MDBNavbarItem>
+              </>
+            )}
+          </MDBNavbarNav>
+        </MDBCollapse>
+      </MDBContainer>
+    </MDBNavbar>
+);
 };
 
 export default Navbar;

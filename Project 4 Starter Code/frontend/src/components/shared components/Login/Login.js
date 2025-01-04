@@ -73,7 +73,8 @@ const Login = () => {
           </p>
         </MDBCol>
 
-        <MDBCol md="6" className="position-relative">
+        <MDBCol md="6" className="position-relative" style={{height:"480px"}}
+        >
           <div
             id="radius-shape-1"
             className="position-absolute rounded-circle shadow-5-strong"
