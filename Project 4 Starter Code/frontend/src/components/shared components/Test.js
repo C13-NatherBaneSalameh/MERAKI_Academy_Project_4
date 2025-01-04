@@ -42,54 +42,48 @@ export default function App() {
 
   const [openNav, setOpenNav] = useState(false);
 
-  return (<div>
+  return (
     <MDBNavbar expand="lg" className="navber">
       <MDBContainer fluid>
-        <MDBNavbarBrand href="#">Navbar</MDBNavbarBrand>
-        <MDBNavbarToggler
-          type="button"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-          onClick={() => setOpenNav(!openNav)}
-        >
-          <MDBIcon icon="bars" fas />
-        </MDBNavbarToggler>
-        <MDBCollapse navbar open={openNav}>
-          <MDBNavbarNav>
-         
+        <MDBNavbarBrand href="#" >Navbar</MDBNavbarBrand>
+        
+        <MDBCollapse navbar open={openNav}  className="ooooo">
+          <MDBNavbarNav >
             {token ? (
-              <>
+              < >
                 <MDBNavbarItem>
-                  <MDBNavbarLink active aria-current="page" href="/dashboard">
+                  <MDBNavbarLink active aria-current="page" href="/dashboard" style={{fontSize:"x-large"}}>
                     Home
                   </MDBNavbarLink>
                 </MDBNavbarItem>
                 <MDBNavbarItem>
                   {role === "teacher" && (
-                    <MDBNavbarLink href="/addNewCourse" active aria-current="page">AddCorse</MDBNavbarLink>
+                    <MDBNavbarLink href="/addNewCourse" active aria-current="page" style={{fontSize:"x-large"}}>AddCorse</MDBNavbarLink>
                   )}
                 </MDBNavbarItem>
                 <MDBNavbarItem>
-                  <MDBNavbarLink href="/logout">Logout</MDBNavbarLink>
+                  <MDBNavbarLink href="/logout" style={{fontSize:"x-large"}}>Logout</MDBNavbarLink>
                 </MDBNavbarItem>
               </>
             ) : (
-              <div className="logAndregBTN">
-                <MDBNavbarItem></MDBNavbarItem>
-                <button on onClick={login} className="b">
-                  Login
-                </button>
-
+              <>
                 <MDBNavbarItem>
-                  <button onClick={register} className="b">
-                    Register
-                  </button>
+                <MDBNavbarLink href="/login" style={{fontSize:"x-large"}}>Login</MDBNavbarLink>
+
+                {/* <button on onClick={login} className="b">
+                  Login
+                </button> */}
                 </MDBNavbarItem>
-              </div>
+                <MDBNavbarItem>
+                <MDBNavbarLink href="/register"  style={{fontSize:"x-large"}}> Register</MDBNavbarLink>
+
+                  
+                </MDBNavbarItem>
+              </>
             )}
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBContainer>
     </MDBNavbar>
-    </div>);
+);
 }

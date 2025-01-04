@@ -65,16 +65,35 @@ body {
 }
 .navber{
   background-color: #ad1fff;
+  display: flex;
+  justify-content: flex-end;
+  
 }
 .logAndregBTN{
+  display: flex;  
+  gap: 10px;
+}
+.innerNavBar{
   display: flex;
   gap: 10px;
 }
 .b{border-radius: 10px;
 background-color: #44006b;
 color: white;
+margin: 5px;
 
 }
+.ooooo{
+  justify-content: flex-end;
+}
+/* .navbar{
+  display: flex;
+  justify-content: space-between
+ } */
+/* .NavBar{
+  display: flex;
+  justify-content: space-between
+ } */
 
 
 
