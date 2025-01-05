@@ -1,89 +1,111 @@
-import React, { useState, useContext } from "react";
+import React from "react";
+import axios from "axios";
 import { UserContext } from "../../App";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import {
-  MDBContainer,
-  MDBNavbar,
-  MDBNavbarBrand,
-  MDBNavbarToggler,
-  MDBNavbarNav,
-  MDBNavbarItem,
-  MDBNavbarLink,
-  MDBCollapse,
-  MDBIcon,
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardImage,
+  MDBBtn,
+  MDBRipple,
 } from "mdb-react-ui-kit";
 
 export default function App() {
   const navigate = useNavigate();
-  const login = () => {
-    navigate("/login");
+  const { token, setCourse, course, role } = useContext(UserContext);
+  const headers = {
+    Authorization: `Bearer ${token}`,
   };
-  const register = () => {
-    navigate("/register");
-  };
-  const back = () => {
-    navigate(-1);
-  };
-  const forword = () => {
-    navigate(1);
-  };
-  const logout = () => {
-    navigate("/logout");
-  };
-  const addCourse = () => {
-    navigate("/addNewCourse");
-  };
-  const dahboardCoutse = () => {
-    navigate("/dashboard");
-  };
+  const [response, setresponse] = useState("");
+  const [error, setError] = useState("");
+  const [isError, setIsError] = useState(false);
+  // const [course, setCourse] = useState();
+  const [teacherId, setTeacherId] = useState();
+  const getAllCOurse = () => {
+    axios
+      .get("http://localhost:5000/course/allCourse", { headers })
+      .then((res) => {
+        console.log(res);
+        console.log("gggggg");
+        const data = res.data.courses;
+        console.log("dddd", data);
+        setCourse(res.data.courses);
+        console.log(course);
 
-  const { token, role } = useContext(UserContext);
+        setTeacherId(res.data.teacherId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const deleteCourseById = (id) => {
+    console.log("bbbbb");
 
-  const [openNav, setOpenNav] = useState(false);
+    axios
+      .delete(`http://localhost:5000/course/${id}`, { headers })
+      .then((res) => {
+        console.log("555555");
 
+        const courseAfterDelete = course.filter((ele) => ele._id !== id);
+        setCourse(courseAfterDelete);
+        console.log("course", course);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getAllCOurse();
+  }, []);
   return (
-    <MDBNavbar expand="lg" className="navber">
-      <MDBContainer fluid>
-        <MDBNavbarBrand href="#" >Navbar</MDBNavbarBrand>
-        
-        <MDBCollapse navbar open={openNav}  className="ooooo">
-          <MDBNavbarNav >
-            {token ? (
-              < >
-                <MDBNavbarItem>
-                  <MDBNavbarLink active aria-current="page" href="/dashboard" style={{fontSize:"x-large"}}>
-                    Home
-                  </MDBNavbarLink>
-                </MDBNavbarItem>
-                <MDBNavbarItem>
-                  {role === "teacher" && (
-                    <MDBNavbarLink href="/addNewCourse" active aria-current="page" style={{fontSize:"x-large"}}>AddCorse</MDBNavbarLink>
-                  )}
-                </MDBNavbarItem>
-                <MDBNavbarItem>
-                  <MDBNavbarLink href="/logout" style={{fontSize:"x-large"}}>Logout</MDBNavbarLink>
-                </MDBNavbarItem>
-              </>
-            ) : (
-              <>
-                <MDBNavbarItem>
-                <MDBNavbarLink href="/login" style={{fontSize:"x-large"}}>Login</MDBNavbarLink>
+    <div>
+      {course?.map((ele, ind) => {
+        return(
+        <MDBCard>
+          <MDBRipple
+            rippleColor="light"
+            rippleTag="div"
+            className="bg-image hover-overlay"
+          >
+            <MDBCardImage
+              id={ele._id}
+              onClick={(e) => {
+                console.log(e.target.id);
 
-                {/* <button on onClick={login} className="b">
-                  Login
-                </button> */}
-                </MDBNavbarItem>
-                <MDBNavbarItem>
-                <MDBNavbarLink href="/register"  style={{fontSize:"x-large"}}> Register</MDBNavbarLink>
-
-                  
-                </MDBNavbarItem>
-              </>
+                navigate(`/dashboard/${e.target.id}`);
+              }}
+              src={ele.img}
+              fluid
+              alt="..."
+            />
+            <a>
+              <div
+                className="mask"
+                style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
+              ></div>
+            </a>
+          </MDBRipple>
+          <MDBCardBody>
+            <MDBCardTitle>{ele.title}</MDBCardTitle>
+            <MDBCardText>{ele.description} </MDBCardText>
+            {role === "teacher" && (
+              <MDBBtn
+                href="#"
+                id={ele._id}
+                onClick={(e) => {
+                  deleteCourseById(e.target.id);
+                }}
+              >
+                Delete
+              </MDBBtn>
             )}
-          </MDBNavbarNav>
-        </MDBCollapse>
-      </MDBContainer>
-    </MDBNavbar>
-);
+          </MDBCardBody>
+        </MDBCard>
+        );
+      })}
+    </div>
+  );
 }

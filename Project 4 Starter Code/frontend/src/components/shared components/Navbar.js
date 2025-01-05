@@ -46,6 +46,14 @@ const Navbar = () => {
     <MDBNavbar expand="lg" className="navber">
       <MDBContainer fluid>
         <MDBNavbarBrand href="#" >Navbar</MDBNavbarBrand>
+        <MDBNavbarToggler
+          type='button'
+          aria-expanded='false'
+          aria-label='Toggle navigation'
+          onClick={() => setOpenNav(!openNav)}
+        >
+          <MDBIcon icon='bars' fas />
+        </MDBNavbarToggler>
         <MDBCollapse navbar open={openNav}  className="ooooo">
           <MDBNavbarNav >
             {token ? (

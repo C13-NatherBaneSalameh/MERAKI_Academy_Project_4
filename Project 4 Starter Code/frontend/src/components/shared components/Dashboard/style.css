@@ -1,0 +1,14 @@
+.courseDiv{
+    display: grid
+;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.btn{
+    margin-left: 3px;
+}
+.gg {
+    border: 1px solid black;
+}
+.gg:hover {
+    border: 2px solid rgb(3, 66, 241);
+}

@@ -3,10 +3,20 @@ import axios from "axios";
 import { UserContext } from "../../../App";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./style.css";
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardImage,
+  MDBBtn,
+  MDBRipple,
+} from "mdb-react-ui-kit";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { token, setCourse, course ,role} = useContext(UserContext);
+  const { token, setCourse, course, role } = useContext(UserContext);
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -53,36 +63,69 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container courseDiv">
       {course?.map((ele, ind) => {
         return (
-          <div
-            id={ele.id}
-            // onClick={(e) => {
-            //   navigate(`/dashboard/${e.target.id}`);
-            // }}
-          >
-            <img
-              id={ele._id}
-              src={ele.img}
-              onClick={(e) => {
-                console.log(e.target.id);
-                
-                navigate(`/dashboard/${e.target.id}`);
-              }}
-            />
-            <p>{ele.title}</p>
-            <p>{ele.description}</p>
-            {role==="teacher"&& <button
-              id={ele._id}
-              onClick={(e) => {
-                deleteCourseById(e.target.id);
-              }}
+            <MDBCard className=" gg mt-4"
+            style={{height:"80%",width:"350px"}}
             >
-              X
-            </button>}
-           
-          </div>
+              <MDBRipple
+                rippleColor="light"
+                rippleTag="div"
+                className="bg-image hover-overlay"
+              >
+                <MDBCardImage
+                className="rounded-top"
+
+                  id={ele._id}
+                  src={ele.img}
+                  style={{ width: "100%" }}
+                  onClick={(e) => {
+                    console.log(e.target.id);
+                    console.log("5555555");
+                    
+
+                    navigate(`/dashboard/${e.target.id}`);
+                  }}
+                  // fluid
+                  alt="..."
+                />
+                <a>
+                  <div
+                    className="mask"
+                    style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
+                  ></div>
+                </a>
+              </MDBRipple>
+              <MDBCardBody>
+                <MDBCardTitle>{ele.title}</MDBCardTitle>
+                <MDBCardText>{ele.description} </MDBCardText>
+                {role === "teacher" && (
+                  <MDBBtn 
+                  className=" btn  btn-danger" 
+                    href="#"
+                    id={ele._id}
+                    onClick={(e) => {
+                      deleteCourseById(e.target.id);
+                    }}
+                  >
+                    Delete
+                  </MDBBtn>
+                )}
+                <MDBBtn className="btn"  href="#"
+                    id={ele._id}
+                    onClick={(e) => {
+                      console.log(e.target.id);
+                      console.log("5555555");
+                      
+  
+                      navigate(`/dashboard/${e.target.id}`);
+                    }}
+                    >
+                  Show lesson
+                </MDBBtn>
+              </MDBCardBody>
+            </MDBCard>
         );
       })}
     </div>
