@@ -4,12 +4,24 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { UserContext } from "../../../App";
+import {
+  MDBCard,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardBody,
+  MDBCardImage,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBBtn,
+} from "mdb-react-ui-kit";
 const DashboardLseeons = () => {
   const [isClickedToUpdate, setIsClickedToUpdate] = useState(false);
   const [newInfoLessons, setNewInfoLessons] = useState({});
   const [comments, setComments] = useState({});
   const [lessons0, setLessons0] = useState([]);
-  const { token, lesson, setLesson, role } = useContext(UserContext);
+  const { token, lesson, setLesson, role,setCentredModal,
+    centredModal } = useContext(UserContext);
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -19,6 +31,7 @@ const DashboardLseeons = () => {
   console.log(id);
   const addLessons = () => {
     navigate(`/addLesson/${id}`);
+    // setCentredModal(true)
   };
   const getLessonsById = () => {
     axios
@@ -88,119 +101,136 @@ const DashboardLseeons = () => {
   // }
 
   return (
-    <div>
-      <div>
-        {!lessons0.length ? (
-          <div>
-            <div>
-              {role === "teacher" && (
-                <button onClick={addLessons}>addLesson</button>
-              )}
-            </div>
-            <p>no lesson yet</p>
-          </div>
-        ) : (
-          <>
-            {role === "teacher" && (
-              <button onClick={addLessons}>addLesson</button>
-            )}
-            {lesson?.map((ele, ind) => {
-              return (
-                <div>
-                  <iframe src={ele.video} type="video/mp4" />
-                  <p>{ele.title}</p>
-                  <p>{ele.description}</p>
-                  {ele.comments.map((o) => (
-                    <p>comment : {o.comment}</p>
-                  ))}
-
-                  <textarea
-                    placeholder="Comment"
-                    onChange={(e) => {
-                      setComments({ ...comments, comment: e.target.value });
-                    }}
-                  ></textarea>
-                  <button
-                    id={ele._id}
-                    onClick={(e) => {
-                      addComment(e.target.id);
-                    }}
-                  >
-                    comment
-                  </button>
-                  {role === "teacher" && (
-                    <button
+    <>
+      {!lessons0.length ? (
+        <>
+          {role === "teacher" && (
+            <button onClick={addLessons}>addLesson</button>
+          )}
+          <p>no lesson yet</p>
+        </>
+      ) : (
+        <>
+          {role === "teacher" && (
+            <button onClick={addLessons}>addLesson</button>
+          )}
+          {lesson?.map((ele, ind) => {
+            return(
+            <MDBCard style={{ maxWidth: "80%", border:"2px solid" }} className="container">
+              <MDBRow className="g-0 ">
+                <MDBCol md="4">
+                  <iframe
+                  className="mt-2"
+                  style={{height:"400px",width:"100%" }}
+                    src={ele.video}
+                    title="YouTube video"
+                    allowfullscreen
+                  ></iframe>
+                </MDBCol>
+                <MDBCol md="8">
+                  <MDBCardBody>
+                    <MDBCardTitle>{ele.title}</MDBCardTitle>
+                    <MDBCardText>{ele.description}</MDBCardText>
+                    <MDBCardText>
+                      {ele.comments.map((o) => (
+                        <p>comment : {o.comment}</p>
+                      ))}
+                    </MDBCardText>
+                    <MDBInput
+                      onChange={(e) => {
+                        setComments({ ...comments, comment: e.target.value });
+                      }}
+                      label="Comment"
+                      id="controlledValue"
+                      type="text"
+                    />
+                    <MDBBtn
                       id={ele._id}
                       onClick={(e) => {
-                        deleteLesson(e.target.id);
+                        addComment(e.target.id);
                       }}
                     >
-                      X
-                    </button>
-                  )}
-
-                  {isClickedToUpdate ? (
-                    <div>
-                      <input
-                        type="text"
-                        placeholder="title"
-                        onChange={(e) => {
-                          setNewInfoLessons({
-                            ...newInfoLessons,
-                            title: e.target.value,
-                          });
-                        }}
-                      />
-                      <textarea
-                        typeof="text"
-                        placeholder="description"
-                        onChange={(e) => {
-                          setNewInfoLessons({
-                            ...newInfoLessons,
-                            description: e.target.value,
-                          });
-                        }}
-                      ></textarea>
-                      <input
-                        placeholder="video"
-                        onChange={(e) => {
-                          setNewInfoLessons({
-                            ...newInfoLessons,
-                            video: e.target.value,
-                          });
-                        }}
-                      />
-                      <button
+                      comment
+                    </MDBBtn>
+                    {role === "teacher" && (
+                      <MDBBtn
+                        className="mx-2"
+                        color="danger"
                         id={ele._id}
                         onClick={(e) => {
-                          updatedLesson(e.target.id);
+                          deleteLesson(e.target.id);
                         }}
                       >
-                        {" "}
-                        Update
-                      </button>
-                    </div>
-                  ) : (
-                    <>
-                      {" "}
-                      {role === "teacher" && (
-                        <button
-                          onClick={() => {
-                            setIsClickedToUpdate(true);
+                        delete
+                      </MDBBtn>
+                    )}
+                    {isClickedToUpdate ? (
+                      <>
+                        <MDBInput
+                          onChange={(e) => {
+                            setNewInfoLessons({
+                              ...newInfoLessons,
+                              title: e.target.value,
+                            });
+                          }}
+                          label="title"
+                          id="controlledValue"
+                          type="text"
+                        />
+                        <MDBInput
+                          onChange={(e) => {
+                            setNewInfoLessons({
+                              ...newInfoLessons,
+                              description: e.target.value,
+                            });
+                          }}
+                          label="description"
+                          id="controlledValue"
+                          type="text"
+                        />
+
+                        <MDBInput
+                          onChange={(e) => {
+                            setNewInfoLessons({
+                              ...newInfoLessons,
+                              video: e.target.value,
+                            });
+                          }}
+                          label="video "
+                          id="controlledValue"
+                          type="text"
+                        />
+                        <MDBBtn
+                          id={ele._id}
+                          onClick={(e) => {
+                            updatedLesson(e.target.id);
                           }}
                         >
-                          update
-                        </button>
-                      )}
-                    </>
-                  )}
-                </div>
-              );
-            })}
-          </>
-        )}
-      </div>
-    </div>
+                          Update
+                        </MDBBtn>
+                      </>
+                    ) : (
+                      <>
+                        {role === "teacher" && (
+                          <MDBBtn
+                            onClick={() => {
+                              setIsClickedToUpdate(true);
+                            }}
+                          >
+                            update
+                          </MDBBtn>
+                        )}
+                      </>
+                    )}
+                  </MDBCardBody>
+                </MDBCol>
+              </MDBRow>
+            </MDBCard>
+            )
+          })}
+        </>
+      )}
+    </>
   );
 };
 
