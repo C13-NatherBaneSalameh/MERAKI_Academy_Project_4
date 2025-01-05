@@ -13,7 +13,7 @@ import {
   MDBNavbarLink,
   MDBCollapse,
   MDBIcon,
-  MDBBtn
+  MDBBtn,
 } from "mdb-react-ui-kit";
 import Dashboard from "./Dashboard/Dashboard.js";
 import AddCourse from "./AddCourse/addCourse.js";
@@ -42,7 +42,7 @@ const Navbar = () => {
     navigate("/dashboard");
   };
 
-  const { token, role, setCentredModal, centredModal } =
+  const { token, setLessAdd, lessAdd, role, setCentredModal, centredModal } =
     useContext(UserContext);
   const [openNav, setOpenNav] = useState(false);
 
@@ -64,6 +64,7 @@ const Navbar = () => {
               <>
                 <MDBNavbarItem>
                   <MDBNavbarLink
+                    onClick={setLessAdd(false)}
                     active
                     aria-current="page"
                     href="/dashboard"
@@ -74,26 +75,28 @@ const Navbar = () => {
                 </MDBNavbarItem>
                 <MDBNavbarItem>
                   {role === "teacher" && (
-                    <MDBNavbarLink
-                      href="#"
-                      onClick={() => {
-                        setCentredModal(true)
-                        console.log("5555");
-                        console.log(centredModal);
-                        // navigate("/test")
-                        // <Test/>
-                        
-                        
-                      }}
-                      active
-                      aria-current="page"
-                      style={{ fontSize: "x-large" }}
-                    >
-                      AddCorse
-                    </MDBNavbarLink>
+                    <>
+                      <MDBNavbarLink
+                        href="#"
+                        onClick={() => {
+                          setCentredModal(true);
+                          console.log("5555");
+                          console.log(centredModal);
+                        }}
+                        active
+                        aria-current="page"
+                        style={{ fontSize: "x-large" }}
+                      >
+                        AddCorse
+                      </MDBNavbarLink>
+                    </>
                   )}
-                   {centredModal&&<AddCourse/>}
-
+                  {centredModal && <AddCourse />}
+                </MDBNavbarItem>
+                <MDBNavbarItem>
+                  {lessAdd && (
+                    <MDBNavbarLink href="#">Add Lessone</MDBNavbarLink>
+                  )}
                 </MDBNavbarItem>
                 <MDBNavbarItem>
                   <MDBNavbarLink href="/logout" style={{ fontSize: "x-large" }}>

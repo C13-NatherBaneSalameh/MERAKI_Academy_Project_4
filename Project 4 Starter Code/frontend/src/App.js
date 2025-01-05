@@ -11,16 +11,16 @@ import AddCourse from "./components/shared components/AddCourse/addCourse";
 import DashboardLseeons from "./components/shared components/DashboardLessons/DashboardLseeons";
 import Addlesson from "./components/shared components/AddLesson/Addlesson";
 import NotFoundPage from "./components/shared components/NotFoundPage";
-import Test from "./components/shared components/Test"
+import Test from "./components/shared components/Test";
 export const UserContext = createContext();
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [role, setRole] = useState(localStorage.getItem("role")||null);
+  const [role, setRole] = useState(localStorage.getItem("role") || null);
   const [courseId, setCourseId] = useState("");
   const [course, setCourse] = useState();
   const [lesson, setLesson] = useState([]);
   const [centredModal, setCentredModal] = useState(false);
-
+  const [lessAdd, setLessAdd] = useState(false);
   return (
     <UserContext.Provider
       value={{
@@ -35,7 +35,9 @@ const App = () => {
         role,
         setRole,
         setCentredModal,
-        centredModal
+        centredModal,
+        lessAdd,
+        setLessAdd,
       }}
     >
       <div className="App">
@@ -50,7 +52,7 @@ const App = () => {
           <Route path="/addNewCourse" element={<AddCourse />} />
           <Route path="/dashboard/:id" element={<DashboardLseeons />} />
           <Route path="/addLesson/:id" element={<Addlesson />} />
-          <Route path="*" element={<NotFoundPage/>}/>
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </UserContext.Provider>

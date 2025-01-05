@@ -16,7 +16,8 @@ import {
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { token, setCourse, course, role } = useContext(UserContext);
+  const { token, setCourse, course, role ,setLessAdd,lessAdd
+  } = useContext(UserContext);
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -116,8 +117,10 @@ const Dashboard = () => {
                     id={ele._id}
                     onClick={(e) => {
                       console.log(e.target.id);
-                      console.log("5555555");
+                      setLessAdd(!lessAdd)
+                      console.log(lessAdd);
                       
+
   
                       navigate(`/dashboard/${e.target.id}`);
                     }}

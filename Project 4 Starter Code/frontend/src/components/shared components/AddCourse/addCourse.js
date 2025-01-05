@@ -42,9 +42,11 @@ const AddCourse = () => {
         setisError(true);
       });
   };
+  const toggleOpen = () =>{
+    setCentredModal(!centredModal)
+    setIsCloseModal(!isCloseModal)
+    //!11111111111
 
-  const toggleOpen = () =>{setCentredModal(!centredModal)
-    setIsCloseModal(true)
     console.log(isCloseModal);
     
 
@@ -99,7 +101,7 @@ const AddCourse = () => {
       />
         {isAdd && <p>{response.data.message}</p>}
         {isError && <p>{error.response.data.message}</p>}
-        {isCloseModal&& <Dashboard />}
+        {isCloseModal&& <Dashboard/>}
             </MDBModalBody>
             <MDBModalFooter>
               <MDBBtn color="secondary" onClick={toggleOpen}>
