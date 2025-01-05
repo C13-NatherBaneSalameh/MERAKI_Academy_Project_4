@@ -87,7 +87,7 @@ const Dashboard = () => {
 
                     navigate(`/dashboard/${e.target.id}`);
                   }}
-                  // fluid
+                  fluid
                   alt="..."
                 />
                 <a>

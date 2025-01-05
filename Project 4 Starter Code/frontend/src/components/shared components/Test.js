@@ -1,111 +1,127 @@
-import React from "react";
-import axios from "axios";
+import React, { useState, useContext, } from "react";
 import { UserContext } from "../../App";
-import { useState, useContext, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardImage,
   MDBBtn,
-  MDBRipple,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
 } from "mdb-react-ui-kit";
+import Dashboard from "./Dashboard/Dashboard";
 
 export default function App() {
-  const navigate = useNavigate();
-  const { token, setCourse, course, role } = useContext(UserContext);
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-  const [response, setresponse] = useState("");
+  const navigate =useNavigate()
+  const nav=()=>{
+    navigate("/dashboard")
+  }
+  const {
+    setCentredModal,
+    centredModal,
+    token,
+  } = useContext(UserContext);
+  const headers = { Authorization: `Bearer ${token}` };
+
+  const [infoCourse, setInfoCourse] = useState({});
   const [error, setError] = useState("");
-  const [isError, setIsError] = useState(false);
-  // const [course, setCourse] = useState();
-  const [teacherId, setTeacherId] = useState();
-  const getAllCOurse = () => {
+  const [isAdd, setIsAdd] = useState(false);
+  const [isError, setisError] = useState(false);
+  const [response, setResponse] = useState("");
+  const [isCloseModal, setIsCloseModal] = useState(false)
+  const add = () => {
     axios
-      .get("http://localhost:5000/course/allCourse", { headers })
+      .post("http://localhost:5000/course/", infoCourse, { headers })
       .then((res) => {
+        setResponse(res);
         console.log(res);
-        console.log("gggggg");
-        const data = res.data.courses;
-        console.log("dddd", data);
-        setCourse(res.data.courses);
-        console.log(course);
-
-        setTeacherId(res.data.teacherId);
+        
+        setIsAdd(true);
+        setisError(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsAdd(false);
+        setError(err);
+        setisError(true);
       });
   };
-  const deleteCourseById = (id) => {
-    console.log("bbbbb");
 
-    axios
-      .delete(`http://localhost:5000/course/${id}`, { headers })
-      .then((res) => {
-        console.log("555555");
+  
+  // const [centredModal, setCentredModal] = useState(false);
 
-        const courseAfterDelete = course.filter((ele) => ele._id !== id);
-        setCourse(courseAfterDelete);
-        console.log("course", course);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  useEffect(() => {
-    getAllCOurse();
-  }, []);
+  const toggleOpen = () =>{setCentredModal(!centredModal)
+    setIsCloseModal(true)
+    console.log(isCloseModal);
+    
+
+  } ;
+
   return (
-    <div>
-      {course?.map((ele, ind) => {
-        return(
-        <MDBCard>
-          <MDBRipple
-            rippleColor="light"
-            rippleTag="div"
-            className="bg-image hover-overlay"
-          >
-            <MDBCardImage
-              id={ele._id}
-              onClick={(e) => {
-                console.log(e.target.id);
+    <>
+      {/* <MDBBtn onClick={toggleOpen}>Vertically centered modal</MDBBtn> */}
 
-                navigate(`/dashboard/${e.target.id}`);
-              }}
-              src={ele.img}
-              fluid
-              alt="..."
-            />
-            <a>
-              <div
-                className="mask"
-                style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
-              ></div>
-            </a>
-          </MDBRipple>
-          <MDBCardBody>
-            <MDBCardTitle>{ele.title}</MDBCardTitle>
-            <MDBCardText>{ele.description} </MDBCardText>
-            {role === "teacher" && (
+      <MDBModal
+        tabIndex="-1"
+        open={centredModal}
+
+        onClose={() => setCentredModal(false)}
+      >
+        <MDBModalDialog centered>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Add Course</MDBModalTitle>
               <MDBBtn
-                href="#"
-                id={ele._id}
-                onClick={(e) => {
-                  deleteCourseById(e.target.id);
-                }}
-              >
-                Delete
+                className="btn-close"
+                color="none"
+                onClick={toggleOpen}
+              ></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+            <input
+        type="text"
+        style={{width:"80%", margin:"10px"}}
+        placeholder="Title"
+        onChange={(e) => {
+          setInfoCourse({ ...infoCourse, title: e.target.value });
+        }}
+      />
+       <input
+        style={{width:"80%", margin:"10px"}}
+
+        type="text"
+        placeholder="Description"
+        onChange={(e) => {
+          setInfoCourse({ ...infoCourse, description: e.target.value });
+        }}
+      />
+       <input
+               style={{width:"80%", margin:"10px"}}
+
+        placeholder="Image"
+        onChange={(e) => {
+          setInfoCourse({ ...infoCourse, img: e.target.value });
+        }}
+        
+      />
+        {isAdd && <p>{response.data.message}</p>}
+        {isError && <p>{error.response.data.message}</p>}
+        {isCloseModal&& <Dashboard />}
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn color="secondary" onClick={toggleOpen}>
+                Close
               </MDBBtn>
-            )}
-          </MDBCardBody>
-        </MDBCard>
-        );
-      })}
-    </div>
+              <MDBBtn  onClick={add} >Save changes</MDBBtn>
+            
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+    </>
   );
 }

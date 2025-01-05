@@ -19,6 +19,8 @@ const App = () => {
   const [courseId, setCourseId] = useState("");
   const [course, setCourse] = useState();
   const [lesson, setLesson] = useState([]);
+  const [centredModal, setCentredModal] = useState(false);
+
   return (
     <UserContext.Provider
       value={{
@@ -32,12 +34,15 @@ const App = () => {
         setLesson,
         role,
         setRole,
+        setCentredModal,
+        centredModal
       }}
     >
       <div className="App">
         <Navbar />
         {/* <Test/> */}
         <Routes>
+          {/* <Route path="/test" element={<Test />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
