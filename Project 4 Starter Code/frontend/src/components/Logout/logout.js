@@ -9,7 +9,7 @@ const navigate =useNavigate()
 
  
  localStorage.clear();
-navigate("/login")
+navigate("/")
 
 };
 

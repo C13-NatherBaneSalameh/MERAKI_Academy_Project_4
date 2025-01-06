@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useContext } from "react";
 import axios from "axios";
@@ -12,11 +12,11 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter,
-} from 'mdb-react-ui-kit';
+  MDBInput,
+} from "mdb-react-ui-kit";
 
 export default function App() {
-  const { token ,centredModall,
-    setCentredModall} = useContext(UserContext);
+  const { token, centredModall, setCentredModall } = useContext(UserContext);
   const headers = { Authorization: `Bearer ${token}` };
 
   // const [lessonInfo, setLessonInfo] = useState({})
@@ -66,24 +66,54 @@ export default function App() {
     <>
       {/* <MDBBtn onClick={toggleOpen}>Vertically centered modal</MDBBtn> */}
 
-      <MDBModal tabIndex='-1' open={centredModall} onClose={() => setCentredModall(false)}>
+      <MDBModal
+        tabIndex="-1"
+        open={centredModall}
+        onClose={() => setCentredModall(false)}
+      >
         <MDBModalDialog centered>
           <MDBModalContent>
             <MDBModalHeader>
-              <MDBModalTitle>Modal title</MDBModalTitle>
-              <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+              <MDBModalTitle>Add Lessons</MDBModalTitle>
+              <MDBBtn
+                className="btn-close"
+                color="none"
+                onClick={toggleOpen}
+              ></MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>
-              <p>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-                egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-              </p>
+              <MDBInput
+                wrapperClass="mb-4"
+                label="title"
+                id="form4"
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              />
+              <MDBInput
+                wrapperClass="mb-4"
+                label="Description"
+                id="form4"
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+              />
+               <MDBInput
+                wrapperClass="mb-4"
+                label="Video"
+                id="form4"
+                onChange={(e) => {
+                  setVideo(e.target.value);
+                }}
+              />
+               {isError && <p>{error.response.data.message}</p>}
+               {isAdded && <p>{response.data.message}</p>}
             </MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn color='secondary' onClick={toggleOpen}>
+              <MDBBtn color="secondary" onClick={toggleOpen}>
                 Close
               </MDBBtn>
-              <MDBBtn>Save changes</MDBBtn>
+              <MDBBtn  onClick={addNewLesson}>Save changes</MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>

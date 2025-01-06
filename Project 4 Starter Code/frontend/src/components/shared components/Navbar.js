@@ -107,7 +107,7 @@ const Navbar = () => {
             ) : (
               <>
                 <MDBNavbarItem>
-                  <MDBNavbarLink href="/login" style={{ fontSize: "x-large" }}>
+                  <MDBNavbarLink href="/" style={{ fontSize: "x-large" }}>
                     Login
                   </MDBNavbarLink>
 
