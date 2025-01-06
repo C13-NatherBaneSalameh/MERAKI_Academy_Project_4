@@ -67,7 +67,7 @@ const Dashboard = () => {
     <div className="container courseDiv">
       {course?.map((ele, ind) => {
         return (
-            <MDBCard className=" gg mt-4"
+            <MDBCard className="card0 gg mt-4"
             style={{height:"80%",width:"350px"}}
             >
               <MDBRipple

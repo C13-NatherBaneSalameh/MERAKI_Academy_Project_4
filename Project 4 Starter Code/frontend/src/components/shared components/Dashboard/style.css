@@ -9,6 +9,14 @@
 .gg {
     border: 1px solid black;
 }
-.gg:hover {
-    border: 5px solid rgb(3, 66, 241);
+.card0:hover {
+    /* border: 5px solid rgb(3, 66, 241);
+    background-color: blue;
+    color: wheat;
+     */
+     transform: scale(1.07);
+}
+
+.card0{
+    transition: all 0.3s;
 }

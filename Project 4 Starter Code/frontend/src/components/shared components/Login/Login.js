@@ -29,8 +29,9 @@ const Login = () => {
       .post(`http://localhost:5000/users/login`, loginInfo)
       .then((res) => {
         // !!!!!
-        // setUserName(res.data.userName)
-        // localStorage.setItem("userName",res.data.username)
+        // const userName=res.data.userName
+        // setUserName(userName)
+        // localStorage.setItem("userName",userName)
 
         setResponse(res);
         console.log(res);
@@ -93,7 +94,7 @@ const Login = () => {
             <MDBCardBody className="p-5">
               <h2 className="login">Login</h2>
 
-              <MDBInput
+              <MDBInput style={{width:"100%"}}
                 wrapperClass="mb-4"
                 label="Email"
                 id="form3"
