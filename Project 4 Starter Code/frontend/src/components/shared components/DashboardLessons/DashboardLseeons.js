@@ -26,6 +26,7 @@ const DashboardLseeons = () => {
   const [newInfoLessons, setNewInfoLessons] = useState({});
   const [comments, setComments] = useState({});
   const [lessons0, setLessons0] = useState([]);
+  const [lessonId, setlessonId] = useState("")
   const { token, lesson, setLesson, role, setCentredModal, centredModal } =
     useContext(UserContext);
 
@@ -149,88 +150,108 @@ const DashboardLseeons = () => {
                     <MDBCardBody>
                       <MDBCardTitle>{ele.title}</MDBCardTitle>
                       <MDBCardText>{ele.description}</MDBCardText>
-
-                    
                     </MDBCardBody>
                   </MDBCol>
-                  <MDBCol style={{display:"flex",flexDirection:"column", columnGap:"10px"}}>
-                    <MDBBtn onClick={toggleOpen} className="mt-2  btn-primary" style={{width:"40%"}}>Show Comment</MDBBtn>
+                  <MDBCol
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      columnGap: "10px",
+                    }}
+                  >
+                   <MDBBtn
+                    id={ele._id}
+                      onClick={(e)=>{
+                        toggleOpen(e)
+                        setlessonId(e.target.id)
+
+                      }}
+                      className="mt-2  btn-primary"
+                      style={{ width: "40%" }}
+                    >
+                      Show Comment
+                    </MDBBtn>
+                    
                     {role === "teacher" && (
+                      <MDBBtn
+                        style={{ width: "40%" }}
+                        className="mt-2"
+                        color="danger"
+                        id={ele._id}
+                        onClick={(e) => {
+                          deleteLesson(e.target.id);
+                        }}
+                      >
+                        delete
+                      </MDBBtn>
+                    )}
+                    {isClickedToUpdate &&ele._id===lessonId  ? (
+                      <>
+                        <MDBInput
+                          className="mb-2"
+                          onChange={(e) => {
+                            setNewInfoLessons({
+                              ...newInfoLessons,
+                              title: e.target.value,
+                            });
+                          }}
+                          label="title"
+                          id="controlledValue"
+                          type="text"
+                        />
+                        <MDBInput
+                          className="mb-2"
+                          onChange={(e) => {
+                            setNewInfoLessons({
+                              ...newInfoLessons,
+                              description: e.target.value,
+                            });
+                          }}
+                          label="description"
+                          id="controlledValue"
+                          type="text"
+                        />
+
+                        <MDBInput
+                          className="mb-2"
+                          onChange={(e) => {
+                            setNewInfoLessons({
+                              ...newInfoLessons,
+                              video: e.target.value,
+                            });
+                          }}
+                          label="video "
+                          id="controlledValue"
+                          type="text"
+                        />
                         <MDBBtn
-                          className=""
-                          color="danger"
+                          className="mb-2"
                           id={ele._id}
                           onClick={(e) => {
-                            deleteLesson(e.target.id);
+                            updatedLesson(e.target.id);
                           }}
                         >
-                          delete
+                          Update
                         </MDBBtn>
-                      )}
-                      {isClickedToUpdate ? (
-                        <>
-                          <MDBInput
-                            className="mb-2"
-                            onChange={(e) => {
-                              setNewInfoLessons({
-                                ...newInfoLessons,
-                                title: e.target.value,
-                              });
-                            }}
-                            label="title"
-                            id="controlledValue"
-                            type="text"
-                          />
-                          <MDBInput
-                            className="mb-2"
-                            onChange={(e) => {
-                              setNewInfoLessons({
-                                ...newInfoLessons,
-                                description: e.target.value,
-                              });
-                            }}
-                            label="description"
-                            id="controlledValue"
-                            type="text"
-                          />
-
-                          <MDBInput
-                            className="mb-2"
-                            onChange={(e) => {
-                              setNewInfoLessons({
-                                ...newInfoLessons,
-                                video: e.target.value,
-                              });
-                            }}
-                            label="video "
-                            id="controlledValue"
-                            type="text"
-                          />
+                      </>
+                    ) : (
+                      <>
+                        {role === "teacher" &&  (
                           <MDBBtn
-                            className="mb-2"
-                            id={ele._id}
+                            style={{ width: "40%" }}
+                        id={ele._id}
+                            className="mt-2"
                             onClick={(e) => {
-                              updatedLesson(e.target.id);
+                              setlessonId(e.target.id)
+                              setIsClickedToUpdate(true);
                             }}
                           >
-                            Update
+                            update
                           </MDBBtn>
-                        </>
-                      ) : (
-                        <>
-                          {role === "teacher" && (
-                            <MDBBtn
-                              className=""
-                              onClick={() => {
-                                setIsClickedToUpdate(true);
-                              }}
-                            >
-                              update
-                            </MDBBtn>
-                          )}
-                        </>
-                      )}
-
+                        )}
+                      </>
+                    )}
+                   {ele._id===lessonId&&
                     <div style={{ marginBottom: "10px" }}>
                       <MDBCollapse open={isOpen}>
                         <MDBCardText>
@@ -274,10 +295,9 @@ const DashboardLseeons = () => {
                           </MDBBtn>
                         </div>
                       </MDBCollapse>
-                    </div>
+                    </div>}
                   </MDBCol>
                 </MDBRow>
-                
               </MDBCard>
             );
           })}

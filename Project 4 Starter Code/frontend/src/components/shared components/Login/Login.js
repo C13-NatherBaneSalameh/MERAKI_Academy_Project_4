@@ -29,12 +29,11 @@ const Login = () => {
       .post(`http://localhost:5000/users/login`, loginInfo)
       .then((res) => {
         // !!!!!
-        // const userName=res.data.userName
-        // setUserName(userName)
-        // localStorage.setItem("userName",userName)
+        setUserName(res.data.userName)
+        localStorage.setItem("userName",res.data.userName)
 
         setResponse(res);
-        console.log(res);
+        console.log(res.data.userName);
         setRole(res.data.role);
         localStorage.setItem("role", res.data.role);
         console.log("res =>", response);
@@ -46,7 +45,7 @@ const Login = () => {
       .catch((err) => {
         // setResponse(err)
         setError(err);
-        console.log("err =>", error);
+        console.log("err =>", err);
         setIsError(true);
         setIsLoged(false);
       });
@@ -71,7 +70,7 @@ const Login = () => {
             </span>
           </h1>
 
-          <p className="px-3" style={{ color: "hsl(218, 81%, 85%)" }}>
+          <p className="px-3" style={{ color: "hsl(218, 76%, 68%)" }}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
             itaque accusantium odio, soluta, corrupti aliquam quibusdam tempora
             at cupiditate quis eum maiores libero veritatis? Dicta facilis sint
@@ -117,7 +116,7 @@ const Login = () => {
                 sign in
               </MDBBtn>
               {isLoged && <p>{navigate("/dashboard")}</p>}
-              {isError && <p>{error.response.data.message}</p>}
+              {isError && <p>{error.response.data?.message}</p>}
 
               <div className="text-center">
                 <p>or sign up with:</p>

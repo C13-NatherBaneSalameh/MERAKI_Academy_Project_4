@@ -4,20 +4,21 @@
 }
 body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
 }
 .background-radial-gradient {
   background-color: hsl(218, 41%, 15%);
   background-image: radial-gradient(650px circle at 0% 0%,
-      hsl(219, 41%, 35%) 15%,
-      hsl(218, 41%, 30%) 35%,
-      hsl(218, 41%, 20%) 75%,
-      hsl(218, 41%, 19%) 80%,
+      hsl(207, 60%, 77%) 15%,
+      hsl(206, 41%, 72%) 35%,
+      hsl(206, 41%, 62%) 75%,
+      hsl(206, 41%, 61%) 80%,
       transparent 100%),
     radial-gradient(1250px circle at 100% 100%,
-      hsl(218, 41%, 45%) 15%,
-      hsl(218, 41%, 30%) 35%,
-      hsl(218, 41%, 20%) 75%,
-      hsl(218, 41%, 19%) 80%,
+      hsl(218, 41%, 87%) 15%,
+      hsl(218, 41%, 62%) 35%,
+      hsl(218, 41%, 62%) 75%,
+      hsl(218, 41%, 61%) 80%,
       transparent 100%);
 }
 
@@ -26,7 +27,7 @@ body {
   width: 220px;
   top: -60px;
   left: -130px;
-  background: radial-gradient(#44006b, #ad1fff);
+  background: radial-gradient(#444ee0, #9ccadf);
   overflow: hidden;
 }
 
@@ -36,7 +37,7 @@ body {
   right: -110px;
   width: 300px;
   height: 300px;
-  background: radial-gradient(#44006b, #ad1fff);
+  background: radial-gradient(#444ee0, #9ccadf);
   overflow: hidden;
 }
 
@@ -59,12 +60,12 @@ body {
   height: 420px;
 }
 .card1{
-  height: 470px;
+  height: 430px;
 }
 .mb-4 {  margin-bottom: 10px;
 }
 .navber{
-  background-color: #ad1fff;
+  background-color: #9fcfe6;
   display: flex;
   justify-content: flex-end;
   

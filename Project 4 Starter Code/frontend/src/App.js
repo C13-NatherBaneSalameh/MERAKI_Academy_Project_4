@@ -39,6 +39,8 @@ const App = () => {
         centredModal,
         lessAdd,
         setLessAdd,
+        userName,
+setUserName
       }}
     >
       <div className="App">

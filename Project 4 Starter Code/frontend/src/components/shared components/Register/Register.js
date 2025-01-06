@@ -73,7 +73,7 @@ const Register = () => {
           </p>
         </MDBCol>
 
-        <MDBCol md="6" className="position-relative"style={{height:"500px" }}>
+        <MDBCol md="6" className="position-relative"style={{height:"480px" }}>
           <div
             id="radius-shape-1"
             className="position-absolute rounded-circle shadow-5-strong"
@@ -128,9 +128,7 @@ const Register = () => {
                       setUserName(e.target.value);
                     }}
                   />
-                </MDBCol>
-              </MDBRow>
-
+                  <div style={{display:"flex", columnGap:"5px"}}>
               <MDBInput
                 wrapperClass="mb-4"
                 label="Email"
@@ -151,6 +149,10 @@ const Register = () => {
                   setPassword(e.target.value);
                 }}
               />
+              </div>
+                </MDBCol>
+              </MDBRow>
+
 
               <MDBBtn className="w-100 mb-4" size="md" onClick={createRegister}>
                 sign up
