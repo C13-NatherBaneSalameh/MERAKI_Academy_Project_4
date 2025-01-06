@@ -22,6 +22,8 @@ const App = () => {
   const [centredModal, setCentredModal] = useState(false);
   const [lessAdd, setLessAdd] = useState(false);
   const [userName, setUserName] = useState(localStorage.getItem("userName"))
+  const [centredModall, setCentredModall] = useState(false);
+
   return (
     <UserContext.Provider
       value={{
@@ -40,7 +42,9 @@ const App = () => {
         lessAdd,
         setLessAdd,
         userName,
-setUserName
+setUserName,
+centredModall,
+setCentredModall
       }}
     >
       <div className="App">
@@ -48,7 +52,7 @@ setUserName
         {/* <Test/> */}
         <Routes>
           {/* <Route path="/test" element={<Test />} /> */}
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/logout" element={<Logout />} />

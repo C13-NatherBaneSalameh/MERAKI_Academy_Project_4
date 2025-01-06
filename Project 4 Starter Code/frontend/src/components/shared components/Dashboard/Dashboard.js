@@ -21,9 +21,6 @@ const Dashboard = () => {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-  const [response, setresponse] = useState("");
-  const [error, setError] = useState("");
-  const [isError, setIsError] = useState(false);
   // const [course, setCourse] = useState();
   const [teacherId, setTeacherId] = useState();
   const getAllCOurse = () => {

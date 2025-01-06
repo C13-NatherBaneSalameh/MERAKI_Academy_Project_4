@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../../App";
 import "./style.css";
+import { useNavigate } from "react-router-dom";
 import {
   MDBBtn,
   MDBModal,
@@ -16,6 +17,7 @@ import Dashboard from "../Dashboard/Dashboard";
 
 
 const AddCourse = () => {
+  const navigate=useNavigate()
   const { token, setCourseId, courseId,setCentredModal,
     centredModal } = useContext(UserContext);
   const headers = { Authorization: `Bearer ${token}` };
@@ -27,6 +29,9 @@ const AddCourse = () => {
   const [response, setResponse] = useState("");
   const [isCloseModal, setIsCloseModal] = useState(false)
 
+  const close=()=>{
+    navigate("/dashboard")
+  }
   const add = () => {
     axios
       .post("http://localhost:5000/course/", infoCourse, { headers })
@@ -34,6 +39,7 @@ const AddCourse = () => {
         setResponse(res);
         setIsAdd(true);
         setisError(false);
+      
       })
       .catch((err) => {
         console.log(err);

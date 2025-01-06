@@ -28,7 +28,8 @@ const DashboardLseeons = () => {
   const [lessons0, setLessons0] = useState([]);
   const [lessonId, setlessonId] = useState("")
   const { token, lesson, setLesson, role, setCentredModal, centredModal,userName,
-    setUserName } =
+    setUserName ,centredModall,
+    setCentredModall} =
     useContext(UserContext);
 
   const headers = {
@@ -39,7 +40,7 @@ const DashboardLseeons = () => {
   console.log(id);
   const addLessons = () => {
     navigate(`/addLesson/${id}`);
-    // setCentredModal(true)
+    // setCentredModall(true)
   };
   const getLessonsById = () => {
     axios
@@ -107,7 +108,7 @@ const DashboardLseeons = () => {
   //     </div>
   //   );
   // }
-
+// 
   return (
     <>
       {!lessons0.length ? (

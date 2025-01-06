@@ -1,224 +1,93 @@
-import React, { useEffect } from "react";
-import axios from "axios";
+import React from 'react';
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
+import axios from "axios";
 import { UserContext } from "../../App";
 import {
-  MDBCard,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardBody,
-  MDBCardImage,
-  MDBRow,
-  MDBCol,
-  MDBInput,
   MDBBtn,
-} from "mdb-react-ui-kit";
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
+} from 'mdb-react-ui-kit';
 
 export default function App() {
-  const [isClickedToUpdate, setIsClickedToUpdate] = useState(false);
-  const [newInfoLessons, setNewInfoLessons] = useState({});
-  const [comments, setComments] = useState({});
-  const [lessons0, setLessons0] = useState([]);
-  const { token, lesson, setLesson, role, setCentredModal, centredModal } =
-    useContext(UserContext);
+  const { token ,centredModall,
+    setCentredModall} = useContext(UserContext);
+  const headers = { Authorization: `Bearer ${token}` };
 
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-  const navigate = useNavigate();
+  // const [lessonInfo, setLessonInfo] = useState({})
+  const [error, setError] = useState("");
+  const [response, setResponse] = useState("");
+  const [isAdded, setIsAdded] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [video, setVideo] = useState();
+
   const { id } = useParams();
   console.log(id);
-  const addLessons = () => {
-    navigate(`/addLesson/${id}`);
-    // setCentredModal(true)
-  };
-  const getLessonsById = () => {
-    axios
-      .get(`http://localhost:5000/lessons/${id}`, { headers })
-      .then((res) => {
-        setLesson(res.data.lessone);
-        console.log(res.data.lessone);
-        setLessons0(res.data.lessone);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
-  const updatedLesson = (id) => {
+  const addNewLesson = () => {
+    // setLessonInfo({...lessonInfo,courseId:id})
+
+    console.log(id);
+    // console.log( "info",lessonInfo);
+
     axios
-      .put(`http://localhost:5000/lessons/${id}`, newInfoLessons, { headers })
+      .post(
+        "http://localhost:5000/lessons",
+        { title: title, courseId: id, description: description, video: video },
+        { headers }
+      )
       .then((res) => {
-        const lessoneAfterUpdate = lesson.map((ele, ind) => {
-          if (ele._id === res.data.lesson._id) {
-            ele.title = res.data.lesson.title;
-            ele.description = res.data.lesson.description;
-            ele.video = res.data.lesson.video;
-          }
-          return ele;
-        });
-        setLesson(lessoneAfterUpdate);
-        setIsClickedToUpdate(false);
+        console.log("res lesson", res);
+
+        setResponse(res);
+        console.log(response);
+
+        setIsAdded(true);
+        setIsError(false);
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
+        setIsError(true);
+        setIsAdded(false);
       });
   };
-  const addComment = (id) => {
-    axios
-      .post(`http://localhost:5000/comments/${id}`, comments, { headers })
-      .then((res) => {
-        getLessonsById();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const deleteLesson = (id) => {
-    axios
-      .delete(`http://localhost:5000/lessons/${id}`, { headers })
-      .then((res) => {
-        const lessonAfterDelete = lesson.filter((ele) => ele._id !== id);
-        setLesson(lessonAfterDelete);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  useEffect(() => {
-    getLessonsById();
-  }, []);
+  // const [centredModall, setCentredModall] = useState(false);
+
+  const toggleOpen = () => setCentredModall(!centredModall);
 
   return (
     <>
-      {!lessons0.length ? (
-        <>
-          {role === "teacher" && (
-            <button onClick={addLessons}>addLesson</button>
-          )}
-          <p>no lesson yet</p>
-        </>
-      ) : (
-        <>
-          {role === "teacher" && (
-            <button onClick={addLessons}>addLesson</button>
-          )}
-          {lesson?.map((ele, ind) => {
-            return(
-            <MDBCard style={{ maxWidth: "540px" }}>
-              <MDBRow className="g-0">
-                <MDBCol md="4">
-                  <iframe
-                    src={ele.video}
-                    title="YouTube video"
-                    allowfullscreen
-                  ></iframe>
-                </MDBCol>
-                <MDBCol md="8">
-                  <MDBCardBody>
-                    <MDBCardTitle>{ele.title}</MDBCardTitle>
-                    <MDBCardText>{ele.description}</MDBCardText>
-                    <MDBCardText>
-                      {ele.comments.map((o) => (
-                        <p>comment : {o.comment}</p>
-                      ))}
-                    </MDBCardText>
-                    <MDBInput
-                      onChange={(e) => {
-                        setComments({ ...comments, comment: e.target.value });
-                      }}
-                      label="Comment"
-                      id="controlledValue"
-                      type="text"
-                    />
-                    <MDBBtn
-                      id={ele._id}
-                      onClick={(e) => {
-                        addComment(e.target.id);
-                      }}
-                    >
-                      comment
-                    </MDBBtn>
-                    {role === "teacher" && (
-                      <MDBBtn
-                        className="mx-2"
-                        color="danger"
-                        id={ele._id}
-                        onClick={(e) => {
-                          deleteLesson(e.target.id);
-                        }}
-                      >
-                        delete
-                      </MDBBtn>
-                    )}
-                    {isClickedToUpdate ? (
-                      <>
-                        <MDBInput
-                          onChange={(e) => {
-                            setNewInfoLessons({
-                              ...newInfoLessons,
-                              title: e.target.value,
-                            });
-                          }}
-                          label="title"
-                          id="controlledValue"
-                          type="text"
-                        />
-                        <MDBInput
-                          onChange={(e) => {
-                            setNewInfoLessons({
-                              ...newInfoLessons,
-                              description: e.target.value,
-                            });
-                          }}
-                          label="description"
-                          id="controlledValue"
-                          type="text"
-                        />
+      {/* <MDBBtn onClick={toggleOpen}>Vertically centered modal</MDBBtn> */}
 
-                        <MDBInput
-                          onChange={(e) => {
-                            setNewInfoLessons({
-                              ...newInfoLessons,
-                              video: e.target.value,
-                            });
-                          }}
-                          label="video "
-                          id="controlledValue"
-                          type="text"
-                        />
-                        <MDBBtn
-                          id={ele._id}
-                          onClick={(e) => {
-                            updatedLesson(e.target.id);
-                          }}
-                        >
-                          Update
-                        </MDBBtn>
-                      </>
-                    ) : (
-                      <>
-                        {role === "teacher" && (
-                          <MDBBtn
-                            onClick={() => {
-                              setIsClickedToUpdate(true);
-                            }}
-                          >
-                            update
-                          </MDBBtn>
-                        )}
-                      </>
-                    )}
-                  </MDBCardBody>
-                </MDBCol>
-              </MDBRow>
-            </MDBCard>
-            )
-          })}
-        </>
-      )}
+      <MDBModal tabIndex='-1' open={centredModall} onClose={() => setCentredModall(false)}>
+        <MDBModalDialog centered>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Modal title</MDBModalTitle>
+              <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+              <p>
+                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
+                egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+              </p>
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn color='secondary' onClick={toggleOpen}>
+                Close
+              </MDBBtn>
+              <MDBBtn>Save changes</MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
     </>
   );
 }
