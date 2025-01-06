@@ -27,7 +27,8 @@ const DashboardLseeons = () => {
   const [comments, setComments] = useState({});
   const [lessons0, setLessons0] = useState([]);
   const [lessonId, setlessonId] = useState("")
-  const { token, lesson, setLesson, role, setCentredModal, centredModal } =
+  const { token, lesson, setLesson, role, setCentredModal, centredModal,userName,
+    setUserName } =
     useContext(UserContext);
 
   const headers = {
@@ -257,7 +258,7 @@ const DashboardLseeons = () => {
                         <MDBCardText>
                           {ele.comments.map((o) => (
                             <p style={{ marginBottom: "0px" }}>
-                              comment : {o.comment}
+                              {userName} : {o.comment}
                             </p>
                           ))}
                         </MDBCardText>

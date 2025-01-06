@@ -60,17 +60,12 @@ const Register = () => {
             style={{ color: "hsl(218, 81%, 95%)" }}
           >
             The best offer <br />
-            <span style={{ color: "hsl(218, 81%, 75%)" }}>
+            <span style={{ color: "hsl(555, 85%, 75%)" }}>
               for your business
             </span>
           </h1>
 
-          <p className="px-3" style={{ color: "hsl(218, 81%, 85%)" }}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
-            itaque accusantium odio, soluta, corrupti aliquam quibusdam tempora
-            at cupiditate quis eum maiores libero veritatis? Dicta facilis sint
-            aliquid ipsum atque?
-          </p>
+         
         </MDBCol>
 
         <MDBCol md="6" className="position-relative"style={{height:"480px" }}>
