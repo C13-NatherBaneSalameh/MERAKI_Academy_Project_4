@@ -28,7 +28,9 @@ const Login = () => {
     axios
       .post(`http://localhost:5000/users/login`, loginInfo)
       .then((res) => {
-        setUserName(res.data.username)
+        // !!!!!
+        // setUserName(res.data.userName)
+        // localStorage.setItem("userName",res.data.username)
 
         setResponse(res);
         console.log(res);

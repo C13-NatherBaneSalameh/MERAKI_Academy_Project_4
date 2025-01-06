@@ -72,7 +72,7 @@ const login =(req,res)=>{
           token: token,
           userId: result._id,
           role:result.role.role,
-          username:result.userName
+          userName:result.userName
 
         });
       } catch (error) {
