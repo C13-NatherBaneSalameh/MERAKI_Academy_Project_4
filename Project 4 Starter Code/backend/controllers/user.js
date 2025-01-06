@@ -56,8 +56,9 @@ const login =(req,res)=>{
         }
         const payload = {
           userId: result._id,
-          author: result.userName,
+          username: result.userName,
           role: result.role,
+          
         
         };
 
@@ -70,7 +71,8 @@ const login =(req,res)=>{
           message: `Valid login credentials`,
           token: token,
           userId: result._id,
-          role:result.role.role
+          role:result.role.role,
+          username:result.userName
 
         });
       } catch (error) {

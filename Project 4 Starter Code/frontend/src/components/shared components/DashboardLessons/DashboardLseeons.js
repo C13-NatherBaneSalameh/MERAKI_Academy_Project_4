@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { UserContext } from "../../../App";
+import "../../../App.css"
+import "./style.css"
 import {
   MDBCard,
   MDBCardTitle,
@@ -105,29 +107,29 @@ const DashboardLseeons = () => {
       {!lessons0.length ? (
         <>
           {role === "teacher" && (
-            <button onClick={addLessons}>addLesson</button>
+            <button onClick={addLessons} style={{marginTop:"10px"}}>addLesson</button>
           )}
           <p>no lesson yet</p>
         </>
       ) : (
         <>
           {role === "teacher" && (
-            <button onClick={addLessons}>addLesson</button>
+            <button onClick={addLessons} style={{marginTop:"10px"}}>addLesson</button>
           )}
           {lesson?.map((ele, ind) => {
             return(
-            <MDBCard style={{ maxWidth: "80%", border:"2px solid" }} className="container">
+            <MDBCard style={{ maxWidth: "70%", border:"2px solid",marginTop:"10px" }} className="container">
               <MDBRow className="g-0 ">
-                <MDBCol md="4">
+                <MDBCol md="4" style={{width:"40%"}}>
                   <iframe
-                  className="mt-2"
-                  style={{height:"400px",width:"100%" }}
+                  className="mt-5"
+                  style={{height:"330px",width:"100%" }}
                     src={ele.video}
                     title="YouTube video"
                     allowfullscreen
                   ></iframe>
                 </MDBCol>
-                <MDBCol md="8">
+                <MDBCol md="8" style={{width:"60%"}}>
                   <MDBCardBody>
                     <MDBCardTitle>{ele.title}</MDBCardTitle>
                     <MDBCardText>{ele.description}</MDBCardText>
@@ -136,7 +138,10 @@ const DashboardLseeons = () => {
                         <p>comment : {o.comment}</p>
                       ))}
                     </MDBCardText>
+                    <div style={{display:"flex" ,marginBottom:"10px" }}>
                     <MDBInput
+                      className="inpComment"
+                     //!1111111
                       onChange={(e) => {
                         setComments({ ...comments, comment: e.target.value });
                       }}
@@ -145,6 +150,8 @@ const DashboardLseeons = () => {
                       type="text"
                     />
                     <MDBBtn
+                    style={{height:"36px" ,width:"110.65px"}}
+                    className="BtnComment"
                       id={ele._id}
                       onClick={(e) => {
                         addComment(e.target.id);
@@ -152,9 +159,10 @@ const DashboardLseeons = () => {
                     >
                       comment
                     </MDBBtn>
+                    </div>
                     {role === "teacher" && (
                       <MDBBtn
-                        className="mx-2"
+                        className="mx-2 "
                         color="danger"
                         id={ele._id}
                         onClick={(e) => {
@@ -213,6 +221,7 @@ const DashboardLseeons = () => {
                       <>
                         {role === "teacher" && (
                           <MDBBtn
+                          className=""
                             onClick={() => {
                               setIsClickedToUpdate(true);
                             }}

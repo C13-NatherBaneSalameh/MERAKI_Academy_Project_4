@@ -17,7 +17,8 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { token, setToken, role, setRole } = useContext(UserContext);
+  const { token, setToken, role, setRole,userName,
+    setUserName } = useContext(UserContext);
   const [loginInfo, setLoginInfo] = useState("");
   const [response, setResponse] = useState("");
   const [isLoged, setIsLoged] = useState(false);
@@ -27,6 +28,8 @@ const Login = () => {
     axios
       .post(`http://localhost:5000/users/login`, loginInfo)
       .then((res) => {
+        setUserName(res.data.username)
+
         setResponse(res);
         console.log(res);
         setRole(res.data.role);

@@ -21,6 +21,7 @@ const App = () => {
   const [lesson, setLesson] = useState([]);
   const [centredModal, setCentredModal] = useState(false);
   const [lessAdd, setLessAdd] = useState(false);
+  const [userName, setUserName] = useState(localStorage.getItem("userName"))
   return (
     <UserContext.Provider
       value={{
