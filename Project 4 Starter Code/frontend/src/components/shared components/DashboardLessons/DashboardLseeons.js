@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
@@ -26,6 +26,27 @@ import {
   MDBModalFooter,
 } from "mdb-react-ui-kit";
 const DashboardLseeons = () => {
+  const cloudinaryRef = useRef();
+  const widgetRef = useRef();
+
+  useEffect(() => {
+    cloudinaryRef.current = window.cloudinary;
+    widgetRef.current = cloudinaryRef.current.createUploadWidget(
+      {
+        cloudName: "duxfa6nqg",
+        uploadPreset: "123abc",
+      },
+      function (err, res) {
+        console.log(res.info.url);
+
+        if (res.info.url) {
+          // setInfoCourse({ ...infoCourse, img : res.info.url});
+          console.log("after", res.info.url);
+          setVideo(res.info.url);
+        }
+      }
+    );
+  }, []);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = (e) => setIsOpen(!isOpen);
@@ -33,7 +54,7 @@ const DashboardLseeons = () => {
   const [newInfoLessons, setNewInfoLessons] = useState({});
   const [comments, setComments] = useState({});
   const [lessons0, setLessons0] = useState([]);
-  const [lessonId, setlessonId] = useState("")
+  const [lessonId, setlessonId] = useState("");
   const [error, setError] = useState("");
   const [response, setResponse] = useState("");
   const [isAdded, setIsAdded] = useState(false);
@@ -41,10 +62,18 @@ const DashboardLseeons = () => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [video, setVideo] = useState();
-  const { token, lesson, setLesson, role, setCentredModal, centredModal,userName,
-    setUserName ,centredModall,
-    setCentredModall} =
-    useContext(UserContext);
+  const {
+    token,
+    lesson,
+    setLesson,
+    role,
+    setCentredModal,
+    centredModal,
+    userName,
+    setUserName,
+    centredModall,
+    setCentredModall,
+  } = useContext(UserContext);
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -53,8 +82,8 @@ const DashboardLseeons = () => {
   const { id } = useParams();
   console.log(id);
   const addLessons = () => {
-    
-    setCentredModall(!centredModall)  };
+    setCentredModall(!centredModall);
+  };
   const addNewLesson = () => {
     // setLessonInfo({...lessonInfo,courseId:id})
 
@@ -72,7 +101,7 @@ const DashboardLseeons = () => {
 
         setResponse(res);
         console.log(response);
-        getLessonsById()
+        getLessonsById();
 
         setIsAdded(true);
         setIsError(false);
@@ -153,66 +182,76 @@ const DashboardLseeons = () => {
   //     </div>
   //   );
   // }
-// 
+  //
   return (
     <>
-     <>
-      {/* <MDBBtn onClick={toggleOpen}>Vertically centered modal</MDBBtn> */}
+      <>
+        {/* <MDBBtn onClick={toggleOpen}>Vertically centered modal</MDBBtn> */}
 
-      <MDBModal
-        tabIndex="-1"
-        open={centredModall}
-        onClose={() => setCentredModall(false)}
-      >
-        <MDBModalDialog centered>
-          <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>Add Lessons</MDBModalTitle>
-              <MDBBtn
-                className="btn-close"
-                color="none"
-                onClick={toggleOpenn}
-              ></MDBBtn>
-            </MDBModalHeader>
-            <MDBModalBody>
-              <MDBInput
-                wrapperClass="mb-4"
-                label="title"
-                id="form4"
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-              />
-              <MDBInput
-                wrapperClass="mb-4"
-                label="Description"
-                id="form4"
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-               <MDBInput
+        <MDBModal
+          tabIndex="-1"
+          open={centredModall}
+          onClose={() => setCentredModall(false)}
+        >
+          <MDBModalDialog centered>
+            <MDBModalContent>
+              <MDBModalHeader>
+                <MDBModalTitle>Add Lessons</MDBModalTitle>
+                <MDBBtn
+                  className="btn-close"
+                  color="none"
+                  onClick={toggleOpenn}
+                ></MDBBtn>
+              </MDBModalHeader>
+              <MDBModalBody>
+                <MDBInput
+                  wrapperClass="mb-4"
+                  label="title"
+                  id="form4"
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                  }}
+                />
+                <MDBInput
+                  wrapperClass="mb-4"
+                  label="Description"
+                  id="form4"
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
+                />
+                {/* <MDBInput
                 wrapperClass="mb-4"
                 label="Video"
                 id="form4"
                 onChange={(e) => {
                   setVideo(e.target.value);
                 }}
-              />
-               {isError && <p>{error.response.data.message}</p>}
-               {isAdded && <p>{response.data.message}</p>}
-            </MDBModalBody>
-            <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={toggleOpenn}>
-                Close
-              </MDBBtn>
-              <MDBBtn  onClick={addNewLesson}>Save changes</MDBBtn>
-            </MDBModalFooter>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
-    </>
-  
+              /> */}
+
+                <MDBBtn
+                  onClick={() => {
+                    console.log("hhhhhhhhhhhhhhhhhh");
+
+                    widgetRef.current.open();
+                  }}
+                >
+                  uplode video
+                </MDBBtn>
+                {isError && <p>{error.response.data.message}</p>}
+                {isAdded && <p>{response.data.message}</p>}
+              </MDBModalBody>
+              <MDBModalFooter>
+                <MDBBtn color="secondary" onClick={toggleOpenn}>
+                  Close
+                </MDBBtn>
+                <MDBBtn onClick={addNewLesson}>Save changes</MDBBtn>
+              </MDBModalFooter>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
+      </>
+
       {!lessons0.length ? (
         <>
           {role === "teacher" && (
@@ -243,11 +282,23 @@ const DashboardLseeons = () => {
                 <MDBRow className="g-0 ">
                   <MDBCol md="4" style={{ width: "30%" }}>
                     <iframe
-                      className="mt-3"
-                      style={{ height: "150px", width: "100%" }}
+                      className="mt-3 video-frame"
+                      style={{
+                        height: "150px",
+                        width: "100%",
+                        transition: "all 0.3s ease",
+                      }}
                       src={ele.video}
                       title="YouTube video"
-                      allowfullscreen
+                      allowFullScreen
+                      onClick={(e) => {
+                        e.target.style.height = "500px";
+                        e.target.style.width = "100%";
+                      }}
+                      onDoubleClick={(e) => {
+                        e.target.style.height = "150px";
+                        e.target.style.width = "100%";
+                      }}
                     ></iframe>
                   </MDBCol>
                   <MDBCol md="8" style={{ width: "30%" }}>
@@ -263,19 +314,18 @@ const DashboardLseeons = () => {
                       columnGap: "10px",
                     }}
                   >
-                   <MDBBtn
-                    id={ele._id}
-                      onClick={(e)=>{
-                        toggleOpen(e)
-                        setlessonId(e.target.id)
-
+                    <MDBBtn
+                      id={ele._id}
+                      onClick={(e) => {
+                        toggleOpen(e);
+                        setlessonId(e.target.id);
                       }}
                       className="mt-2  btn-primary"
                       style={{ width: "40%" }}
                     >
                       Show Comment
                     </MDBBtn>
-                    
+
                     {role === "teacher" && (
                       <MDBBtn
                         style={{ width: "40%" }}
@@ -289,7 +339,7 @@ const DashboardLseeons = () => {
                         delete
                       </MDBBtn>
                     )}
-                    {isClickedToUpdate &&ele._id===lessonId  ? (
+                    {isClickedToUpdate && ele._id === lessonId ? (
                       <>
                         <MDBInput
                           className="mb-2"
@@ -340,13 +390,13 @@ const DashboardLseeons = () => {
                       </>
                     ) : (
                       <>
-                        {role === "teacher" &&  (
+                        {role === "teacher" && (
                           <MDBBtn
                             style={{ width: "40%" }}
-                        id={ele._id}
+                            id={ele._id}
                             className="mt-2"
                             onClick={(e) => {
-                              setlessonId(e.target.id)
+                              setlessonId(e.target.id);
                               setIsClickedToUpdate(true);
                             }}
                           >
@@ -355,51 +405,52 @@ const DashboardLseeons = () => {
                         )}
                       </>
                     )}
-                   {ele._id===lessonId&&
-                    <div style={{ marginBottom: "10px" }}>
-                      <MDBCollapse open={isOpen}>
-                        <MDBCardText>
-                          {ele.comments.map((o) => (
-                            <p style={{ marginBottom: "0px" }}>
-                              {userName} : {o.comment}
-                            </p>
-                          ))}
-                        </MDBCardText>
-                        <div
-                          style={{
-                            display: "flex",
-                            marginBottom: "10px",
-                            width: "100% ",
-                          }}
-                        >
-                          <div style={{ width: "80%" }}>
-                            <MDBInput
-                              className="inpComment"
-                              //!1111111
-                              onChange={(e) => {
-                                setComments({
-                                  ...comments,
-                                  comment: e.target.value,
-                                });
-                              }}
-                              label="Comment"
-                              id="controlledValue"
-                              type="text"
-                            />
-                          </div>
-                          <MDBBtn
-                            style={{ height: "36px", width: "110.65px" }}
-                            className="BtnComment"
-                            id={ele._id}
-                            onClick={(e) => {
-                              addComment(e.target.id);
+                    {ele._id === lessonId && (
+                      <div style={{ marginBottom: "10px" }}>
+                        <MDBCollapse open={isOpen}>
+                          <MDBCardText>
+                            {ele.comments.map((o) => (
+                              <p style={{ marginBottom: "0px" }}>
+                                {userName} : {o.comment}
+                              </p>
+                            ))}
+                          </MDBCardText>
+                          <div
+                            style={{
+                              display: "flex",
+                              marginBottom: "10px",
+                              width: "100% ",
                             }}
                           >
-                            comment
-                          </MDBBtn>
-                        </div>
-                      </MDBCollapse>
-                    </div>}
+                            <div style={{ width: "80%" }}>
+                              <MDBInput
+                                className="inpComment"
+                                //!1111111
+                                onChange={(e) => {
+                                  setComments({
+                                    ...comments,
+                                    comment: e.target.value,
+                                  });
+                                }}
+                                label="Comment"
+                                id="controlledValue"
+                                type="text"
+                              />
+                            </div>
+                            <MDBBtn
+                              style={{ height: "36px", width: "110.65px" }}
+                              className="BtnComment"
+                              id={ele._id}
+                              onClick={(e) => {
+                                addComment(e.target.id);
+                              }}
+                            >
+                              comment
+                            </MDBBtn>
+                          </div>
+                        </MDBCollapse>
+                      </div>
+                    )}
                   </MDBCol>
                 </MDBRow>
               </MDBCard>

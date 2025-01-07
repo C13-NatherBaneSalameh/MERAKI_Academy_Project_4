@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { UserContext } from "../../../App";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect ,useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 // !!!!
@@ -23,6 +23,28 @@ import {
 } from "mdb-react-ui-kit";
 
 const Dashboard = () => {
+  const cloudinaryRef=useRef()
+  const widgetRef=useRef()
+
+  useEffect(() => {
+    cloudinaryRef.current=window.cloudinary
+    widgetRef.current= cloudinaryRef.current.createUploadWidget({
+      cloudName:"duxfa6nqg",
+      uploadPreset:"abc123"
+    } , function(err,res){
+      console.log(res.info.url);
+      
+if(res.info.url){
+  // setInfoCourse({ ...infoCourse, img : res.info.url});
+  console.log( "after",res.info.url);
+  setImg( res.info.url)
+
+}
+    })
+  
+   
+  }, [])
+  
   const navigate = useNavigate();
   const { token, setCourse, course, role ,setLessAdd,lessAdd,setCentredModal,centredModal
   } = useContext(UserContext);
@@ -35,11 +57,14 @@ const Dashboard = () => {
   const [isError, setisError] = useState(false);
   const [response, setResponse] = useState("");
   const [isCloseModal, setIsCloseModal] = useState(false)
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const [img, setImg] = useState("")
   // const [course, setCourse] = useState();
   const [teacherId, setTeacherId] = useState();
   const add = () => {
     axios
-      .post("http://localhost:5000/course/", infoCourse, { headers })
+      .post("http://localhost:5000/course/", {title:title,description:description,img:img}, { headers })
       .then((res) => {
         setResponse(res);
         setIsAdd(true);
@@ -131,7 +156,8 @@ const Dashboard = () => {
         style={{width:"80%", margin:"10px"}}
         placeholder="Title"
         onChange={(e) => {
-          setInfoCourse({ ...infoCourse, title: e.target.value });
+          // setInfoCourse({ ...infoCourse, title: e.target.value });
+          setTitle( e.target.value )
         }}
       />
        <input
@@ -140,10 +166,11 @@ const Dashboard = () => {
         type="text"
         placeholder="Description"
         onChange={(e) => {
-          setInfoCourse({ ...infoCourse, description: e.target.value });
+          // setInfoCourse({ ...infoCourse, description: e.target.value });
+          setDescription( e.target.value)
         }}
       />
-       <input
+       {/* <input
                style={{width:"80%", margin:"10px"}}
 
         placeholder="Image"
@@ -151,7 +178,8 @@ const Dashboard = () => {
           setInfoCourse({ ...infoCourse, img: e.target.value });
         }}
         
-      />
+      /> */}
+      <MDBBtn onClick={()=>widgetRef.current.open()}> upload img</MDBBtn>
         {isAdd && <p>{response.data.message}</p>}
         {isError && <p>{error.response.data.message}</p>}
             </MDBModalBody>
