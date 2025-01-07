@@ -53,8 +53,7 @@ const DashboardLseeons = () => {
   const { id } = useParams();
   console.log(id);
   const addLessons = () => {
-    // navigate(`/addLesson/${id}`);
-    // setCentredModall(true)
+    
     setCentredModall(!centredModall)  };
   const addNewLesson = () => {
     // setLessonInfo({...lessonInfo,courseId:id})
@@ -73,6 +72,7 @@ const DashboardLseeons = () => {
 
         setResponse(res);
         console.log(response);
+        getLessonsById()
 
         setIsAdded(true);
         setIsError(false);

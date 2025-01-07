@@ -18,7 +18,7 @@ import Dashboard from "../Dashboard/Dashboard";
 
 const AddCourse = () => {
   const navigate=useNavigate()
-  const { token, setCourseId, courseId,setCentredModal,
+  const { token,setCentredModal,
     centredModal } = useContext(UserContext);
   const headers = { Authorization: `Bearer ${token}` };
 
@@ -39,6 +39,7 @@ const AddCourse = () => {
         setResponse(res);
         setIsAdd(true);
         setisError(false);
+        
       
       })
       .catch((err) => {
@@ -107,7 +108,6 @@ const AddCourse = () => {
       />
         {isAdd && <p>{response.data.message}</p>}
         {isError && <p>{error.response.data.message}</p>}
-        {isCloseModal&& <Dashboard/>}
             </MDBModalBody>
             <MDBModalFooter>
               <MDBBtn color="secondary" onClick={toggleOpen}>

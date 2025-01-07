@@ -56,9 +56,9 @@ setCentredModall
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/addNewCourse" element={<AddCourse />} />
+          {/* <Route path="/addNewCourse" element={<AddCourse />} /> */}
           <Route path="/dashboard/:id" element={<DashboardLseeons />} />
-          <Route path="/addLesson/:id" element={<Addlesson />} />
+          {/* <Route path="/addLesson/:id" element={<Addlesson />} /> */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
