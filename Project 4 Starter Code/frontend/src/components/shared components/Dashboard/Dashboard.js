@@ -20,6 +20,7 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter,
+  MDBContainer,
 } from "mdb-react-ui-kit";
 
 const Dashboard = () => {
@@ -130,7 +131,7 @@ if(res.info.url){
 
   return (
     
-    <div className="container courseDiv">
+    <MDBContainer fluid className="container courseDiv">
        <>
       {/* <MDBBtn onClick={toggleOpen}>Vertically centered modal</MDBBtn> */}
 
@@ -260,7 +261,7 @@ if(res.info.url){
             </MDBCard>
         );
       })}
-    </div>
+    </MDBContainer>
   );
 };
 

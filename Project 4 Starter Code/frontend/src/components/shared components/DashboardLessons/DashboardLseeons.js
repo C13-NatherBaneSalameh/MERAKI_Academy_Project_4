@@ -62,6 +62,7 @@ const DashboardLseeons = () => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [video, setVideo] = useState();
+  
   const {
     token,
     lesson,
@@ -131,7 +132,7 @@ const DashboardLseeons = () => {
 
   const updatedLesson = (id) => {
     axios
-      .put(`http://localhost:5000/lessons/${id}`, newInfoLessons, { headers })
+      .put(`http://localhost:5000/lessons/${id}`, {title:title,description:description ,video:video}, { headers })
       .then((res) => {
         const lessoneAfterUpdate = lesson.map((ele, ind) => {
           if (ele._id === res.data.lesson._id) {
@@ -255,16 +256,20 @@ const DashboardLseeons = () => {
       {!lessons0.length ? (
         <>
           {role === "teacher" && (
-            <MDBBtn onClick={addLessons} style={{ marginTop: "10px" }}>
+            <MDBBtn onClick={addLessons} style={{ marginTop: "10px", marginLeft:"1200px" }}>
               addLesson
             </MDBBtn>
           )}
-          <p>no lesson yet</p>
+          <br/>
+          <br/>
+          <br/>
+          
+          <p style={{fontSize:"50px"}}>No lessons yet!</p>
         </>
       ) : (
         <>
           {role === "teacher" && (
-            <MDBBtn onClick={addLessons} style={{ marginTop: "10px" }}>
+            <MDBBtn onClick={addLessons} style={{ marginTop: "10px" , marginLeft:"1220px"}}>
               addLesson
             </MDBBtn>
           )}
@@ -312,6 +317,7 @@ const DashboardLseeons = () => {
                       display: "flex",
                       flexDirection: "column",
                       columnGap: "10px",
+                      alignItems:"end"
                     }}
                   >
                     <MDBBtn
@@ -325,7 +331,8 @@ const DashboardLseeons = () => {
                     >
                       Show Comment
                     </MDBBtn>
-
+                    
+{/* 
                     {role === "teacher" && (
                       <MDBBtn
                         style={{ width: "40%" }}
@@ -338,35 +345,40 @@ const DashboardLseeons = () => {
                       >
                         delete
                       </MDBBtn>
-                    )}
+                    )} */}
+                    {/* !!!! */}
                     {isClickedToUpdate && ele._id === lessonId ? (
-                      <>
+                      <div className="mt-2" >
                         <MDBInput
-                          className="mb-2"
+                          className="mt-3"
+                          // !!!
+                          // style={{width:"90vw"}}
                           onChange={(e) => {
-                            setNewInfoLessons({
-                              ...newInfoLessons,
-                              title: e.target.value,
-                            });
+                            // setNewInfoLessons({
+                            //   ...newInfoLessons,
+                            //   title: e.target.value,
+                            // });
+                            setTitle(e.target.value)
                           }}
                           label="title"
                           id="controlledValue"
                           type="text"
                         />
                         <MDBInput
-                          className="mb-2"
+                          className="mt-2"
                           onChange={(e) => {
-                            setNewInfoLessons({
-                              ...newInfoLessons,
-                              description: e.target.value,
-                            });
+                            // setNewInfoLessons({
+                            //   ...newInfoLessons,
+                            //   description: e.target.value,
+                            // });
+                            setDescription(e.target.value)
                           }}
                           label="description"
                           id="controlledValue"
                           type="text"
                         />
 
-                        <MDBInput
+                        {/* <MDBInput
                           className="mb-2"
                           onChange={(e) => {
                             setNewInfoLessons({
@@ -377,7 +389,10 @@ const DashboardLseeons = () => {
                           label="video "
                           id="controlledValue"
                           type="text"
-                        />
+                        /> */}
+                        <MDBBtn className="mt-2" onClick={()=>widgetRef.current.open()}>upload video</MDBBtn>
+                        <div className="mt-2">
+
                         <MDBBtn
                           className="mb-2"
                           id={ele._id}
@@ -387,7 +402,8 @@ const DashboardLseeons = () => {
                         >
                           Update
                         </MDBBtn>
-                      </>
+                        </div>
+                      </div>
                     ) : (
                       <>
                         {role === "teacher" && (
@@ -405,25 +421,40 @@ const DashboardLseeons = () => {
                         )}
                       </>
                     )}
+                    
+                    {role === "teacher" && (
+                      <MDBBtn
+                        style={{ width: "40%" }}
+                        className="mt-2"
+                        color="danger"
+                        id={ele._id}
+                        onClick={(e) => {
+                          deleteLesson(e.target.id);
+                        }}
+                      >
+                        delete
+                      </MDBBtn>
+                    )}
                     {ele._id === lessonId && (
                       <div style={{ marginBottom: "10px" }}>
                         <MDBCollapse open={isOpen}>
-                          <MDBCardText>
+                          <MDBCardText >
                             {ele.comments.map((o) => (
-                              <p style={{ marginBottom: "0px" }}>
+                             <div style={{display:"flex",justifyContent:"start"}}> <p style={{ marginBottom: "0px" }}>
                                 {userName} : {o.comment}
-                              </p>
+                              </p> <br></br></div>
                             ))}
                           </MDBCardText>
                           <div
                             style={{
                               display: "flex",
                               marginBottom: "10px",
-                              width: "100% ",
+                              width: "80%",
                             }}
                           >
                             <div style={{ width: "80%" }}>
-                              <MDBInput
+                              <MDBInput 
+                              style={{width:"55vw"}}
                                 className="inpComment"
                                 //!1111111
                                 onChange={(e) => {
