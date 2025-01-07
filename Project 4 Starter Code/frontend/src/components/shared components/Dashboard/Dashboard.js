@@ -210,7 +210,7 @@ if(res.info.url){
 
                   id={ele._id}
                   src={ele.img}
-                  style={{ width: "100%" }}
+                  style={{ width: "100%",height:"250px" }}
                   onClick={(e) => {
                     console.log(e.target.id);
                     console.log("5555555");

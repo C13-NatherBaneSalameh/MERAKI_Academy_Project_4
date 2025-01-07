@@ -62,7 +62,7 @@ const DashboardLseeons = () => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [video, setVideo] = useState();
-  
+const [showHide, setShowHide] = useState(true)  
   const {
     token,
     lesson,
@@ -325,11 +325,12 @@ const DashboardLseeons = () => {
                       onClick={(e) => {
                         toggleOpen(e);
                         setlessonId(e.target.id);
+                        setShowHide(!showHide)
                       }}
                       className="mt-2  btn-primary"
                       style={{ width: "40%" }}
                     >
-                      Show Comment
+                      {showHide? <>Show Comment</>:<>Hide Comment</> }
                     </MDBBtn>
                     
 {/* 

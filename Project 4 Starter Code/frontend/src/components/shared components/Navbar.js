@@ -47,7 +47,7 @@ const Navbar = () => {
   const [openNav, setOpenNav] = useState(false);
 
   return (
-    <MDBNavbar expand="lg" className="navber">
+    <MDBNavbar sticky expand="lg" className="navber">
       <MDBContainer fluid>
         <MDBNavbarBrand href="#">Navbar</MDBNavbarBrand>
         <MDBNavbarToggler
