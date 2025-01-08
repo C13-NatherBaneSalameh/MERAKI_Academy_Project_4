@@ -2,7 +2,7 @@ const express=require("express")
 const {createNewLesson ,getAllLessonsByID,deleteLessonsById ,updateLessonById}=require("../controllers/lessons")
 const authentication=require("../middleware/authentication")
 const authorization = require("../middleware/authorization")
-const{addToFavorite ,getAllFav}=require("../controllers/favorites")
+const{addToFavorite ,getAllFav ,deleteFvById}=require("../controllers/favorites")
 
 const lessoneRouter =express.Router()
 lessoneRouter.post("/",authentication ,authorization("CREATE_LESSON"),createNewLesson)
@@ -11,6 +11,8 @@ lessoneRouter.delete("/:id",authentication, authorization("DELETE_LESSON"),delet
 lessoneRouter.put("/:id", authentication,authorization("UPDETE_LESSONE") ,updateLessonById)
 lessoneRouter.post("/:id/favorite",authentication ,addToFavorite)
 lessoneRouter.get("/fav/favorite",authentication, getAllFav)
+lessoneRouter.delete("/:id/favorite",authentication,deleteFvById)
+
 
 
 module.exports=lessoneRouter

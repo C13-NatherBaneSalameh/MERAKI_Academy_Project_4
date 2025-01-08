@@ -2,7 +2,10 @@ const jwt = require("jsonwebtoken");
 
 // This function checks if the user logged in
 const authentication = (req, res, next) => {
+  
   try {
+    console.log("request",req.headers.authorization);
+
     if (!req.headers.authorization) {
       return res.status(403).json({
         success: false,
@@ -10,6 +13,8 @@ const authentication = (req, res, next) => {
       });
     }
     const token = req.headers.authorization.split(" ").pop();
+    // console.log(token);
+    
 
     jwt.verify(token, process.env.SECRET, (err, result) => {
       if (err) {

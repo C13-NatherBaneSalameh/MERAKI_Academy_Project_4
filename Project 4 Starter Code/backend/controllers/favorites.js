@@ -23,8 +23,9 @@ const addToFavorite = (req, res) => {
     });
 };
 const getAllFav=(req,res)=>{
+    const userId=req.token.userId
     favoriteModel
-    .find({})
+    .find({favOwner:userId})
     .populate("favItem")
     .then((result)=>{
         res.status(200).json({
@@ -43,4 +44,25 @@ const getAllFav=(req,res)=>{
           })
     })
 }
-module.exports = { addToFavorite ,getAllFav };
+const deleteFvById = (req, res) => {
+    // ال id 
+    // لل فايفورت الي بدي امسحها وحبعثها بالبارامز 
+    const id = req.params.id;
+  
+    favoriteModel
+      .findOneAndDelete({ favItem: id })
+      .then((result) => {
+        res.status(200).json({
+          success: true,
+          message: "favItem deleted ",
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          success: false,
+          message: "Server Error",
+          err: err.message,
+        });
+      });
+  };
+module.exports = { addToFavorite ,getAllFav,deleteFvById };

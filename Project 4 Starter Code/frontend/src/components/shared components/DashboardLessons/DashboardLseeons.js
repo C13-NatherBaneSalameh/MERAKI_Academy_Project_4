@@ -24,6 +24,7 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter,
+  MDBIcon
 } from "mdb-react-ui-kit";
 const DashboardLseeons = () => {
   const cloudinaryRef = useRef();
@@ -64,6 +65,7 @@ const DashboardLseeons = () => {
   const [video, setVideo] = useState();
 const [showHide, setShowHide] = useState(false)  
 const [btnText, setBtnText] = useState("show comment")
+const [colorIcon, setcolorIcon] = useState(true)
 // const changeText=()=>{
 //   if(btnText==="show comment"){
 //     setBtnText("Hide Comment")
@@ -194,6 +196,47 @@ const {
   //   );
   // }
   //
+  // TODO favorit function 
+  const addToFavorite=(id)=>{
+    console.log(token);
+    
+    console.log(headers);
+    
+axios.post(`http://localhost:5000/lessons/${id}/favorite`,{},  {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        } )
+.then((res)=>{
+  setResponse(res)
+  console.log(res);
+  
+})
+.catch((err)=>{
+  setError(err)
+})
+
+
+  }
+  // !!!delete
+const deleteFavorite=(id)=>{
+  console.log("llllllllllllllll",id);
+  
+  axios
+  .delete(`http://localhost:5000/lessons/${id}/favorite`, { headers })
+  .then((res)=>{
+    console.log("sucsess",res);
+    console.log(55555555);
+    
+    
+
+  })
+  .catch((err)=>{
+    console.log("bad",err);
+    
+    
+  })
+}
   return (
     <>
       <>
@@ -296,6 +339,7 @@ const {
               >
                 <MDBRow className="g-0 ">
                   <MDBCol md="4" style={{ width: "30%" }}>
+                    <div style={{display:"flex", flexDirection:"column",alignItems:" flex-start"}}>
                     <iframe
                       className="mt-3 video-frame"
                       style={{
@@ -315,6 +359,16 @@ const {
                         e.target.style.width = "100%";
                       }}
                     ></iframe>
+                    {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+                    <MDBIcon far id={ele._id}  icon="heart" className="m-2" onClick={(e)=>{
+                      addToFavorite(ele._id)
+                    }} style={{fontSize:"x-large"}} />
+
+                    <MDBBtn id={ele._id} onClick={(e)=>{
+                      deleteFavorite(e.target.id)
+                    }}>delete</MDBBtn>
+                    
+                    </div >
                   </MDBCol>
                   <MDBCol md="8" style={{ width: "30%" }}>
                     <MDBCardBody>

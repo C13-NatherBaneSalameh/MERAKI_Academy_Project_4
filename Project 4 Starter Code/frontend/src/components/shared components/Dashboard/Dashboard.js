@@ -104,9 +104,7 @@ const Dashboard = () => {
       .get("http://localhost:5000/course/allCourse", { headers })
       .then((res) => {
         console.log(res);
-        console.log("gggggg");
         const data = res.data.courses;
-        console.log("dddd", data);
         setCourse(res.data.courses);
         console.log(course);
 
