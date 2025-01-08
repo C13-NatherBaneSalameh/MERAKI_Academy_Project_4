@@ -8,9 +8,7 @@ const commentSchema  =new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:"User"
     },
-    // nameCommenter:{
-    //     mongoose.Schema.Types.String ,ref:"User"
-    // }
+    
 
 })
 const commentModel=mongoose.model("Comment",commentSchema) 

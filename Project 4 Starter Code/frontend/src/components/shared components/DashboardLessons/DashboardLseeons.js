@@ -62,8 +62,17 @@ const DashboardLseeons = () => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [video, setVideo] = useState();
-const [showHide, setShowHide] = useState(true)  
-  const {
+const [showHide, setShowHide] = useState(false)  
+const [btnText, setBtnText] = useState("show comment")
+// const changeText=()=>{
+//   if(btnText==="show comment"){
+//     setBtnText("Hide Comment")
+//   }else{
+//     setBtnText("show comment")
+//   }
+// }
+
+const {
     token,
     lesson,
     setLesson,
@@ -121,8 +130,9 @@ const [showHide, setShowHide] = useState(true)
     axios
       .get(`http://localhost:5000/lessons/${id}`, { headers })
       .then((res) => {
+        
         setLesson(res.data.lessone);
-        console.log(res.data.lessone);
+        console.log("lessons===>",res.data.lessone);
         setLessons0(res.data.lessone);
       })
       .catch((err) => {
@@ -325,12 +335,26 @@ const [showHide, setShowHide] = useState(true)
                       onClick={(e) => {
                         toggleOpen(e);
                         setlessonId(e.target.id);
+                        console.log(e.target.innerText);
+                        // if(e.target.innerText==="Show Comment"){
+                        //   e.target.innerText="Hide Comment"
+                        // }else{
+                        //   e.target.innerText="Show Comment"
+                        // }
+                        // changeText()
+                        
                         setShowHide(!showHide)
+                        // if(btnText==="show comment" && ele._id === lessonId){
+                        //   setBtnText("Hide Comment")
+                        // }else{
+                        //   setBtnText("show comment")
+                        // }
                       }}
                       className="mt-2  btn-primary"
                       style={{ width: "40%" }}
                     >
-                      {showHide? <>Show Comment</>:<>Hide Comment</> }
+                     {/* {btnText} */}
+                      {showHide &&ele._id === lessonId? <>Hide Comment</>:<>Show Comment</> }
                     </MDBBtn>
                     
 {/* 
@@ -398,6 +422,7 @@ const [showHide, setShowHide] = useState(true)
                           className="mb-2"
                           id={ele._id}
                           onClick={(e) => {
+                            
                             updatedLesson(e.target.id);
                           }}
                         >
@@ -442,7 +467,7 @@ const [showHide, setShowHide] = useState(true)
                           <MDBCardText >
                             {ele.comments.map((o) => (
                              <div style={{display:"flex",justifyContent:"start"}}> <p style={{ marginBottom: "0px" }}>
-                                {userName} : {o.comment}
+                                {o.commenter.userName} : {o.comment}
                               </p> <br></br></div>
                             ))}
                           </MDBCardText>

@@ -33,7 +33,12 @@ const getAllLessonsByID = (req, res) => {
 
   lessonsModel
     .find({courseId:id})
-    .populate("comments","-_id -__v")
+    .populate({
+      path:"comments",
+      populate:{
+        path:"commenter"
+      }
+    })
     .then((result) => {
       if (result.length === 0) {
         res.status(400).json("No lessons yet ");

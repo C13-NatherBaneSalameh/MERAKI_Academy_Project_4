@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { UserContext } from "../../../App";
-import { useState, useContext, useEffect ,useRef} from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 // !!!!
@@ -24,30 +24,38 @@ import {
 } from "mdb-react-ui-kit";
 
 const Dashboard = () => {
-  const cloudinaryRef=useRef()
-  const widgetRef=useRef()
+  const cloudinaryRef = useRef();
+  const widgetRef = useRef();
 
   useEffect(() => {
-    cloudinaryRef.current=window.cloudinary
-    widgetRef.current= cloudinaryRef.current.createUploadWidget({
-      cloudName:"duxfa6nqg",
-      uploadPreset:"abc123"
-    } , function(err,res){
-      console.log(res.info.url);
-      
-if(res.info.url){
-  // setInfoCourse({ ...infoCourse, img : res.info.url});
-  console.log( "after",res.info.url);
-  setImg( res.info.url)
+    cloudinaryRef.current = window.cloudinary;
+    widgetRef.current = cloudinaryRef.current.createUploadWidget(
+      {
+        cloudName: "duxfa6nqg",
+        uploadPreset: "abc123",
+      },
+      function (err, res) {
+        // console.log(res.info.url);
 
-}
-    })
-  
-   
-  }, [])
-  
+        if (res.info.url) {
+          // setInfoCourse({ ...infoCourse, img : res.info.url});
+          console.log("after", res.info.url);
+          setImg(res.info.url);
+        }
+      }
+    );
+  }, []);
+
   const navigate = useNavigate();
-  const { token, setCourse, course, role ,setLessAdd,lessAdd,setCentredModal,centredModal
+  const {
+    token,
+    setCourse,
+    course,
+    role,
+    setLessAdd,
+    lessAdd,
+    setCentredModal,
+    centredModal,
   } = useContext(UserContext);
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -57,22 +65,24 @@ if(res.info.url){
   const [isAdd, setIsAdd] = useState(false);
   const [isError, setisError] = useState(false);
   const [response, setResponse] = useState("");
-  const [isCloseModal, setIsCloseModal] = useState(false)
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [img, setImg] = useState("")
+  const [isCloseModal, setIsCloseModal] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [img, setImg] = useState("");
   // const [course, setCourse] = useState();
   const [teacherId, setTeacherId] = useState();
   const add = () => {
     axios
-      .post("http://localhost:5000/course/", {title:title,description:description,img:img}, { headers })
+      .post(
+        "http://localhost:5000/course/",
+        { title: title, description: description, img: img },
+        { headers }
+      )
       .then((res) => {
         setResponse(res);
         setIsAdd(true);
         setisError(false);
-        getAllCOurse()
-        
-      
+        getAllCOurse();
       })
       .catch((err) => {
         console.log(err);
@@ -81,15 +91,13 @@ if(res.info.url){
         setisError(true);
       });
   };
-  const toggleOpen = () =>{
-    setCentredModal(!centredModal)
-    setIsCloseModal(!isCloseModal)
+  const toggleOpen = () => {
+    setCentredModal(!centredModal);
+    setIsCloseModal(!isCloseModal);
     //!11111111111
 
     console.log(isCloseModal);
-    
-
-  } ;
+  };
 
   const getAllCOurse = () => {
     axios
@@ -101,7 +109,6 @@ if(res.info.url){
         console.log("dddd", data);
         setCourse(res.data.courses);
         console.log(course);
-
 
         setTeacherId(res.data.teacherId);
       })
@@ -130,48 +137,45 @@ if(res.info.url){
   }, []);
 
   return (
-    
     <MDBContainer fluid className="container courseDiv">
-       <>
-      {/* <MDBBtn onClick={toggleOpen}>Vertically centered modal</MDBBtn> */}
+      <>
+        {/* <MDBBtn onClick={toggleOpen}>Vertically centered modal</MDBBtn> */}
 
-      <MDBModal
-        tabIndex="-1"
-        open={centredModal}
-
-        onClose={() => setCentredModal(false)}
-      >
-        <MDBModalDialog centered>
-          <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>Add Course</MDBModalTitle>
-              <MDBBtn
-                className="btn-close"
-                color="none"
-                onClick={toggleOpen}
-              ></MDBBtn>
-            </MDBModalHeader>
-            <MDBModalBody>
-            <input
-        type="text"
-        style={{width:"80%", margin:"10px"}}
-        placeholder="Title"
-        onChange={(e) => {
-          // setInfoCourse({ ...infoCourse, title: e.target.value });
-          setTitle( e.target.value )
-        }}
-      />
-       <input
-        style={{width:"80%", margin:"10px"}}
-
-        type="text"
-        placeholder="Description"
-        onChange={(e) => {
-          // setInfoCourse({ ...infoCourse, description: e.target.value });
-          setDescription( e.target.value)
-        }}
-      />
-       {/* <input
+        <MDBModal
+          tabIndex="-1"
+          open={centredModal}
+          onClose={() => setCentredModal(false)}
+        >
+          <MDBModalDialog centered>
+            <MDBModalContent>
+              <MDBModalHeader>
+                <MDBModalTitle>Add Course</MDBModalTitle>
+                <MDBBtn
+                  className="btn-close"
+                  color="none"
+                  onClick={toggleOpen}
+                ></MDBBtn>
+              </MDBModalHeader>
+              <MDBModalBody>
+                <input
+                  type="text"
+                  style={{ width: "80%", margin: "10px" }}
+                  placeholder="Title"
+                  onChange={(e) => {
+                    // setInfoCourse({ ...infoCourse, title: e.target.value });
+                    setTitle(e.target.value);
+                  }}
+                />
+                <input
+                  style={{ width: "80%", margin: "10px" }}
+                  type="text"
+                  placeholder="Description"
+                  onChange={(e) => {
+                    // setInfoCourse({ ...infoCourse, description: e.target.value });
+                    setDescription(e.target.value);
+                  }}
+                />
+                {/* <input
                style={{width:"80%", margin:"10px"}}
 
         placeholder="Image"
@@ -180,85 +184,86 @@ if(res.info.url){
         }}
         
       /> */}
-      <MDBBtn onClick={()=>widgetRef.current.open()}> upload img</MDBBtn>
-        {isAdd && <p>{response.data.message}</p>}
-        {isError && <p>{error.response.data.message}</p>}
-            </MDBModalBody>
-            <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={toggleOpen}>
-                Close
-              </MDBBtn>
-              <MDBBtn  onClick={add} >Save changes</MDBBtn>
-            
-            </MDBModalFooter>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
-    </>
+                <MDBBtn onClick={() => widgetRef.current.open()}>
+                  {" "}
+                  upload img
+                </MDBBtn>
+                {isAdd && <p>{response.data.message}</p>}
+                {isError && <p>{error.response.data.message}</p>}
+              </MDBModalBody>
+              <MDBModalFooter>
+                <MDBBtn color="secondary" onClick={toggleOpen}>
+                  Close
+                </MDBBtn>
+                <MDBBtn onClick={add}>Save changes</MDBBtn>
+              </MDBModalFooter>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
+      </>
       {course?.map((ele, ind) => {
         return (
-            <MDBCard className="card0 gg mt-4"
-            style={{height:"80%",width:"350px"}}
+          <MDBCard
+            className="card0 gg mt-4"
+            style={{ height: "80%", width: "350px" }}
+          >
+            <MDBRipple
+              rippleColor="light"
+              rippleTag="div"
+              className="bg-image hover-overlay"
             >
-              <MDBRipple
-                rippleColor="light"
-                rippleTag="div"
-                className="bg-image hover-overlay"
-              >
-                <MDBCardImage
+              <MDBCardImage
                 className="rounded-top"
+                id={ele._id}
+                src={ele.img}
+                style={{ width: "100%", height: "250px" }}
+                onClick={(e) => {
+                  console.log(e.target.id);
+                  console.log("5555555");
 
+                  navigate(`/dashboard/${e.target.id}`);
+                }}
+                fluid
+                alt="..."
+              />
+              <a>
+                <div
+                  className="mask"
+                  style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
+                ></div>
+              </a>
+            </MDBRipple>
+            <MDBCardBody>
+              <MDBCardTitle>{ele.title}</MDBCardTitle>
+              <MDBCardText>{ele.description} </MDBCardText>
+              {role === "teacher" && (
+                <MDBBtn
+                  className=" btn  btn-danger"
+                  href="#"
                   id={ele._id}
-                  src={ele.img}
-                  style={{ width: "100%",height:"250px" }}
                   onClick={(e) => {
-                    console.log(e.target.id);
-                    console.log("5555555");
-                    
-
-                    navigate(`/dashboard/${e.target.id}`);
+                    deleteCourseById(e.target.id);
                   }}
-                  fluid
-                  alt="..."
-                />
-                <a>
-                  <div
-                    className="mask"
-                    style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
-                  ></div>
-                </a>
-              </MDBRipple>
-              <MDBCardBody>
-                <MDBCardTitle>{ele.title}</MDBCardTitle>
-                <MDBCardText>{ele.description} </MDBCardText>
-                {role === "teacher" && (
-                  <MDBBtn 
-                  className=" btn  btn-danger" 
-                    href="#"
-                    id={ele._id}
-                    onClick={(e) => {
-                      deleteCourseById(e.target.id);
-                    }}
-                  >
-                    Delete
-                  </MDBBtn>
-                )}
-                <MDBBtn className="btn"  href="#"
-                    id={ele._id}
-                    onClick={(e) => {
-                      console.log(e.target.id);
-                      setLessAdd(!lessAdd)
-                      console.log(lessAdd);
-                      
-
-  
-                      navigate(`/dashboard/${e.target.id}`);
-                    }}
-                    >
-                  Show lesson
+                >
+                  Delete
                 </MDBBtn>
-              </MDBCardBody>
-            </MDBCard>
+              )}
+              <MDBBtn
+                className="btn"
+                href="#"
+                id={ele._id}
+                onClick={(e) => {
+                  console.log(e.target.id);
+                  setLessAdd(!lessAdd);
+                  console.log(lessAdd);
+
+                  navigate(`/dashboard/${e.target.id}`);
+                }}
+              >
+                Show lesson
+              </MDBBtn>
+            </MDBCardBody>
+          </MDBCard>
         );
       })}
     </MDBContainer>
