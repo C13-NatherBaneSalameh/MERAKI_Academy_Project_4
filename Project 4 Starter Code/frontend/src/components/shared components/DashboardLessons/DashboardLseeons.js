@@ -24,7 +24,7 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter,
-  MDBIcon
+  MDBIcon,
 } from "mdb-react-ui-kit";
 const DashboardLseeons = () => {
   const cloudinaryRef = useRef();
@@ -63,18 +63,18 @@ const DashboardLseeons = () => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [video, setVideo] = useState();
-const [showHide, setShowHide] = useState(false)  
-const [btnText, setBtnText] = useState("show comment")
-const [colorIcon, setcolorIcon] = useState(true)
-// const changeText=()=>{
-//   if(btnText==="show comment"){
-//     setBtnText("Hide Comment")
-//   }else{
-//     setBtnText("show comment")
-//   }
-// }
+  const [showHide, setShowHide] = useState(false);
+  const [btnText, setBtnText] = useState("show comment");
+  const [colorIcon, setcolorIcon] = useState(true);
+  // const changeText=()=>{
+  //   if(btnText==="show comment"){
+  //     setBtnText("Hide Comment")
+  //   }else{
+  //     setBtnText("show comment")
+  //   }
+  // }
 
-const {
+  const {
     token,
     lesson,
     setLesson,
@@ -132,9 +132,8 @@ const {
     axios
       .get(`http://localhost:5000/lessons/${id}`, { headers })
       .then((res) => {
-        
         setLesson(res.data.lessone);
-        console.log("lessons===>",res.data.lessone);
+        console.log("lessons===>", res.data.lessone);
         setLessons0(res.data.lessone);
       })
       .catch((err) => {
@@ -144,7 +143,11 @@ const {
 
   const updatedLesson = (id) => {
     axios
-      .put(`http://localhost:5000/lessons/${id}`, {title:title,description:description ,video:video}, { headers })
+      .put(
+        `http://localhost:5000/lessons/${id}`,
+        { title: title, description: description, video: video },
+        { headers }
+      )
       .then((res) => {
         const lessoneAfterUpdate = lesson.map((ele, ind) => {
           if (ele._id === res.data.lesson._id) {
@@ -196,47 +199,44 @@ const {
   //   );
   // }
   //
-  // TODO favorit function 
-  const addToFavorite=(id)=>{
+  // TODO favorit function
+  const addToFavorite = (id) => {
     console.log(token);
-    
+
     console.log(headers);
-    
-axios.post(`http://localhost:5000/lessons/${id}/favorite`,{},  {
+
+    axios
+      .post(
+        `http://localhost:5000/lessons/${id}/favorite`,
+        {},
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        } )
-.then((res)=>{
-  setResponse(res)
-  console.log(res);
-  
-})
-.catch((err)=>{
-  setError(err)
-})
-
-
-  }
+        }
+      )
+      .then((res) => {
+        setResponse(res);
+        console.log(res);
+      })
+      .catch((err) => {
+        setError(err);
+      });
+  };
   // !!!delete
-const deleteFavorite=(id)=>{
-  console.log("llllllllllllllll",id);
-  
-  axios
-  .delete(`http://localhost:5000/lessons/${id}/favorite`, { headers })
-  .then((res)=>{
-    console.log("sucsess",res);
-    console.log(55555555);
-    
-    
+  const deleteFavorite = (id) => {
+    console.log("llllllllllllllll", id);
 
-  })
-  .catch((err)=>{
-    console.log("bad",err);
-    
-    
-  })
-}
+    axios
+      .delete(`http://localhost:5000/lessons/${id}/favorite`, { headers })
+      .then((res) => {
+        console.log("sucsess", res);
+        console.log(55555555);
+      })
+      .catch((err) => {
+        console.log("bad", err);
+      });
+  };
   return (
     <>
       <>
@@ -309,20 +309,26 @@ const deleteFavorite=(id)=>{
       {!lessons0.length ? (
         <>
           {role === "teacher" && (
-            <MDBBtn onClick={addLessons} style={{ marginTop: "10px", marginLeft:"1200px" }}>
+            <MDBBtn
+              onClick={addLessons}
+              style={{ marginTop: "10px", marginLeft: "1200px" }}
+            >
               addLesson
             </MDBBtn>
           )}
-          <br/>
-          <br/>
-          <br/>
-          
-          <p style={{fontSize:"50px"}}>No lessons yet!</p>
+          <br />
+          <br />
+          <br />
+
+          <p style={{ fontSize: "50px" }}>No lessons yet!</p>
         </>
       ) : (
         <>
           {role === "teacher" && (
-            <MDBBtn onClick={addLessons} style={{ marginTop: "10px" , marginLeft:"1220px"}}>
+            <MDBBtn
+              onClick={addLessons}
+              style={{ marginTop: "10px", marginLeft: "1220px" }}
+            >
               addLesson
             </MDBBtn>
           )}
@@ -339,36 +345,53 @@ const deleteFavorite=(id)=>{
               >
                 <MDBRow className="g-0 ">
                   <MDBCol md="4" style={{ width: "30%" }}>
-                    <div style={{display:"flex", flexDirection:"column",alignItems:" flex-start"}}>
-                    <iframe
-                      className="mt-3 video-frame"
+                    <div
                       style={{
-                        height: "150px",
-                        width: "100%",
-                        transition: "all 0.3s ease",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: " flex-start",
                       }}
-                      src={ele.video}
-                      title="YouTube video"
-                      allowFullScreen
-                      onClick={(e) => {
-                        e.target.style.height = "500px";
-                        e.target.style.width = "100%";
-                      }}
-                      onDoubleClick={(e) => {
-                        e.target.style.height = "150px";
-                        e.target.style.width = "100%";
-                      }}
-                    ></iframe>
-                    {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
-                    <MDBIcon far id={ele._id}  icon="heart" className="m-2" onClick={(e)=>{
-                      addToFavorite(ele._id)
-                    }} style={{fontSize:"x-large"}} />
+                    >
+                      <iframe
+                        className="mt-3 video-frame"
+                        style={{
+                          height: "150px",
+                          width: "100%",
+                          transition: "all 0.3s ease",
+                        }}
+                        src={ele.video}
+                        title="YouTube video"
+                        allowFullScreen
+                        onClick={(e) => {
+                          e.target.style.height = "500px";
+                          e.target.style.width = "100%";
+                        }}
+                        onDoubleClick={(e) => {
+                          e.target.style.height = "150px";
+                          e.target.style.width = "100%";
+                        }}
+                      ></iframe>
+                      {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+                      <MDBIcon
+                        far
+                        id={ele._id}
+                        icon="heart"
+                        className="m-2"
+                        onClick={(e) => {
+                          addToFavorite(ele._id);
+                        }}
+                        style={{ fontSize: "x-large" }}
+                      />
 
-                    <MDBBtn id={ele._id} onClick={(e)=>{
-                      deleteFavorite(e.target.id)
-                    }}>delete</MDBBtn>
-                    
-                    </div >
+                      <MDBBtn
+                        id={ele._id}
+                        onClick={(e) => {
+                          deleteFavorite(e.target.id);
+                        }}
+                      >
+                        delete
+                      </MDBBtn>
+                    </div>
                   </MDBCol>
                   <MDBCol md="8" style={{ width: "30%" }}>
                     <MDBCardBody>
@@ -381,7 +404,7 @@ const deleteFavorite=(id)=>{
                       display: "flex",
                       flexDirection: "column",
                       columnGap: "10px",
-                      alignItems:"end"
+                      alignItems: "end",
                     }}
                   >
                     <MDBBtn
@@ -390,28 +413,23 @@ const deleteFavorite=(id)=>{
                         toggleOpen(e);
                         setlessonId(e.target.id);
                         console.log(e.target.innerText);
-                        // if(e.target.innerText==="Show Comment"){
-                        //   e.target.innerText="Hide Comment"
-                        // }else{
-                        //   e.target.innerText="Show Comment"
-                        // }
-                        // changeText()
                         
-                        setShowHide(!showHide)
-                        // if(btnText==="show comment" && ele._id === lessonId){
-                        //   setBtnText("Hide Comment")
-                        // }else{
-                        //   setBtnText("show comment")
-                        // }
+
+                        setShowHide(!showHide);
+                       
                       }}
                       className="mt-2  btn-primary"
                       style={{ width: "40%" }}
                     >
-                     {/* {btnText} */}
-                      {showHide &&ele._id === lessonId? <>Hide Comment</>:<>Show Comment</> }
+                      {/* {btnText} */}
+                      {showHide && ele._id === lessonId ? (
+                        <>Hide Comment</>
+                      ) : (
+                        <>Show Comment</>
+                      )}
                     </MDBBtn>
-                    
-{/* 
+
+                    {/* 
                     {role === "teacher" && (
                       <MDBBtn
                         style={{ width: "40%" }}
@@ -427,7 +445,7 @@ const deleteFavorite=(id)=>{
                     )} */}
                     {/* !!!! */}
                     {isClickedToUpdate && ele._id === lessonId ? (
-                      <div className="mt-2" >
+                      <div className="mt-2">
                         <MDBInput
                           className="mt-3"
                           // !!!
@@ -437,7 +455,7 @@ const deleteFavorite=(id)=>{
                             //   ...newInfoLessons,
                             //   title: e.target.value,
                             // });
-                            setTitle(e.target.value)
+                            setTitle(e.target.value);
                           }}
                           label="title"
                           id="controlledValue"
@@ -450,7 +468,7 @@ const deleteFavorite=(id)=>{
                             //   ...newInfoLessons,
                             //   description: e.target.value,
                             // });
-                            setDescription(e.target.value)
+                            setDescription(e.target.value);
                           }}
                           label="description"
                           id="controlledValue"
@@ -469,19 +487,22 @@ const deleteFavorite=(id)=>{
                           id="controlledValue"
                           type="text"
                         /> */}
-                        <MDBBtn className="mt-2" onClick={()=>widgetRef.current.open()}>upload video</MDBBtn>
-                        <div className="mt-2">
-
                         <MDBBtn
-                          className="mb-2"
-                          id={ele._id}
-                          onClick={(e) => {
-                            
-                            updatedLesson(e.target.id);
-                          }}
+                          className="mt-2"
+                          onClick={() => widgetRef.current.open()}
                         >
-                          Update
+                          upload video
                         </MDBBtn>
+                        <div className="mt-2">
+                          <MDBBtn
+                            className="mb-2"
+                            id={ele._id}
+                            onClick={(e) => {
+                              updatedLesson(e.target.id);
+                            }}
+                          >
+                            Update
+                          </MDBBtn>
                         </div>
                       </div>
                     ) : (
@@ -501,7 +522,7 @@ const deleteFavorite=(id)=>{
                         )}
                       </>
                     )}
-                    
+
                     {role === "teacher" && (
                       <MDBBtn
                         style={{ width: "40%" }}
@@ -516,13 +537,25 @@ const deleteFavorite=(id)=>{
                       </MDBBtn>
                     )}
                     {ele._id === lessonId && (
-                      <div style={{ marginBottom: "10px" }}>
+                      <div style={{ marginBottom: "10px",display: "flex",
+                        
+                            flexDirection: "column" }}>
                         <MDBCollapse open={isOpen}>
-                          <MDBCardText >
+                          <MDBCardText>
                             {ele.comments.map((o) => (
-                             <div style={{display:"flex",justifyContent:"start"}}> <p style={{ marginBottom: "0px" }}>
-                                {o.commenter.userName} : {o.comment}
-                              </p> <br></br></div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  
+                                  justifyContent: "start",
+                                }}
+                              >
+                                {" "}
+                                <p style={{ marginBottom: "0px" ,width: "65vw" ,display:"flex" }}>
+                                  {o.commenter.userName} : {o.comment}
+                                </p>{" "}
+                                <br></br>
+                              </div>
                             ))}
                           </MDBCardText>
                           <div
@@ -533,8 +566,8 @@ const deleteFavorite=(id)=>{
                             }}
                           >
                             <div style={{ width: "80%" }}>
-                              <MDBInput 
-                              style={{width:"55vw"}}
+                              <MDBInput
+                              
                                 className="inpComment"
                                 //!1111111
                                 onChange={(e) => {

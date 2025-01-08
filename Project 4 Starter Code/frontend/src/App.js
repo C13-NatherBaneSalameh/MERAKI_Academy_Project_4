@@ -12,6 +12,7 @@ import DashboardLseeons from "./components/shared components/DashboardLessons/Da
 import Addlesson from "./components/shared components/AddLesson/Addlesson";
 import NotFoundPage from "./components/shared components/NotFoundPage";
 import Test from "./components/shared components/Test";
+import { Favorite } from "./components/shared components/Favorite/Favorite";
 export const UserContext = createContext();
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -59,6 +60,7 @@ setCentredModall
           {/* <Route path="/addNewCourse" element={<AddCourse />} /> */}
           <Route path="/dashboard/:id" element={<DashboardLseeons />} />
           {/* <Route path="/addLesson/:id" element={<Addlesson />} /> */}
+          <Route path="favorite" element={<Favorite/>}/>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

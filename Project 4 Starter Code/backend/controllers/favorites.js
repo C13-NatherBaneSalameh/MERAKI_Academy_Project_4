@@ -26,7 +26,15 @@ const getAllFav=(req,res)=>{
     const userId=req.token.userId
     favoriteModel
     .find({favOwner:userId})
-    .populate("favItem")
+    .populate({
+        path:"favItem",
+        populate:{
+            path:"comments",
+            populate:{
+                path:"commenter"
+            }
+        }
+    })
     .then((result)=>{
         res.status(200).json({
             success: true,

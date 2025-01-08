@@ -93,7 +93,8 @@ const Navbar = () => {
                   )}
                   {/* {centredModal && <AddCourse />} */}
                 </MDBNavbarItem>
-                
+                <MDBNavbarLink active href="/favorite" style={{ fontSize: "x-large" }}> favorite </MDBNavbarLink>
+
                 <MDBNavbarItem>
                   <MDBNavbarLink href="/logout" style={{ fontSize: "x-large" }}>
                     Logout
