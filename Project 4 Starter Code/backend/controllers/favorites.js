@@ -22,5 +22,25 @@ const addToFavorite = (req, res) => {
       });
     });
 };
-
+const getAllFav=(req,res)=>{
+    favoriteModel
+    .find({})
+    .populate("favItem")
+    .then((result)=>{
+        res.status(200).json({
+            success: true,
+            message:" All the favorite",
+            favorite: result,
+           })
+    })
+    .catch((err)=>{
+        res.status(500).json({
+            success: false,
+        
+        message: "Server Error",
+        
+        err:err.message
+          })
+    })
+}
 module.exports = { addToFavorite ,getAllFav };
