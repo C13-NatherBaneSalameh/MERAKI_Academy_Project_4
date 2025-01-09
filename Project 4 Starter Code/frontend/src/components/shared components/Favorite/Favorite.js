@@ -34,6 +34,8 @@ export const Favorite = () => {
   const [lessonId, setlessonId] = useState("");
   const [showHide, setShowHide] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [comments, setComments] = useState({});
+
 
   const getAllFavorit = () => {
     axios
@@ -48,6 +50,33 @@ export const Favorite = () => {
         console.log(err);
       });
   };
+  const deleteFavorite = (id) => {
+    console.log("llllllllllllllll", id);
+
+    axios
+      .delete(`http://localhost:5000/lessons/${id}/favorite`, { headers })
+      .then((res) => {
+        console.log("sucsess", res);
+        console.log(55555555);
+        const FavoritAfterDElete=favoritItem.filter((ele)=>{
+            return ele.favItem._id !==id
+        })
+        setFavoritItem(FavoritAfterDElete)
+      })
+      .catch((err) => {
+        console.log("bad", err);
+      });
+  };
+  const addComment = (id) => {
+    axios
+      .post(`http://localhost:5000/comments/${id}`, comments, { headers })
+      .then((res) => {
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  
   useEffect(() => {
     getAllFavorit();
   }, []);
@@ -95,14 +124,12 @@ export const Favorite = () => {
                     }}
                   ></iframe>
                   {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
-                  {/* <MDBIcon far id={ele._id}  icon="heart" className="m-2" onClick={(e)=>{
-                      addToFavorite(ele._id)
-                    }} style={{fontSize:"x-large"}} />
+                 
 
-                    <MDBBtn id={ele._id} onClick={(e)=>{
+                    <MDBBtn className="m-2" id={ele.favItem._id} onClick={(e)=>{
                       deleteFavorite(e.target.id)
                     }}>delete</MDBBtn>
-                     */}
+                    
                 </div>
               </MDBCol>
               <MDBCol md="8" style={{ width: "30%" }}>
@@ -116,7 +143,7 @@ export const Favorite = () => {
                   display: "flex",
                   flexDirection: "column",
                   columnGap: "10px",
-                  alignItems: "start",
+                  alignItems: "end",
                 }}
               >
                 <MDBBtn
@@ -150,7 +177,7 @@ export const Favorite = () => {
                             }}
                           >
                            
-                            <p style={{ marginBottom: "0px", width: "50vw", display:"flex" }}>
+                            <p style={{ marginBottom: "0px", width: "65vw", display:"flex" }}>
                               {o.commenter.userName} : {o.comment}
                             </p>
                             <br></br>

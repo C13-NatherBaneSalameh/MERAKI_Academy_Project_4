@@ -65,7 +65,7 @@ const DashboardLseeons = () => {
   const [video, setVideo] = useState();
   const [showHide, setShowHide] = useState(false);
   const [btnText, setBtnText] = useState("show comment");
-  const [colorIcon, setcolorIcon] = useState(true);
+  const [btnFav, setBtnFav] = useState( false)
   // const changeText=()=>{
   //   if(btnText==="show comment"){
   //     setBtnText("Hide Comment")
@@ -372,7 +372,7 @@ const DashboardLseeons = () => {
                         }}
                       ></iframe>
                       {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
-                      <MDBIcon
+                      {/* <MDBIcon
                         far
                         id={ele._id}
                         icon="heart"
@@ -381,15 +381,28 @@ const DashboardLseeons = () => {
                           addToFavorite(ele._id);
                         }}
                         style={{ fontSize: "x-large" }}
-                      />
+                      /> */}
+                      
 
                       <MDBBtn
+                      className="m-2"
                         id={ele._id}
                         onClick={(e) => {
-                          deleteFavorite(e.target.id);
+                          if(e.target.innerText==="FAV"){
+                            addToFavorite(ele._id);
+
+                          }
+                          else{
+                            deleteFavorite(e.target.id);
+
+
+                          }
+                          setlessonId(e.target.id)
+
+                          setBtnFav(!btnFav)
                         }}
                       >
-                        delete
+                        {btnFav && ele._id===lessonId?<>REMOV</>:<>FAV</>}
                       </MDBBtn>
                     </div>
                   </MDBCol>
