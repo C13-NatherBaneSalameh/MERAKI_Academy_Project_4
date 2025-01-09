@@ -36,7 +36,6 @@ export const Favorite = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [comments, setComments] = useState({});
 
-
   const getAllFavorit = () => {
     axios
       .get("http://localhost:5000/lessons/fav/favorite", { headers })
@@ -58,10 +57,10 @@ export const Favorite = () => {
       .then((res) => {
         console.log("sucsess", res);
         console.log(55555555);
-        const FavoritAfterDElete=favoritItem.filter((ele)=>{
-            return ele.favItem._id !==id
-        })
-        setFavoritItem(FavoritAfterDElete)
+        const FavoritAfterDElete = favoritItem.filter((ele) => {
+          return ele.favItem._id !== id;
+        });
+        setFavoritItem(FavoritAfterDElete);
       })
       .catch((err) => {
         console.log("bad", err);
@@ -71,12 +70,14 @@ export const Favorite = () => {
     axios
       .post(`http://localhost:5000/comments/${id}`, comments, { headers })
       .then((res) => {
+        getAllFavorit()
+        setComments("")
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  
+
   useEffect(() => {
     getAllFavorit();
   }, []);
@@ -124,12 +125,16 @@ export const Favorite = () => {
                     }}
                   ></iframe>
                   {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
-                 
 
-                    <MDBBtn className="m-2" id={ele.favItem._id} onClick={(e)=>{
-                      deleteFavorite(e.target.id)
-                    }}>delete</MDBBtn>
-                    
+                  <MDBBtn
+                    className="m-2"
+                    id={ele.favItem._id}
+                    onClick={(e) => {
+                      deleteFavorite(e.target.id);
+                    }}
+                  >
+                    delete
+                  </MDBBtn>
                 </div>
               </MDBCol>
               <MDBCol md="8" style={{ width: "30%" }}>
@@ -176,8 +181,13 @@ export const Favorite = () => {
                               justifyContent: "start",
                             }}
                           >
-                           
-                            <p style={{ marginBottom: "0px", width: "65vw", display:"flex" }}>
+                            <p
+                              style={{
+                                marginBottom: "0px",
+                                width: "65vw",
+                                display: "flex",
+                              }}
+                            >
                               {o.commenter.userName} : {o.comment}
                             </p>
                             <br></br>
@@ -191,7 +201,7 @@ export const Favorite = () => {
                           width: "80%",
                         }}
                       >
-                        {/* <div style={{ width: "80%" }}>
+                        <div style={{ width: "80%" }}>
                           <MDBInput
                             style={{ width: "55vw" }}
                             className="inpComment"
@@ -206,24 +216,23 @@ export const Favorite = () => {
                             id="controlledValue"
                             type="text"
                           />
-                        </div> */}
-                        {/* <MDBBtn
+                        </div>
+                        <MDBBtn
                           style={{ height: "36px", width: "110.65px" }}
                           className="BtnComment"
-                          id={ele._id}
+                          id={ele.favItem._id}
                           onClick={(e) => {
                             addComment(e.target.id);
                           }}
                         >
                           comment
-                        </MDBBtn> */}
+                        </MDBBtn>
                       </div>
                     </MDBCollapse>
                   </div>
                 )}
               </MDBCol>
             </MDBRow>
-            
           </MDBCard>
         );
       })}

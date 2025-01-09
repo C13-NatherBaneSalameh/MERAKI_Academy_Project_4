@@ -382,9 +382,7 @@ const DashboardLseeons = () => {
                         }}
                         style={{ fontSize: "x-large" }}
                       /> */}
-                      
-
-                      <MDBBtn
+                      {role==="student"&& <MDBBtn
                       className="m-2"
                         id={ele._id}
                         onClick={(e) => {
@@ -403,7 +401,10 @@ const DashboardLseeons = () => {
                         }}
                       >
                         {btnFav && ele._id===lessonId?<>REMOV</>:<>FAV</>}
-                      </MDBBtn>
+                      </MDBBtn>}
+                      
+
+                     
                     </div>
                   </MDBCol>
                   <MDBCol md="8" style={{ width: "30%" }}>
