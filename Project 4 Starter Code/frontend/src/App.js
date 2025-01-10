@@ -22,8 +22,9 @@ const App = () => {
   const [lesson, setLesson] = useState([]);
   const [centredModal, setCentredModal] = useState(false);
   const [lessAdd, setLessAdd] = useState(false);
-  const [userName, setUserName] = useState(localStorage.getItem("userName"))
+  const [userName, setUserName] = useState(localStorage.getItem("userName"));
   const [centredModall, setCentredModall] = useState(false);
+  const [teacherId, setTeacherId] = useState(localStorage.getItem("teacherId"));
 
   return (
     <UserContext.Provider
@@ -43,9 +44,11 @@ const App = () => {
         lessAdd,
         setLessAdd,
         userName,
-setUserName,
-centredModall,
-setCentredModall
+        setUserName,
+        centredModall,
+        setCentredModall,
+        teacherId,
+        setTeacherId,
       }}
     >
       <div className="App">
@@ -60,7 +63,7 @@ setCentredModall
           {/* <Route path="/addNewCourse" element={<AddCourse />} /> */}
           <Route path="/dashboard/:id" element={<DashboardLseeons />} />
           {/* <Route path="/addLesson/:id" element={<Addlesson />} /> */}
-          <Route path="favorite" element={<Favorite/>}/>
+          <Route path="favorite" element={<Favorite />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

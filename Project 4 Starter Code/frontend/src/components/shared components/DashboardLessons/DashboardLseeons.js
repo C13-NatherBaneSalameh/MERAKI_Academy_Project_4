@@ -85,6 +85,8 @@ const DashboardLseeons = () => {
     setUserName,
     centredModall,
     setCentredModall,
+    teacherId,
+setTeacherId
   } = useContext(UserContext);
 
   const headers = {
@@ -133,7 +135,7 @@ const DashboardLseeons = () => {
       .get(`http://localhost:5000/lessons/${id}`, { headers })
       .then((res) => {
         setLesson(res.data.lessone);
-        console.log("lessons===>", res.data.lessone);
+        console.log("lessons===>", res.data);
         setLessons0(res.data.lessone);
       })
       .catch((err) => {
@@ -604,7 +606,7 @@ const DashboardLseeons = () => {
                                 >
                                   {o.commenter.userName} : {o.comment}{" "}
                                   <div style={{ width: "50%" }}>
-                                    <MDBBtn floating tag="a" color="danger">
+                                    {(teacherId ===o.commenter._id||role==="teacher")&&<MDBBtn floating tag="a" color="danger">
                                       <MDBIcon
                                         id={o._id}
                                         far
@@ -613,7 +615,9 @@ const DashboardLseeons = () => {
                                           deleteCommentById(e.target.id);
                                         }}
                                       />
-                                    </MDBBtn>
+                                    </MDBBtn>}
+                                   
+                                    
                                   </div>
                                 </p>{" "}
                                 <br></br>

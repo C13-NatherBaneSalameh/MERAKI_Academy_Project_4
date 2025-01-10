@@ -56,6 +56,8 @@ const Dashboard = () => {
     lessAdd,
     setCentredModal,
     centredModal,
+    teacherId,
+setTeacherId
   } = useContext(UserContext);
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -70,7 +72,6 @@ const Dashboard = () => {
   const [description, setDescription] = useState("");
   const [img, setImg] = useState("");
   // const [course, setCourse] = useState();
-  const [teacherId, setTeacherId] = useState();
   const add = () => {
     axios
       .post(
@@ -109,6 +110,7 @@ const Dashboard = () => {
         console.log(course);
 
         setTeacherId(res.data.teacherId);
+        localStorage.setItem("teacherId",res.data.teacherId)
       })
       .catch((err) => {
         console.log(err);
