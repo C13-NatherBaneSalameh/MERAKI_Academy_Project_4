@@ -21,6 +21,9 @@ import {
   MDBModalBody,
   MDBModalFooter,
   MDBContainer,
+  MDBIcon,
+MDBFooter,
+MDBPagination
 } from "mdb-react-ui-kit";
 
 const Dashboard = () => {
@@ -137,6 +140,7 @@ setTeacherId
   }, []);
 
   return (
+    <>
     <MDBContainer fluid className="container courseDiv">
       <>
         {/* <MDBBtn onClick={toggleOpen}>Vertically centered modal</MDBBtn> */}
@@ -162,7 +166,6 @@ setTeacherId
                   style={{ width: "80%", margin: "10px" }}
                   placeholder="Title"
                   onChange={(e) => {
-                    // setInfoCourse({ ...infoCourse, title: e.target.value });
                     setTitle(e.target.value);
                   }}
                 />
@@ -171,19 +174,10 @@ setTeacherId
                   type="text"
                   placeholder="Description"
                   onChange={(e) => {
-                    // setInfoCourse({ ...infoCourse, description: e.target.value });
                     setDescription(e.target.value);
                   }}
                 />
-                {/* <input
-               style={{width:"80%", margin:"10px"}}
-
-        placeholder="Image"
-        onChange={(e) => {
-          setInfoCourse({ ...infoCourse, img: e.target.value });
-        }}
-        
-      /> */}
+                
                 <MDBBtn onClick={() => widgetRef.current.open()}>
                   {" "}
                   upload img
@@ -204,8 +198,8 @@ setTeacherId
       {course?.map((ele, ind) => {
         return (
           <MDBCard
-            className="card0 shadow-lg  mt-4"
-            style={{ height: "80%", width: "350px",border:"1px solid  #9fcfe6"}}
+            className="card0 shadow-lg   mt-4 cont"
+            style={{ height: "80%", width: "350px",border:"2px solid  #9fcfe6"}}
           >
             <MDBRipple
               rippleColor="light"
@@ -266,8 +260,80 @@ setTeacherId
           </MDBCard>
         );
       })}
-      
+    
     </MDBContainer>
+    <MDBFooter className='bg-light text-center text-white'>
+      <MDBContainer className='p-4 pb-0'>
+        <section className='mb-4'>
+          <MDBBtn
+            floating
+            className='m-1'
+            style={{ backgroundColor: '#3b5998' }}
+            href='#!'
+            role='button'
+          >
+            <MDBIcon fab icon='facebook-f' />
+          </MDBBtn>
+
+          <MDBBtn
+            floating
+            className='m-1'
+            style={{ backgroundColor: '#55acee' }}
+            href='#!'
+            role='button'
+          >
+            <MDBIcon fab icon='twitter' />
+          </MDBBtn>
+
+          <MDBBtn
+            floating
+            className='m-1'
+            style={{ backgroundColor: '#dd4b39' }}
+            href='#!'
+            role='button'
+          >
+            <MDBIcon fab icon='google' />
+          </MDBBtn>
+          <MDBBtn
+            floating
+            className='m-1'
+            style={{ backgroundColor: '#ac2bac' }}
+            href='#!'
+            role='button'
+          >
+            <MDBIcon fab icon='instagram' />
+          </MDBBtn>
+
+          <MDBBtn
+            floating
+            className='m-1'
+            style={{ backgroundColor: '#0082ca' }}
+            href='#!'
+            role='button'
+          >
+            <MDBIcon fab icon='linkedin-in' />
+          </MDBBtn>
+
+          <MDBBtn
+            floating
+            className='m-1'
+            style={{ backgroundColor: '#333333' }}
+            href='#!'
+            role='button'
+          >
+            <MDBIcon fab icon='github' />
+          </MDBBtn>
+        </section>
+      </MDBContainer>
+
+      <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
+        © 2020 Copyright:
+        <a className='text-white' href='https://mdbootstrap.com/'>
+          MDBootstrap.com
+        </a>
+      </div>
+    </MDBFooter>
+    </>
   );
 };
 
