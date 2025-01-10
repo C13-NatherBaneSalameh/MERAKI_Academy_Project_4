@@ -133,7 +133,7 @@ export const Favorite = () => {
                       deleteFavorite(e.target.id);
                     }}
                   >
-                    delete
+                    remove
                   </MDBBtn>
                 </div>
               </MDBCol>

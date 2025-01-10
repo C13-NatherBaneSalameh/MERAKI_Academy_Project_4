@@ -42,4 +42,25 @@ const createNewComment = (req, res) => {
       });
     });
 };
-module.exports = { createNewComment };
+const deleteCommentById=(req,res)=>{
+  const teacherId=req.token.userId
+
+  const id = req.params.commentId;
+    commentModel
+    .findOneAndDelete({ _id: id })
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "comment deleted ",
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server Error",
+        err: err.message,
+      });
+    });
+
+}
+module.exports = { createNewComment,deleteCommentById };

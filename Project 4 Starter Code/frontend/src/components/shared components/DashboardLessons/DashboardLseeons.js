@@ -65,7 +65,7 @@ const DashboardLseeons = () => {
   const [video, setVideo] = useState();
   const [showHide, setShowHide] = useState(false);
   const [btnText, setBtnText] = useState("show comment");
-  const [btnFav, setBtnFav] = useState( false)
+  const [btnFav, setBtnFav] = useState(false);
   // const changeText=()=>{
   //   if(btnText==="show comment"){
   //     setBtnText("Hide Comment")
@@ -164,11 +164,37 @@ const DashboardLseeons = () => {
         console.log(err);
       });
   };
+
+  //!!comment
   const addComment = (id) => {
     axios
       .post(`http://localhost:5000/comments/${id}`, comments, { headers })
       .then((res) => {
         getLessonsById();
+        // setComments("")
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteCommentById = (id) => {
+    console.log(id);
+    console.log("hi");
+
+    axios
+      .delete(`http://localhost:5000/comments/${id}/delete`, { headers })
+      .then((res) => {
+        const lessonAfterDeleteComment = lesson.map((ele) => {
+          return {
+            ...ele,
+            comments: ele.comments.filter((e) => e._id !== id),
+          };
+        });
+        setLesson(lessonAfterDeleteComment);
+        // setComments("")
+        
       })
       .catch((err) => {
         console.log(err);
@@ -353,7 +379,7 @@ const DashboardLseeons = () => {
                       }}
                     >
                       <iframe
-                        className="mt-3 video-frame"
+                        className="mt-3 mb-3 video-frame"
                         style={{
                           height: "150px",
                           width: "100%",
@@ -382,29 +408,28 @@ const DashboardLseeons = () => {
                         }}
                         style={{ fontSize: "x-large" }}
                       /> */}
-                      {role==="student"&& <MDBBtn
-                      className="m-2"
-                        id={ele._id}
-                        onClick={(e) => {
-                          if(e.target.innerText==="FAV"){
-                            addToFavorite(ele._id);
+                      {role === "student" && (
+                        <MDBBtn
+                          className="m-2"
+                          id={ele._id}
+                          onClick={(e) => {
+                            if (e.target.innerText === "FAV") {
+                              addToFavorite(ele._id);
+                            } else {
+                              deleteFavorite(e.target.id);
+                            }
+                            setlessonId(e.target.id);
 
-                          }
-                          else{
-                            deleteFavorite(e.target.id);
-
-
-                          }
-                          setlessonId(e.target.id)
-
-                          setBtnFav(!btnFav)
-                        }}
-                      >
-                        {btnFav && ele._id===lessonId?<>REMOV</>:<>FAV</>}
-                      </MDBBtn>}
-                      
-
-                     
+                            setBtnFav(!btnFav);
+                          }}
+                        >
+                          {btnFav && ele._id === lessonId ? (
+                            <>REMOV</>
+                          ) : (
+                            <>FAV</>
+                          )}
+                        </MDBBtn>
+                      )}
                     </div>
                   </MDBCol>
                   <MDBCol md="8" style={{ width: "30%" }}>
@@ -427,10 +452,8 @@ const DashboardLseeons = () => {
                         toggleOpen(e);
                         setlessonId(e.target.id);
                         console.log(e.target.innerText);
-                        
 
                         setShowHide(!showHide);
-                       
                       }}
                       className="mt-2  btn-primary"
                       style={{ width: "40%" }}
@@ -551,22 +574,47 @@ const DashboardLseeons = () => {
                       </MDBBtn>
                     )}
                     {ele._id === lessonId && (
-                      <div style={{ marginBottom: "10px",display: "flex",
-                        
-                            flexDirection: "column" }}>
+                      <div
+                        style={{
+                          marginBottom: "10px",
+                          display: "flex",
+
+                          flexDirection: "column",
+                        }}
+                      >
                         <MDBCollapse open={isOpen}>
                           <MDBCardText>
                             {ele.comments.map((o) => (
                               <div
                                 style={{
                                   display: "flex",
-                                  
+
                                   justifyContent: "start",
                                 }}
                               >
                                 {" "}
-                                <p style={{ marginBottom: "0px" ,width: "65vw" ,display:"flex" }}>
-                                  {o.commenter.userName} : {o.comment}
+                                <p
+                                  style={{
+                                    marginBottom: "0px",
+                                    width: "65vw",
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                  }}
+                                  className="mt-2 text-break"
+                                >
+                                  {o.commenter.userName} : {o.comment}{" "}
+                                  <div style={{ width: "50%" }}>
+                                    <MDBBtn floating tag="a" color="danger">
+                                      <MDBIcon
+                                        id={o._id}
+                                        far
+                                        icon="trash-alt"
+                                        onClick={(e) => {
+                                          deleteCommentById(e.target.id);
+                                        }}
+                                      />
+                                    </MDBBtn>
+                                  </div>
                                 </p>{" "}
                                 <br></br>
                               </div>
@@ -581,7 +629,6 @@ const DashboardLseeons = () => {
                           >
                             <div style={{ width: "80%" }}>
                               <MDBInput
-                              
                                 className="inpComment"
                                 //!1111111
                                 onChange={(e) => {
