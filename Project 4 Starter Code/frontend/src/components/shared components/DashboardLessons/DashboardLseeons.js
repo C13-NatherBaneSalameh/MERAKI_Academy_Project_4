@@ -336,12 +336,24 @@ setTeacherId
         <>
           {role === "teacher" && (
             
+            <div className="mt-2 me-2" style={{display:"flex",justifyContent:"space-between" }}>
             <MDBBtn
-              onClick={addLessons}
-              style={{ marginTop: "10px", marginLeft: "1200px" }}
-            >
-              addLesson
-            </MDBBtn>
+           onClick={addLessons}
+           className=" ms-2"
+         >
+           addLesson
+         </MDBBtn>
+          <MDBInputGroup style={{width:"30%"}}>
+      <MDBInput className="search" label='Search' onChange={(e)=>{
+        setSearch(e.target.value)
+      }} />
+      <MDBBtn rippleColor='dark'  >
+        <MDBIcon icon='search' onClick={(e)=>{
+          getLessonsByIdTitle()
+        }} />
+      </MDBBtn>
+    </MDBInputGroup>
+    </div>
           )}
 
           
@@ -354,25 +366,43 @@ setTeacherId
       ) : (
         <>
           {role === "teacher" && (
-            <MDBBtn
+           
+             <div className="mt-2 me-2" style={{display:"flex",justifyContent:"space-between" }}>
+               <MDBBtn
               onClick={addLessons}
-              style={{ marginTop: "10px", marginLeft: "1220px" }}
+              className=" ms-2"
             >
               addLesson
             </MDBBtn>
+             <MDBInputGroup style={{width:"30%"}}>
+         <MDBInput className="search" label='Search' onChange={(e)=>{
+           setSearch(e.target.value)
+         }} />
+         <MDBBtn rippleColor='dark'  >
+           <MDBIcon icon='search' onClick={(e)=>{
+             getLessonsByIdTitle()
+           }} />
+         </MDBBtn>
+       </MDBInputGroup>
+       </div>
           )}
-          {role==="student"&& <div className="mt-2 me-2" style={{display:"flex",justifyContent:"center" }}>
-          <MDBInputGroup style={{width:"30%"}}>
-      <MDBInput className="search" label='Search' onChange={(e)=>{
-        setSearch(e.target.value)
-      }} />
-      <MDBBtn rippleColor='dark'  >
-        <MDBIcon icon='search' onClick={(e)=>{
-          getLessonsByIdTitle()
-        }} />
-      </MDBBtn>
-    </MDBInputGroup>
-    </div>}
+
+          {role==="student"&&  <div className="mt-2 me-2" style={{display:"flex",justifyContent:"end" }}>
+             
+             <MDBInputGroup style={{width:"30%"}}>
+         <MDBInput className="search" label='Search' onChange={(e)=>{
+           setSearch(e.target.value)
+         }} />
+         <MDBBtn rippleColor='dark'  >
+           <MDBIcon icon='search' onClick={(e)=>{
+             getLessonsByIdTitle()
+           }} />
+         </MDBBtn>
+       </MDBInputGroup>
+       </div>
+       }
+         
+         
          
           {lesson?.map((ele, ind) => {
             return (
