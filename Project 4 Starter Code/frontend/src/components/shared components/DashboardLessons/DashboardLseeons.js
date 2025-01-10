@@ -460,7 +460,6 @@ setTeacherId
                       className="mt-2  btn-primary"
                       style={{ width: "40%" }}
                     >
-                      {/* {btnText} */}
                       {showHide && ele._id === lessonId ? (
                         <>Hide Comment</>
                       ) : (
@@ -468,20 +467,7 @@ setTeacherId
                       )}
                     </MDBBtn>
 
-                    {/* 
-                    {role === "teacher" && (
-                      <MDBBtn
-                        style={{ width: "40%" }}
-                        className="mt-2"
-                        color="danger"
-                        id={ele._id}
-                        onClick={(e) => {
-                          deleteLesson(e.target.id);
-                        }}
-                      >
-                        delete
-                      </MDBBtn>
-                    )} */}
+              
                     {/* !!!! */}
                     {isClickedToUpdate && ele._id === lessonId ? (
                       <div className="mt-2">
@@ -583,14 +569,14 @@ setTeacherId
 
                           flexDirection: "column",
                         }}
-                      >
+                      >                  <div style={{ marginBottom: "10px" }}>
+
                         <MDBCollapse open={isOpen}>
                           <MDBCardText>
                             {ele.comments.map((o) => (
                               <div
                                 style={{
                                   display: "flex",
-
                                   justifyContent: "start",
                                 }}
                               >
@@ -601,6 +587,7 @@ setTeacherId
                                     width: "65vw",
                                     display: "flex",
                                     justifyContent: "space-between",
+
                                   }}
                                   className="mt-2 text-break"
                                 >
@@ -633,6 +620,7 @@ setTeacherId
                           >
                             <div style={{ width: "80%" }}>
                               <MDBInput
+                               style={{ width: "55vw" }}
                                 className="inpComment"
                                 //!1111111
                                 onChange={(e) => {
@@ -658,6 +646,7 @@ setTeacherId
                             </MDBBtn>
                           </div>
                         </MDBCollapse>
+                        </div>
                       </div>
                     )}
                   </MDBCol>

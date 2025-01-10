@@ -23,10 +23,11 @@ import {
   MDBCol,
   MDBCollapse,
   MDBInput,
+  MDBIcon,
 } from "mdb-react-ui-kit";
 export const Favorite = () => {
   const toggleOpen = (e) => setIsOpen(!isOpen);
-  const { token, role } = useContext(UserContext);
+  const { token, role, lesson, teacherId, setLesson } = useContext(UserContext);
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -41,7 +42,7 @@ export const Favorite = () => {
       .get("http://localhost:5000/lessons/fav/favorite", { headers })
       .then((res) => {
         setFavoritItem(res.data.favorite);
-        console.log(res.data.favorite);
+        console.log(res);
 
         console.log(favoritItem);
       })
@@ -70,8 +71,27 @@ export const Favorite = () => {
     axios
       .post(`http://localhost:5000/comments/${id}`, comments, { headers })
       .then((res) => {
-        getAllFavorit()
-        setComments("")
+        getAllFavorit();
+        setComments("");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const deleteCommentById = (id) => {
+    axios
+      .delete(`http://localhost:5000/comments/${id}/delete`, { headers })
+      .then((res) => {
+        const afterDelete = favoritItem.map((ele) => {
+          return {
+            ...ele,
+            favItem: {
+              ...ele.favItem,
+              comments: ele.favItem.comments.filter((o) => o._id !== id),
+            },
+          };
+        });
+        setFavoritItem(afterDelete);
       })
       .catch((err) => {
         console.log(err);
@@ -163,7 +183,6 @@ export const Favorite = () => {
                   className="mt-2  btn-primary"
                   style={{ width: "40%" }}
                 >
-                  {/* {btnText} */}
                   {showHide && ele._id === lessonId ? (
                     <>Hide Comment</>
                   ) : (
@@ -186,9 +205,26 @@ export const Favorite = () => {
                                 marginBottom: "0px",
                                 width: "65vw",
                                 display: "flex",
+                                justifyContent: "space-between",
+
                               }}
                             >
                               {o.commenter.userName} : {o.comment}
+                              <div style={{ width: "50%" }}>
+                                {(teacherId === o.commenter._id ||
+                                  role === "teacher") && (
+                                  <MDBBtn floating tag="a" color="danger">
+                                    <MDBIcon
+                                      id={o._id}
+                                      far
+                                      icon="trash-alt"
+                                      onClick={(e) => {
+                                        deleteCommentById(e.target.id);
+                                      }}
+                                    />
+                                  </MDBBtn>
+                                )}
+                              </div>
                             </p>
                             <br></br>
                           </div>
