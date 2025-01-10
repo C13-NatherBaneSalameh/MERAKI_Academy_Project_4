@@ -101,9 +101,9 @@ const updateLessonById = (req, res) => {
 
   const findLessonsByTitle=(req,res)=>{
     const id = req.params.id;
-   const title=req.body.title
+   const title=req.query.title
     lessonsModel
-      .find({courseId:id ,title:title})
+      .find({ courseId:id,title:new RegExp(title,"i")})
       .populate({
         path:"comments",
         populate:{
@@ -112,7 +112,7 @@ const updateLessonById = (req, res) => {
       })
       .then((result) => {
         if (result.length === 0) {
-          res.status(400).json("No lessons yet ");
+          res.status(200).json("No lessons yet ");
         } else {
           res.status(200).json({
             success: true,
@@ -124,9 +124,7 @@ const updateLessonById = (req, res) => {
       .catch((err) => {
         res.status(500).json({
           success: false,
-  
           message: "Server Error",
-  
           err: err.message,
         });
       });

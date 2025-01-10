@@ -25,6 +25,7 @@ import {
   MDBModalBody,
   MDBModalFooter,
   MDBIcon,
+  MDBInputGroup
 } from "mdb-react-ui-kit";
 const DashboardLseeons = () => {
   const cloudinaryRef = useRef();
@@ -64,15 +65,9 @@ const DashboardLseeons = () => {
   const [description, setDescription] = useState();
   const [video, setVideo] = useState();
   const [showHide, setShowHide] = useState(false);
-  const [btnText, setBtnText] = useState("show comment");
   const [btnFav, setBtnFav] = useState(false);
-  // const changeText=()=>{
-  //   if(btnText==="show comment"){
-  //     setBtnText("Hide Comment")
-  //   }else{
-  //     setBtnText("show comment")
-  //   }
-  // }
+  const [search, setSearch] = useState()
+  
 
   const {
     token,
@@ -126,7 +121,6 @@ setTeacherId
         setIsAdded(false);
       });
   };
-  // const [centredModall, setCentredModall] = useState(false);
 
   const toggleOpenn = () => setCentredModall(!centredModall);
 
@@ -213,20 +207,8 @@ setTeacherId
         console.log(err);
       });
   };
-  useEffect(() => {
-    getLessonsById();
-  }, []);
-  // if (!lessons0.length) {
-  //   return (
-  //     <div>
-  //       <div>
-  //         <button onClick={addLessons}>addLesson</button>
-  //       </div>
-  //       <p>no lesson yet</p>
-  //     </div>
-  //   );
-  // }
-  //
+ 
+ 
   // TODO favorit function
   const addToFavorite = (id) => {
     console.log(token);
@@ -265,10 +247,33 @@ setTeacherId
         console.log("bad", err);
       });
   };
+  //TODO search =============================
+  const getLessonsByIdTitle = () => {
+    axios
+      .get(`http://localhost:5000/lessons/${id}/search?title=${search}`, { headers })
+      .then((res) => {
+        console.log(res);
+        
+        setLesson(res.data.lessone);
+        // console.log("lessons===>", res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    if(search){
+      getLessonsByIdTitle()
+
+    }else{
+      getLessonsById();
+
+    }
+   
+  }, [search]);
   return (
     <>
       <>
-        {/* <MDBBtn onClick={toggleOpen}>Vertically centered modal</MDBBtn> */}
 
         <MDBModal
           tabIndex="-1"
@@ -302,14 +307,7 @@ setTeacherId
                     setDescription(e.target.value);
                   }}
                 />
-                {/* <MDBInput
-                wrapperClass="mb-4"
-                label="Video"
-                id="form4"
-                onChange={(e) => {
-                  setVideo(e.target.value);
-                }}
-              /> */}
+                
 
                 <MDBBtn
                   onClick={() => {
@@ -337,6 +335,7 @@ setTeacherId
       {!lessons0.length ? (
         <>
           {role === "teacher" && (
+            
             <MDBBtn
               onClick={addLessons}
               style={{ marginTop: "10px", marginLeft: "1200px" }}
@@ -344,6 +343,8 @@ setTeacherId
               addLesson
             </MDBBtn>
           )}
+
+          
           <br />
           <br />
           <br />
@@ -360,6 +361,19 @@ setTeacherId
               addLesson
             </MDBBtn>
           )}
+          {role==="student"&& <div className="mt-2 me-2" style={{display:"flex",justifyContent:"end" }}>
+          <MDBInputGroup style={{width:"50%"}}>
+      <MDBInput label='Search' onChange={(e)=>{
+        setSearch(e.target.value)
+      }} />
+      <MDBBtn rippleColor='dark' >
+        <MDBIcon icon='search' onClick={(e)=>{
+          getLessonsByIdTitle()
+        }} />
+      </MDBBtn>
+    </MDBInputGroup>
+    </div>}
+         
           {lesson?.map((ele, ind) => {
             return (
               <MDBCard
@@ -399,17 +413,7 @@ setTeacherId
                           e.target.style.width = "100%";
                         }}
                       ></iframe>
-                      {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
-                      {/* <MDBIcon
-                        far
-                        id={ele._id}
-                        icon="heart"
-                        className="m-2"
-                        onClick={(e) => {
-                          addToFavorite(ele._id);
-                        }}
-                        style={{ fontSize: "x-large" }}
-                      /> */}
+                      
                       {role === "student" && (
                         <MDBBtn
                           className="m-2"
@@ -474,12 +478,8 @@ setTeacherId
                         <MDBInput
                           className="mt-3"
                           // !!!
-                          // style={{width:"90vw"}}
                           onChange={(e) => {
-                            // setNewInfoLessons({
-                            //   ...newInfoLessons,
-                            //   title: e.target.value,
-                            // });
+                           
                             setTitle(e.target.value);
                           }}
                           label="title"
@@ -489,10 +489,7 @@ setTeacherId
                         <MDBInput
                           className="mt-2"
                           onChange={(e) => {
-                            // setNewInfoLessons({
-                            //   ...newInfoLessons,
-                            //   description: e.target.value,
-                            // });
+                           
                             setDescription(e.target.value);
                           }}
                           label="description"
@@ -500,18 +497,7 @@ setTeacherId
                           type="text"
                         />
 
-                        {/* <MDBInput
-                          className="mb-2"
-                          onChange={(e) => {
-                            setNewInfoLessons({
-                              ...newInfoLessons,
-                              video: e.target.value,
-                            });
-                          }}
-                          label="video "
-                          id="controlledValue"
-                          type="text"
-                        /> */}
+                       
                         <MDBBtn
                           className="mt-2"
                           onClick={() => widgetRef.current.open()}
