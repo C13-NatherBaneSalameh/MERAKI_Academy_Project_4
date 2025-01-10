@@ -204,8 +204,8 @@ setTeacherId
       {course?.map((ele, ind) => {
         return (
           <MDBCard
-            className="card0 gg mt-4"
-            style={{ height: "80%", width: "350px" }}
+            className="card0 shadow-lg  mt-4"
+            style={{ height: "80%", width: "350px",border:"1px solid  #9fcfe6"}}
           >
             <MDBRipple
               rippleColor="light"

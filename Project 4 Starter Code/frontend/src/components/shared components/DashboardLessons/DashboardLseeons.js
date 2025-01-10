@@ -361,12 +361,12 @@ setTeacherId
               addLesson
             </MDBBtn>
           )}
-          {role==="student"&& <div className="mt-2 me-2" style={{display:"flex",justifyContent:"end" }}>
-          <MDBInputGroup style={{width:"50%"}}>
-      <MDBInput label='Search' onChange={(e)=>{
+          {role==="student"&& <div className="mt-2 me-2" style={{display:"flex",justifyContent:"center" }}>
+          <MDBInputGroup style={{width:"30%"}}>
+      <MDBInput className="search" label='Search' onChange={(e)=>{
         setSearch(e.target.value)
       }} />
-      <MDBBtn rippleColor='dark' >
+      <MDBBtn rippleColor='dark'  >
         <MDBIcon icon='search' onClick={(e)=>{
           getLessonsByIdTitle()
         }} />
@@ -380,10 +380,10 @@ setTeacherId
                 style={{
                   maxWidth: "70%",
                   height: "50%",
-                  border: "2px solid",
-                  marginTop: "10px",
+                  border: "2px solid #9fcfe6",
+                  marginTop: "20px",
                 }}
-                className="container"
+                className="container shadow-lg"
               >
                 <MDBRow className="g-0 ">
                   <MDBCol md="4" style={{ width: "30%" }}>
