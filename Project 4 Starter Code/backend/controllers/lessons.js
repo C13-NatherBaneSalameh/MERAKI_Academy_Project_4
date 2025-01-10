@@ -98,4 +98,42 @@ const updateLessonById = (req, res) => {
     err: err.message
   })
   })};
-module.exports = { createNewLesson,getAllLessonsByID,deleteLessonsById ,updateLessonById};
+
+  const findLessonsByTitle=(req,res)=>{
+    const id = req.params.id;
+   const title=req.body.title
+    lessonsModel
+      .find({courseId:id ,title:title})
+      .populate({
+        path:"comments",
+        populate:{
+          path:"commenter"
+        }
+      })
+      .then((result) => {
+        if (result.length === 0) {
+          res.status(400).json("No lessons yet ");
+        } else {
+          res.status(200).json({
+            success: true,
+            message: " All the lessons",
+            lessone: result,
+          });
+        }
+      })
+      .catch((err) => {
+        res.status(500).json({
+          success: false,
+  
+          message: "Server Error",
+  
+          err: err.message,
+        });
+      });
+
+
+
+
+
+  }
+module.exports = { createNewLesson,getAllLessonsByID,deleteLessonsById ,updateLessonById,findLessonsByTitle};

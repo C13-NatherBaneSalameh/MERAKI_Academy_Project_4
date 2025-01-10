@@ -12,6 +12,8 @@ lessoneRouter.put("/:id", authentication,authorization("UPDETE_LESSONE") ,update
 lessoneRouter.post("/:id/favorite",authentication ,addToFavorite)
 lessoneRouter.get("/fav/favorite",authentication, getAllFav)
 lessoneRouter.delete("/:id/favorite",authentication,deleteFvById)
+lessoneRouter.get("/:id/title",authentication, getAllLessonsByID)
+
 
 
 
