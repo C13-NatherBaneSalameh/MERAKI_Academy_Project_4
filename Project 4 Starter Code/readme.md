@@ -1,10 +1,10 @@
 <p align="center">
 <a href="https://www.meraki-academy.org" target="_blank" rel="noopener noreferrer">
- <img width="400px" height="100px" src="https://www.meraki-academy.org/assets/img/logov02.svg" alt="Project logo">
+ <img width="400px" height="100px" src="https://res.cloudinary.com/duxfa6nqg/image/upload/v1736556922/wnvrbnsmkcvzziataj30.jpg" alt="Project logo">
  </a>
 </p>
 
-<h3 align="center">Project Title
+<h3 align="center">Esay Learning
 </h3>
 
 ---
