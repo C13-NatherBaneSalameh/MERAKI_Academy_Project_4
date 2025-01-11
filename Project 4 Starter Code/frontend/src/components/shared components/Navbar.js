@@ -14,6 +14,7 @@ import {
   MDBCollapse,
   MDBIcon,
   MDBBtn,
+  MDBCardImage
 } from "mdb-react-ui-kit";
 import Dashboard from "./Dashboard/Dashboard.js";
 import AddCourse from "./AddCourse/addCourse.js";
@@ -49,7 +50,8 @@ const Navbar = () => {
   return (
     <MDBNavbar sticky expand="lg" className="navber">
       <MDBContainer fluid>
-        <MDBNavbarBrand href="#">Navbar</MDBNavbarBrand>
+        <img style={{width:"100px",height:"75px"}} className="logo" src="https://res.cloudinary.com/duxfa6nqg/image/upload/v1736556922/wnvrbnsmkcvzziataj30.jpg"/>
+        <MDBNavbarBrand href="#" style={{color:"rgb(14 62 86)",marginLeft:"10px" ,fontSize:"30px"}} >Esay Learning </MDBNavbarBrand>
         <MDBNavbarToggler
           type="button"
           aria-expanded="false"
@@ -68,7 +70,7 @@ const Navbar = () => {
                     active
                     aria-current="page"
                     href="/dashboard"
-                    style={{ fontSize: "x-large" }}
+                    style={{ fontSize: "x-large",color:"rgb(14 62 86)" }}
                   >
                     Home
                   </MDBNavbarLink>
@@ -85,7 +87,7 @@ const Navbar = () => {
                         }}
                         active
                         aria-current="page"
-                        style={{ fontSize: "x-large" }}
+                        style={{ fontSize: "x-large",color:"rgb(14 62 86)" }}
                       >
                         AddCorse
                       </MDBNavbarLink>
@@ -97,7 +99,7 @@ const Navbar = () => {
                   <MDBNavbarLink
                     active
                     href="/favorite"
-                    style={{ fontSize: "x-large" }}
+                    style={{ fontSize: "x-large",color:"rgb(14 62 86)" }}
                   >
                     {" "}
                     favorite{" "}
@@ -105,7 +107,7 @@ const Navbar = () => {
                 )}
 
                 <MDBNavbarItem>
-                  <MDBNavbarLink href="/logout" style={{ fontSize: "x-large" }}>
+                  <MDBNavbarLink href="/logout" style={{ fontSize: "x-large",color:"rgb(14 62 86)" }}>
                     Logout
                   </MDBNavbarLink>
                 </MDBNavbarItem>
@@ -113,7 +115,7 @@ const Navbar = () => {
             ) : (
               <>
                 <MDBNavbarItem>
-                  <MDBNavbarLink href="/" style={{ fontSize: "x-large" }}>
+                  <MDBNavbarLink href="/" style={{ fontSize: "x-large",color:"rgb(14 62 86)" }}>
                     Login
                   </MDBNavbarLink>
 
@@ -124,7 +126,7 @@ const Navbar = () => {
                 <MDBNavbarItem>
                   <MDBNavbarLink
                     href="/register"
-                    style={{ fontSize: "x-large" }}
+                    style={{ fontSize: "x-large",color:"rgb(14 62 86)" }}
                   >
                     {" "}
                     Register

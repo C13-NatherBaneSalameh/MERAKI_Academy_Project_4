@@ -23,7 +23,7 @@ import {
   MDBContainer,
   MDBIcon,
 MDBFooter,
-MDBPagination
+
 } from "mdb-react-ui-kit";
 
 const Dashboard = () => {
@@ -329,8 +329,7 @@ setTeacherId
       <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
         © 2020 Copyright:
         <a className='text-white' href='https://mdbootstrap.com/'>
-          MDBootstrap.com
-        </a>
+        EasyLearning.com        </a>
       </div>
     </MDBFooter>
     </>

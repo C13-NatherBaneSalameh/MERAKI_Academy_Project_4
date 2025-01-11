@@ -65,16 +65,16 @@ console.log("+++>",userName);
             className="my-5 display-3 fw-bold ls-tight px-3"
             style={{ color: "hsl(218, 81%, 95%)" }}
           >
-            The best offer <br />
-            <span style={{ color: "hsl(555, 85%, 75%)" }}>
-              for your business
+            Discover the Joy of <br />
+            <span style={{ color:" rgb(14 62 86) "}}>
+              Easy Learning!
             </span>
           </h1>
 
          
         </MDBCol>
 
-        <MDBCol md="6" className="position-relative" style={{height:"480px"}}
+        <MDBCol md="6" className="position-relative" style={{height:"628px"}}
         >
           <div
             id="radius-shape-1"

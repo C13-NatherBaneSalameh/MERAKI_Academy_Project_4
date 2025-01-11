@@ -11,7 +11,6 @@ import {
   MDBCardTitle,
   MDBCardText,
   MDBCardBody,
-  MDBCardImage,
   MDBRow,
   MDBCol,
   MDBInput,
@@ -25,7 +24,9 @@ import {
   MDBModalBody,
   MDBModalFooter,
   MDBIcon,
-  MDBInputGroup
+  MDBInputGroup,
+  MDBContainer,
+  MDBFooter,
 } from "mdb-react-ui-kit";
 const DashboardLseeons = () => {
   const cloudinaryRef = useRef();
@@ -66,8 +67,7 @@ const DashboardLseeons = () => {
   const [video, setVideo] = useState();
   const [showHide, setShowHide] = useState(false);
   const [btnFav, setBtnFav] = useState(false);
-  const [search, setSearch] = useState()
-  
+  const [search, setSearch] = useState();
 
   const {
     token,
@@ -81,7 +81,7 @@ const DashboardLseeons = () => {
     centredModall,
     setCentredModall,
     teacherId,
-setTeacherId
+    setTeacherId,
   } = useContext(UserContext);
 
   const headers = {
@@ -168,7 +168,6 @@ setTeacherId
       .then((res) => {
         getLessonsById();
         // setComments("")
-
       })
       .catch((err) => {
         console.log(err);
@@ -190,7 +189,6 @@ setTeacherId
         });
         setLesson(lessonAfterDeleteComment);
         // setComments("")
-        
       })
       .catch((err) => {
         console.log(err);
@@ -207,8 +205,7 @@ setTeacherId
         console.log(err);
       });
   };
- 
- 
+
   // TODO favorit function
   const addToFavorite = (id) => {
     console.log(token);
@@ -250,10 +247,12 @@ setTeacherId
   //TODO search =============================
   const getLessonsByIdTitle = () => {
     axios
-      .get(`http://localhost:5000/lessons/${id}/search?title=${search}`, { headers })
+      .get(`http://localhost:5000/lessons/${id}/search?title=${search}`, {
+        headers,
+      })
       .then((res) => {
         console.log(res);
-        
+
         setLesson(res.data.lessone);
         // console.log("lessons===>", res.data);
       })
@@ -262,19 +261,15 @@ setTeacherId
       });
   };
   useEffect(() => {
-    if(search){
-      getLessonsByIdTitle()
-
-    }else{
+    if (search) {
+      getLessonsByIdTitle();
+    } else {
       getLessonsById();
-
     }
-   
   }, [search]);
   return (
-    <>
+    <div style={{display:"flex",flexDirection:"column" ,minHeight:"100vh"}}>
       <>
-
         <MDBModal
           tabIndex="-1"
           open={centredModall}
@@ -307,7 +302,6 @@ setTeacherId
                     setDescription(e.target.value);
                   }}
                 />
-                
 
                 <MDBBtn
                   onClick={() => {
@@ -333,85 +327,106 @@ setTeacherId
       </>
 
       {!lessons0.length ? (
-        <>
+        <div style={{display:"flex",flexDirection:"column",flex:"1"}}>
           {role === "teacher" && (
-            
-            <div className="mt-2 me-2" style={{display:"flex",justifyContent:"space-between" }}>
-            <MDBBtn
-           onClick={addLessons}
-           className=" ms-2"
-         >
-           addLesson
-         </MDBBtn>
-          <MDBInputGroup style={{width:"30%"}}>
-      <MDBInput className="search" label='Search' onChange={(e)=>{
-        setSearch(e.target.value)
-      }} />
-      <MDBBtn rippleColor='dark'  >
-        <MDBIcon icon='search' onClick={(e)=>{
-          getLessonsByIdTitle()
-        }} />
-      </MDBBtn>
-    </MDBInputGroup>
-    </div>
+            <div
+              className="mt-2 me-2"
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <MDBBtn onClick={addLessons} className=" ms-2">
+                addLesson
+              </MDBBtn>
+              <MDBInputGroup style={{ width: "30%" }}>
+                <MDBInput
+                  className="search"
+                  label="Search"
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}
+                />
+                <MDBBtn rippleColor="dark">
+                  <MDBIcon
+                    icon="search"
+                    onClick={(e) => {
+                      getLessonsByIdTitle();
+                    }}
+                  />
+                </MDBBtn>
+              </MDBInputGroup>
+            </div>
           )}
 
-          
           <br />
           <br />
           <br />
 
           <p style={{ fontSize: "50px" }}>No lessons yet!</p>
-        </>
+        </div>
       ) : (
         <>
           {role === "teacher" && (
-           
-             <div className="mt-2 me-2" style={{display:"flex",justifyContent:"space-between" }}>
-               <MDBBtn
-              onClick={addLessons}
-              className=" ms-2"
+            <div
+              className="mt-2 me-2"
+              style={{ display: "flex", justifyContent: "space-between" }}
             >
-              addLesson
-            </MDBBtn>
-             <MDBInputGroup style={{width:"30%"}}>
-         <MDBInput className="search" label='Search' onChange={(e)=>{
-           setSearch(e.target.value)
-         }} />
-         <MDBBtn rippleColor='dark'  >
-           <MDBIcon icon='search' onClick={(e)=>{
-             getLessonsByIdTitle()
-           }} />
-         </MDBBtn>
-       </MDBInputGroup>
-       </div>
+              <MDBBtn onClick={addLessons} className=" ms-2">
+                addLesson
+              </MDBBtn>
+              <MDBInputGroup style={{ width: "30%" }}>
+                <MDBInput
+                  className="search"
+                  label="Search"
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}
+                />
+                <MDBBtn rippleColor="dark">
+                  <MDBIcon
+                    icon="search"
+                    onClick={(e) => {
+                      getLessonsByIdTitle();
+                    }}
+                  />
+                </MDBBtn>
+              </MDBInputGroup>
+            </div>
           )}
 
-          {role==="student"&&  <div className="mt-2 me-2" style={{display:"flex",justifyContent:"end" }}>
-             
-             <MDBInputGroup style={{width:"30%"}}>
-         <MDBInput className="search" label='Search' onChange={(e)=>{
-           setSearch(e.target.value)
-         }} />
-         <MDBBtn rippleColor='dark'  >
-           <MDBIcon icon='search' onClick={(e)=>{
-             getLessonsByIdTitle()
-           }} />
-         </MDBBtn>
-       </MDBInputGroup>
-       </div>
-       }
-         
-         
-         
+          {role === "student" && (
+            <div
+              className="mt-2 me-2"
+              style={{ display: "flex", justifyContent: "end" }}
+            >
+              <MDBInputGroup style={{ width: "30%" }}>
+                <MDBInput
+                  className="search"
+                  label="Search"
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}
+                />
+                <MDBBtn rippleColor="dark">
+                  <MDBIcon
+                    icon="search"
+                    onClick={(e) => {
+                      getLessonsByIdTitle();
+                    }}
+                  />
+                </MDBBtn>
+              </MDBInputGroup>
+            </div>
+          )}
+
           {lesson?.map((ele, ind) => {
             return (
+              <main style={{flex:"1"}}>
               <MDBCard
                 style={{
                   maxWidth: "70%",
                   height: "50%",
                   border: "2px solid #9fcfe6",
                   marginTop: "20px",
+                  
                 }}
                 className="container shadow-lg"
               >
@@ -443,7 +458,7 @@ setTeacherId
                           e.target.style.width = "100%";
                         }}
                       ></iframe>
-                      
+
                       {role === "student" && (
                         <MDBBtn
                           className="m-2"
@@ -501,7 +516,6 @@ setTeacherId
                       )}
                     </MDBBtn>
 
-              
                     {/* !!!! */}
                     {isClickedToUpdate && ele._id === lessonId ? (
                       <div className="mt-2">
@@ -509,7 +523,6 @@ setTeacherId
                           className="mt-3"
                           // !!!
                           onChange={(e) => {
-                           
                             setTitle(e.target.value);
                           }}
                           label="title"
@@ -519,7 +532,6 @@ setTeacherId
                         <MDBInput
                           className="mt-2"
                           onChange={(e) => {
-                           
                             setDescription(e.target.value);
                           }}
                           label="description"
@@ -527,7 +539,6 @@ setTeacherId
                           type="text"
                         />
 
-                       
                         <MDBBtn
                           className="mt-2"
                           onClick={() => widgetRef.current.open()}
@@ -585,94 +596,173 @@ setTeacherId
 
                           flexDirection: "column",
                         }}
-                      >                  <div style={{ marginBottom: "10px" }}>
-
-                        <MDBCollapse open={isOpen}>
-                          <MDBCardText>
-                            {ele.comments.map((o) => (
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "start",
-                                }}
-                              >
-                                {" "}
-                                <p 
+                      >
+                        {" "}
+                        <div style={{ marginBottom: "10px" }}>
+                          <MDBCollapse open={isOpen}>
+                            <MDBCardText>
+                              {ele.comments.map((o) => (
+                                <div
                                   style={{
-                                    marginBottom: "0px",
-                                    width: "65vw",
                                     display: "flex",
-                                    justifyContent: "space-between",
-
+                                    justifyContent: "start",
                                   }}
-                                  className="mt-2 text-break"
                                 >
-                                  {o.commenter.userName} : {o.comment}{" "}
-                                  <div style={{ width: "50%" }}>
-                                    {(teacherId ===o.commenter._id||role==="teacher")&&<MDBBtn floating tag="a" color="danger">
-                                      <MDBIcon
-                                        id={o._id}
-                                        far
-                                        icon="trash-alt"
-                                        onClick={(e) => {
-                                          deleteCommentById(e.target.id);
-                                        }}
-                                      />
-                                    </MDBBtn>}
-                                   
-                                    
-                                  </div>
-                                </p>{" "}
-                                <br></br>
-                              </div>
-                            ))}
-                          </MDBCardText>
-                          <div
-                            style={{
-                              display: "flex",
-                              marginBottom: "10px",
-                              width: "80%",
-                            }}
-                          >
-                            <div style={{ width: "80%" }}>
-                              <MDBInput
-                               style={{ width: "55vw" }}
-                                className="inpComment"
-                                //!1111111
-                                onChange={(e) => {
-                                  setComments({
-                                    ...comments,
-                                    comment: e.target.value,
-                                  });
-                                }}
-                                label="Comment"
-                                id="controlledValue"
-                                type="text"
-                              />
-                            </div>
-                            <MDBBtn
-                              style={{ height: "36px", width: "110.65px" }}
-                              className="BtnComment"
-                              id={ele._id}
-                              onClick={(e) => {
-                                addComment(e.target.id);
+                                  {" "}
+                                  <p
+                                    style={{
+                                      marginBottom: "0px",
+                                      width: "65vw",
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                     
+                                    }}
+                                    className="mt-2 text-break"
+                                  >
+                                    {o.commenter.userName} : {o.comment}{" "}
+                                    <div style={{ width: "50%" }}>
+                                      {(teacherId === o.commenter._id ||
+                                        role === "teacher") && (
+                                        <MDBBtn floating tag="a" color="danger">
+                                          <MDBIcon
+                                            id={o._id}
+                                            far
+                                            icon="trash-alt"
+                                            onClick={(e) => {
+                                              deleteCommentById(e.target.id);
+                                            }}
+                                          />
+                                        </MDBBtn>
+                                      )}
+                                    </div>
+                                  </p>{" "}
+                                  <br></br>
+                                </div>
+                              ))}
+                            </MDBCardText>
+                            <div
+                              style={{
+                                display: "flex",
+                                marginBottom: "10px",
+                                width: "80%",
                               }}
                             >
-                              comment
-                            </MDBBtn>
-                          </div>
-                        </MDBCollapse>
+                              <div style={{ width: "80%" }}>
+                                <MDBInput
+                                  style={{ width: "55vw" }}
+                                  className="inpComment"
+                                  //!1111111
+                                  onChange={(e) => {
+                                    setComments({
+                                      ...comments,
+                                      comment: e.target.value,
+                                    });
+                                  }}
+                                  label="Comment"
+                                  id="controlledValue"
+                                  type="text"
+                                />
+                              </div>
+                              <MDBBtn
+                                style={{ height: "36px", width: "110.65px" }}
+                                className="BtnComment"
+                                id={ele._id}
+                                onClick={(e) => {
+                                  addComment(e.target.id);
+                                }}
+                              >
+                                comment
+                              </MDBBtn>
+                            </div>
+                          </MDBCollapse>
                         </div>
                       </div>
                     )}
                   </MDBCol>
                 </MDBRow>
               </MDBCard>
+              </main>
             );
           })}
         </>
       )}
-    </>
+      <MDBFooter
+        className="bg-light text-center text-white"
+      >
+        <MDBContainer className="p-4 pb-0">
+          <section className="mb-4">
+            <MDBBtn
+              floating
+              className="m-1"
+              style={{ backgroundColor: "#3b5998" }}
+              href="#!"
+              role="button"
+            >
+              <MDBIcon fab icon="facebook-f" />
+            </MDBBtn>
+
+            <MDBBtn
+              floating
+              className="m-1"
+              style={{ backgroundColor: "#55acee" }}
+              href="#!"
+              role="button"
+            >
+              <MDBIcon fab icon="twitter" />
+            </MDBBtn>
+
+            <MDBBtn
+              floating
+              className="m-1"
+              style={{ backgroundColor: "#dd4b39" }}
+              href="#!"
+              role="button"
+            >
+              <MDBIcon fab icon="google" />
+            </MDBBtn>
+            <MDBBtn
+              floating
+              className="m-1"
+              style={{ backgroundColor: "#ac2bac" }}
+              href="#!"
+              role="button"
+            >
+              <MDBIcon fab icon="instagram" />
+            </MDBBtn>
+
+            <MDBBtn
+              floating
+              className="m-1"
+              style={{ backgroundColor: "#0082ca" }}
+              href="#!"
+              role="button"
+            >
+              <MDBIcon fab icon="linkedin-in" />
+            </MDBBtn>
+
+            <MDBBtn
+              floating
+              className="m-1"
+              style={{ backgroundColor: "#333333" }}
+              href="#!"
+              role="button"
+            >
+              <MDBIcon fab icon="github" />
+            </MDBBtn>
+          </section>
+        </MDBContainer>
+
+        <div 
+          className="text-center p-3"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.2)"}}
+        >
+          © 2020 Copyright:
+          <a className="text-white" href="https://mdbootstrap.com/">
+            EasyLearning.com
+          </a>
+        </div>
+      </MDBFooter>
+    </div>
   );
 };
 
