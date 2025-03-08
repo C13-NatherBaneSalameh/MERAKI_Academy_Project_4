@@ -26,7 +26,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const login = () => {
     axios
-      .post(`http://localhost:5000/users/login`, loginInfo)
+      .post(`https://easy-learning-1qtv.onrender.com/users/login`, loginInfo)
       .then((res) => {
         // !!!!!
         setUserName(res.data.userName)

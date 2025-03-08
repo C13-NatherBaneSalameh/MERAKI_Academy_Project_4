@@ -26,7 +26,7 @@ const Register = () => {
 
   const createRegister = () => {
     axios
-      .post(`http://localhost:5000/users/register`, {userName:userName,
+      .post(`https://easy-learning-1qtv.onrender.com/users/register`, {userName:userName,
         email:email,
         password:password,
         role:roleId})

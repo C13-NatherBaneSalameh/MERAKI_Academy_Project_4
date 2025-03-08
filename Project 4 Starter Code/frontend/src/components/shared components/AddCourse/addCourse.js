@@ -34,7 +34,7 @@ const AddCourse = () => {
   }
   const add = () => {
     axios
-      .post("http://localhost:5000/course/", infoCourse, { headers })
+      .post("https://easy-learning-1qtv.onrender.com/course/", infoCourse, { headers })
       .then((res) => {
         setResponse(res);
         setIsAdd(true);

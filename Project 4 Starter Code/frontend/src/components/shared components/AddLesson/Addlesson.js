@@ -27,7 +27,7 @@ const Addlesson = () => {
 
     axios
       .post(
-        "http://localhost:5000/lessons",
+        "https://easy-learning-1qtv.onrender.com/lessons",
         { title: title, courseId: id, description: description, video: video },
         { headers }
       )

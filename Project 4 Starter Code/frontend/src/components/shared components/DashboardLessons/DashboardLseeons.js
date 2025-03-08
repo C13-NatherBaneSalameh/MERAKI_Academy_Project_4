@@ -87,7 +87,7 @@ const DashboardLseeons = () => {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-  const navigate = useNavigate();
+  const c = useNavigate();
   const { id } = useParams();
   console.log(id);
   const addLessons = () => {
@@ -101,7 +101,7 @@ const DashboardLseeons = () => {
 
     axios
       .post(
-        "http://localhost:5000/lessons",
+        "https://easy-learning-1qtv.onrender.com/lessons",
         { title: title, courseId: id, description: description, video: video },
         { headers }
       )
@@ -126,7 +126,7 @@ const DashboardLseeons = () => {
 
   const getLessonsById = () => {
     axios
-      .get(`http://localhost:5000/lessons/${id}`, { headers })
+      .get(`https://easy-learning-1qtv.onrender.com/lessons/${id}`, { headers })
       .then((res) => {
         setLesson(res.data.lessone);
         console.log("lessons===>", res.data);
@@ -140,7 +140,7 @@ const DashboardLseeons = () => {
   const updatedLesson = (id) => {
     axios
       .put(
-        `http://localhost:5000/lessons/${id}`,
+        `https://easy-learning-1qtv.onrender.com/lessons/${id}`,
         { title: title, description: description, video: video },
         { headers }
       )
@@ -164,7 +164,7 @@ const DashboardLseeons = () => {
   //!!comment
   const addComment = (id) => {
     axios
-      .post(`http://localhost:5000/comments/${id}`, comments, { headers })
+      .post(`https://easy-learning-1qtv.onrender.com/comments/${id}`, comments, { headers })
       .then((res) => {
         getLessonsById();
         // setComments("")
@@ -179,7 +179,7 @@ const DashboardLseeons = () => {
     console.log("hi");
 
     axios
-      .delete(`http://localhost:5000/comments/${id}/delete`, { headers })
+      .delete(`https://easy-learning-1qtv.onrender.com/comments/${id}/delete`, { headers })
       .then((res) => {
         const lessonAfterDeleteComment = lesson.map((ele) => {
           return {
@@ -196,7 +196,7 @@ const DashboardLseeons = () => {
   };
   const deleteLesson = (id) => {
     axios
-      .delete(`http://localhost:5000/lessons/${id}`, { headers })
+      .delete(`https://easy-learning-1qtv.onrender.com/lessons/${id}`, { headers })
       .then((res) => {
         const lessonAfterDelete = lesson.filter((ele) => ele._id !== id);
         setLesson(lessonAfterDelete);
@@ -214,7 +214,7 @@ const DashboardLseeons = () => {
 
     axios
       .post(
-        `http://localhost:5000/lessons/${id}/favorite`,
+        `https://easy-learning-1qtv.onrender.com/lessons/${id}/favorite`,
         {},
         {
           headers: {
@@ -235,7 +235,7 @@ const DashboardLseeons = () => {
     console.log("llllllllllllllll", id);
 
     axios
-      .delete(`http://localhost:5000/lessons/${id}/favorite`, { headers })
+      .delete(`https://easy-learning-1qtv.onrender.com/lessons/${id}/favorite`, { headers })
       .then((res) => {
         console.log("sucsess", res);
         console.log(55555555);
@@ -247,7 +247,7 @@ const DashboardLseeons = () => {
   //TODO search =============================
   const getLessonsByIdTitle = () => {
     axios
-      .get(`http://localhost:5000/lessons/${id}/search?title=${search}`, {
+      .get(`https://easy-learning-1qtv.onrender.com/lessons/${id}/search?title=${search}`, {
         headers,
       })
       .then((res) => {

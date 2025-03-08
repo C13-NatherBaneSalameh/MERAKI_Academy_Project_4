@@ -78,7 +78,7 @@ setTeacherId
   const add = () => {
     axios
       .post(
-        "http://localhost:5000/course/",
+        "https://easy-learning-1qtv.onrender.com/course/",
         { title: title, description: description, img: img },
         { headers }
       )
@@ -105,7 +105,7 @@ setTeacherId
 
   const getAllCOurse = () => {
     axios
-      .get("http://localhost:5000/course/allCourse", { headers })
+      .get("https://easy-learning-1qtv.onrender.com/course/allCourse", { headers })
       .then((res) => {
         console.log(res);
         const data = res.data.courses;
@@ -123,7 +123,7 @@ setTeacherId
     console.log("bbbbb");
 
     axios
-      .delete(`http://localhost:5000/course/${id}`, { headers })
+      .delete(`https://easy-learning-1qtv.onrender.com/course/${id}`, { headers })
       .then((res) => {
         console.log("555555");
 

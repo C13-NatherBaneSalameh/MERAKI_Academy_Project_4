@@ -39,7 +39,7 @@ export const Favorite = () => {
 
   const getAllFavorit = () => {
     axios
-      .get("http://localhost:5000/lessons/fav/favorite", { headers })
+      .get("https://easy-learning-1qtv.onrender.com/lessons/fav/favorite", { headers })
       .then((res) => {
         setFavoritItem(res.data.favorite);
         console.log(res);
@@ -54,7 +54,7 @@ export const Favorite = () => {
     console.log("llllllllllllllll", id);
 
     axios
-      .delete(`http://localhost:5000/lessons/${id}/favorite`, { headers })
+      .delete(`https://easy-learning-1qtv.onrender.com/lessons/${id}/favorite`, { headers })
       .then((res) => {
         console.log("sucsess", res);
         console.log(55555555);
@@ -69,7 +69,7 @@ export const Favorite = () => {
   };
   const addComment = (id) => {
     axios
-      .post(`http://localhost:5000/comments/${id}`, comments, { headers })
+      .post(`https://easy-learning-1qtv.onrender.com/comments/${id}`, comments, { headers })
       .then((res) => {
         getAllFavorit();
         setComments("");
@@ -80,7 +80,7 @@ export const Favorite = () => {
   };
   const deleteCommentById = (id) => {
     axios
-      .delete(`http://localhost:5000/comments/${id}/delete`, { headers })
+      .delete(`https://easy-learning-1qtv.onrender.com/comments/${id}/delete`, { headers })
       .then((res) => {
         const afterDelete = favoritItem.map((ele) => {
           return {
