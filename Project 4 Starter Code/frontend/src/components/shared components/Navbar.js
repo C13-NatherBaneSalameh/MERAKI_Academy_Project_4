@@ -51,7 +51,7 @@ const Navbar = () => {
     <MDBNavbar sticky expand="lg" className="navber">
       <MDBContainer fluid>
         <img style={{width:"100px",height:"75px"}} className="logo" src="https://res.cloudinary.com/duxfa6nqg/image/upload/v1736556922/wnvrbnsmkcvzziataj30.jpg"/>
-        <MDBNavbarBrand href="#" style={{color:"rgb(14 62 86)",marginLeft:"10px" ,fontSize:"30px"}} >Esay Learning </MDBNavbarBrand>
+        <MDBNavbarBrand href="#" style={{color:"rgb(14 62 86)",marginLeft:"10px" ,fontSize:"30px"}} >Easy Learning </MDBNavbarBrand>
         <MDBNavbarToggler
           type="button"
           aria-expanded="false"
